@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ru.ivanp.vibro.utils.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="50dp"
+    android:paddingLeft="@dimen/step2"
+    android:paddingRight="@dimen/step2" >
+
+    <!-- TEXT -->
+
+    <CheckedTextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:checkMark="?android:attr/listChoiceIndicatorSingle"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+</ru.ivanp.vibro.utils.CheckableLinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
+    xmlns:widget="http://schemas.android.com/apk/res/ru.ivanp.vibro" >
+
+    <!-- INTENSITY -->
+    <ru.ivanp.vibro.utils.SeekbarPreference
+        android:defaultValue="100"
+        android:key="morse_magnitude"
+        android:persistent="true"
+        android:title="@string/magnitude"
+        widget:currentValueText="@string/current_magnitude"
+        widget:maxValue="100"
+        widget:minValue="1" />
+
+    <!-- TIME UNIT LENGTH -->
+    <ru.ivanp.vibro.utils.SeekbarPreference
+        android:defaultValue="100"
+        android:key="morse_time_unit_length"
+        android:persistent="true"
+        android:summary="@string/see_help"
+        android:title="@string/time_unit_length"
+        widget:currentValueText="@string/current_time_unit_length"
+        widget:maxValue="500"
+        widget:minValue="50" />
+
+</PreferenceScreen>

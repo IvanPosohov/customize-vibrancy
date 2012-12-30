@@ -1,0 +1,137 @@
+<resources>
+
+    <string name="app_name">Customize Vibrancy</string>
+    <string name="second">%d second</string>
+    <string name="seconds23">%d seconds</string>
+    <string name="seconds">%d seconds</string>
+    <string name="minute">%d minute</string>
+    <string name="minutes23">%d minutes</string>
+    <string name="minutes">%d minutes</string>
+    <string name="do_not_vibrate">Do not vibrate</string>
+    <string name="help">Help</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="rate_app">Rate application</string>
+    <string name="or">or…</string>
+
+    <!-- ABOUT ACTIVITY -->
+    <string name="about">About</string>
+    <string name="about_version">Version %s</string>
+    <string name="about_authors">Authors</string>
+    <string name="about_code">Posohov Ivan (code)</string>
+    <string name="about_design">Lihachev Ivan (design)</string>
+    <string name="about_desc">Description</string>
+    <string name="about_desc_text">This application allows you to customize your phone vibrations. You can choose one of default vibrations or create your own and set it to:\n
+        1) incoming call;\n
+        2) off-hook;\n
+        3) call finished;\n
+        4) each minute of call after specified interval expiration;\n
+        5) incoming SMS;\n
+        6) Internet became not available;\n
+        7) Internet became available via Wifi;\n
+        8) Internet became available via 3G/GMS.</string>
+    <string name="about_feedback">Feedback</string>
+    <string name="about_feedback_text">If you find any bugs or want to new feature in next versions or you just want to talk with someone, please mail me posohof@gmail.com</string>
+
+    <!-- SETTINGS -->
+    <string name="settings">Settings</string>
+    <string name="vibration_enabled">Vibration enabled</string>
+    <string name="call_timer_interval">Call timer interval</string>
+    <string name="call_time_interval_summary">Vibrate each minute of call after specified interval expiration</string>
+    <string name="second_45">On 45th seconds</string>
+    <string name="second_50">On 50th seconds</string>
+    <string name="second_55">On 55th seconds</string>
+    <string name="second_60">On 60th seconds</string>
+    <string name="minute_5">Every 5 minutes</string>
+    <string name="minute_10">Every 10 minutes</string>
+    <string name="minute_20">Every 20 minutes</string>
+    <string name="minute_30">Every 30 minutes</string>
+    <string name="minute_60">Every 60 minutes</string>
+    <string name="cancel_sms_vibration_on_read">Cancel SMS vibration on read</string>
+    <string name="cancel_sms_vibration_on_read_desc">Cancel incoming SMS vibration when you start to read it. If unchecked be careful with endless vibrations</string>
+
+    <!-- RECORDER -->
+    <string name="select_recorder">Select recorder</string>
+    <string name="create_new_vibration">Create new vibration</string>
+    <string name="vibration_name">Vibration name</string>
+    <string name="tap_recorder">Tap recorder</string>
+    <string name="touch_to_start">Touch to start recording</string>
+    <string name="press_rec_to_start">Press Rec button to start recording</string>
+    <string name="playing">Playing</string>
+    <string name="tap_recorder_settings">Tap recorder settings</string>
+    <string name="vibration_magnitude">Vibration magnitude</string>
+    <string name="fixed_magnitude">Fixed magnitude</string>
+    <string name="fixed_magnitude_summary">If magnitude is fixed recorder will always vibrate with the same intensity</string>
+    <string name="magnitude">Magnitude</string>
+    <string name="current_magnitude">Current vibration magnitude is %d%%</string>
+    <string name="duration_of_vibration">Duration of vibration</string>
+    <string name="limit_duration_of_vibration">Limit duration of vibration</string>
+    <string name="duration">Duration</string>
+    <string name="current_duration">Maximum duration of vibration is %d sec</string>
+
+    <!-- MORSE -->
+    <string name="morse_recorder">Morse recorder</string>
+    <string name="morse_hint">Type here to translate</string>
+    <string name="morse_recorder_settings">Morse recorder settings</string>
+    <string name="time_unit_length">Time unit length</string>
+    <string name="current_time_unit_length">Current time unit length is %d ms</string>
+    <string name="see_help">See help for more info</string>
+    <string name="morse_recorder_help">Morse recorder help</string>
+    <string name="morse_recorder_help_msg">Here used an international Morse code (more info on http://en.wikipedia.org/wiki/Morse_code), it is composed of five elements:\n - short mark, dot (·) — \"dot duration\" is one unit long;\n - longer mark, dash (–) — three units long;\n - inter-element gap between the dots and dashes within a character — one dot duration or one unit long;\n - short gap (between letters) — three units long;\n - medium gap (between words) — seven units long.\nLength of "one unit long" can be specified in settings.</string>
+
+    <!-- DONATE -->
+    <string name="donate">Donate</string>
+    <string name="donate_message">If you like this application, you can help author =)</string>
+    <string name="donate_amount">Donate %s$</string>
+
+    <!-- TRIGGERS -->
+    <string name="trigger_incoming_call">On incoming call</string>
+    <string name="trigger_pick_up_the_phone">On off-hook</string>
+    <string name="trigger_call_ends">On call finished</string>
+    <string name="trigger_call_time_interval">On each call minute interval</string>
+    <string name="trigger_incoming_sms">On incomming SMS</string>
+    <string name="trigger_internet_unavailable">On Internet became not available</string>
+    <string name="trigger_internet_available_wifi">On Internet became available via Wifi</string>
+    <string name="trigger_internet_available_mobile">On Internet became available via 3G</string>
+    <string name="select_vibration">Select vibration</string>
+
+    <!-- VIBRATIONS -->
+    <string name="sharp_click">Sharp click (%d%%)</string>
+    <string name="strong_click">Strong click (%d%%)</string>
+    <string name="bump">Bump (%d%%)</string>
+    <string name="bounce">Bounce (%d%%)</string>
+    <string name="double_sharp_click">Double sharp click (%d%%)</string>
+    <string name="double_strong_click">Double strong click (%d%%)</string>
+    <string name="double_bump">Double bump (%d%%)</string>
+    <string name="triple_strong_click">Triple strong click (%d%%)</string>
+    <string name="tick">Tick (%d%%)</string>
+    <string name="long_buzz">Long buzz (%d%%)</string>
+    <string name="short_buzz">Short buzz (%d%%)</string>
+    <string name="long_transition_ramp_up">Long transition ramp up (%d%%)</string>
+    <string name="short_transition_ramp_up">Short transition ramp up (%d%%)</string>
+    <string name="long_transition_ramp_down">Long transition ramp down (%d%%)</string>
+    <string name="short_transition_ramp_down">Short transition ramp down (%d%%)</string>
+    <string name="fast_pulse">Fast pulse (%d%%)</string>
+    <string name="fast_pulsing">Fast pulsing (%d%%)</string>
+    <string name="slow_pulse">Slow pulse (%d%%)</string>
+    <string name="slow_pulsing">Slow pulsing (%d%%)</string>
+    <string name="transition_bump">Transition bump (%d%%)</string>
+    <string name="transition_bounce">Transition bounce (%d%%)</string>
+    <string name="alert">Alert%d</string>
+    <string name="explosion">Explosion%d</string>
+    <string name="weapon">Weapon%d</string>
+    <string name="impact_wood">Impact wood (%d%%)</string>
+    <string name="impact_metal">Impact metal (%d%%)</string>
+    <string name="impact_rubber">Impact rubber (%d%%)</string>
+    <string name="textture">Texture%d</string>
+    <string name="engine1">Engine1 (%d%%)</string>
+    <string name="engine2">Engine2 (%d%%)</string>
+    <string name="engine3">Engine3 (%d%%)</string>
+    <string name="engine4">Engine4 (%d%%)</string>
+    <string name="ramp_up">Ramp up (%d sec)</string>
+    <string name="fast_periodic_ramp_up">Fast periodic ramp up (%d sec)</string>
+    <string name="slow_periodic_ramp_up">Slow periodic ramp up (%d sec)</string>
+	<string name="ramp_up_and_keep">Ramp up and keep</string>
+    <string name="fast_periodic_ramp_up_keep">Fast periodic ramp up and keep</string>
+    <string name="slow_periodic_ramp_up_keep">Slow periodic ramp up and keep</string>
+</resources>

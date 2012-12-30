@@ -1,0 +1,136 @@
+<resources>
+
+    <string name="app_name">Customize Vibrancy</string>
+    <string name="second">%d секунда</string>
+    <string name="seconds23">%d секунды</string>
+    <string name="seconds">%d секунд</string>
+    <string name="minute">%d минута</string>
+    <string name="minutes23">%d минуты</string>
+    <string name="minutes">%d минут</string>
+    <string name="do_not_vibrate">Не вибрировать</string>
+    <string name="help">Помощь</string>
+    <string name="cancel">Отмена</string>
+    <string name="remove">Удалить</string>
+    <string name="rate_app">Оценить приложение</string>
+
+    <!-- ABOUT ACTIVITY -->
+    <string name="about">О программе</string>
+    <string name="about_version">Версия %s</string>
+    <string name="about_authors">Авторы</string>
+    <string name="about_code">Посоход Иван (код)</string>
+    <string name="about_design">Лихачев Иван (дизайн)</string>
+    <string name="about_desc">Описание</string>
+    <string name="about_desc_text">Приложение позволяет индивидуально настроить вибрацию телефона. Вы можете выбрать одну из стандартных вибраций или создать свою и установить ее на:\n
+        1) входящий вызов;\n
+        2) поднятие трубки;\n
+        3) завершение вызова;\n
+        4) каждую минуту вызова после истечения указанного интервала;\n
+        5) входящее SMS;\n
+        6) Интернет становится недоступен;\n
+        7) Интернет становится доступен через Wifi;\n
+        8) Интернет становится доступен через 3G/GMS.</string>
+    <string name="about_feedback">Обратная связь</string>
+    <string name="about_feedback_text">Если вы нашли в программе ошибку или хотите чтобы в следующей версии появилась какая-то новая возможность или вам просто не с кем поговорть пожалуйста напишите мне posohof@gmail.com</string>
+
+    <!-- SETTINGS -->
+    <string name="settings">Настройки</string>
+    <string name="vibration_enabled">Вибрация включена</string>
+    <string name="call_timer_interval">Интервал таймера вызова</string>
+    <string name="call_time_interval_summary">Вибрировать каждую минуту вызова после истечения указанного интервала</string>
+    <string name="second_45">На 45ой секунде</string>
+    <string name="second_50">На 50ой секунде</string>
+    <string name="second_55">На 55ой секунде</string>
+    <string name="second_60">На 60ой секунде</string>
+    <string name="minute_5">Каждые 5 минут</string>
+    <string name="minute_10">Каждые 10 минут</string>
+    <string name="minute_20">Каждые 20 минут</string>
+    <string name="minute_30">Каждые 30 минут</string>
+    <string name="minute_60">Каждые 60 минут</string>
+    <string name="cancel_sms_vibration_on_read">Прерывать СМС вибрацию при прочтении</string>
+    <string name="cancel_sms_vibration_on_read_desc">Прерывать вибрацию на входящую СМС когда Вы начинаете читать ее. Если отключено будте осторожны с бесконечными вибрациями</string>
+
+    <!-- RECORDER -->
+    <string name="select_recorder">Выберите метод записи</string>
+    <string name="create_new_vibration">Создать новую вибрацию</string>
+    <string name="vibration_name">Имя вибрации</string>
+    <string name="tap_recorder">Запись нажатиями</string>
+    <string name="touch_to_start">Коснитесь чтобы начать запись</string>
+    <string name="rec_to_start">Нажмите кнопку Rec чтобы начать запись</string>
+    <string name="playing">Воспроизведение</string>
+    <string name="tap_recorder_settings">Настройки записи</string>
+    <string name="vibration_magnitude">Мощность вибрации</string>
+    <string name="fixed_magnitude">Зафиксировать мощность</string>
+    <string name="fixed_magnitude_summary">Если мощность фиксирована, то вибрация всегда с одинаковой интенсивностью</string>
+    <string name="magnitude">Мощность</string>
+    <string name="current_magnitude">Текщая мощность вибрации %d%%</string>
+    <string name="duration_of_vibration">Длительность вибрации</string>
+    <string name="limit_duration_of_vibration">Ограничить длительность вибрации</string>
+    <string name="duration">Длительность</string>
+    <string name="current_duration">Максимальная длительность вибрации %d сек</string>
+
+    <!-- MORSE -->
+    <string name="morse_recorder">Перевод кода Морзе</string>
+    <string name="morse_hint">Напишите здесь для перевода</string>
+    <string name="morse_recorder_settings">Настройки переводчика кода Морзе</string>
+    <string name="time_unit_length">Длина единицы времени</string>
+    <string name="current_time_unit_length">Текущая длина единицы времени %d мс</string>
+    <string name="see_help">Подробнее смотри в справке</string>
+    <string name="morse_recorder_help">Помощь по переводчику кода Морзе</string>
+    <string name="morse_recorder_help_msg">В приложении использован интернациональный код Морзе (подробнее http://en.wikipedia.org/wiki/Morse_code), он основывается на пяти элементах:\n - короткий знак, точка (·) — \"длительность точки\" равна одной единице времени;\n - долгий знак, тире (–) — три единицы времени;\n - отступ между точками и тире в пределах буквы — длительность одной точки или одна единица времени;\n - малый отступ (между буквами) — три единицы времени;\n - средний отступ (между словами) — семь единиц времени.\nДлина "одной единицы времени" может быть изменена в настройках.</string>
+
+    <!-- DONATE -->
+    <string name="donate">Помочь</string>
+    <string name="donate_message">Если Вам понравилось это приложение, Вы можете помочь автору =)</string>
+    <string name="donate_amount">Пожертвовать %s$</string>
+
+    <!-- TRIGGERS -->
+    <string name="trigger_incoming_call">На входящий вызов</string>
+    <string name="trigger_pick_up_the_phone">На поднятие трубки</string>
+    <string name="trigger_call_ends">На заверщение вызова</string>
+    <string name="trigger_call_time_interval">На интервал каждой минуты вызова</string>
+    <string name="trigger_incoming_sms">На входящее SMS</string>
+    <string name="trigger_internet_unavailable">Когда интернет становится недоступен</string>
+    <string name="trigger_internet_available_wifi">Когда интернет становится доступен через Wifi</string>
+    <string name="trigger_internet_available_mobile">Когда интернет становится доступен через 3G</string>
+    <string name="select_vibration">Выберите вибрацию</string>
+
+    <!-- VIBRATIONS -->
+    <string name="sharp_click">Резкий одиночный (%d%%)</string>
+    <string name="strong_click">Сильный одиночный (%d%%)</string>
+    <string name="bump">Удар (%d%%)</string>
+    <string name="bounce">Пружина (%d%%)</string>
+    <string name="double_sharp_click">Двойной резкий (%d%%)</string>
+    <string name="double_strong_click">Двойной сильный (%d%%)</string>
+    <string name="double_bump">Двойной удар (%d%%)</string>
+    <string name="triple_strong_click">Тройной сильный (%d%%)</string>
+    <string name="tick">Тик (%d%%)</string>
+    <string name="long_buzz">Долгое жужжание (%d%%)</string>
+    <string name="short_buzz">Короткое жужжание (%d%%)</string>
+    <string name="long_transition_ramp_up">Долгое нарастание (%d%%)</string>
+    <string name="short_transition_ramp_up">Быстрое нарастание (%d%%)</string>
+    <string name="long_transition_ramp_down">Долгое убывание (%d%%)</string>
+    <string name="short_transition_ramp_down">Быстрое убывание (%d%%)</string>
+    <string name="fast_pulse">Быстрый импульс (%d%%)</string>
+    <string name="fast_pulsing">Быстрая пульсация (%d%%)</string>
+    <string name="slow_pulse">Медленный импульс (%d%%)</string>
+    <string name="slow_pulsing">Медленная пульсация (%d%%)</string>
+    <string name="transition_bump">Переход и удар (%d%%)</string>
+    <string name="transition_bounce">Переход и пружина (%d%%)</string>
+    <string name="alert">Тревога%d</string>
+    <string name="explosion">Взрыв%d</string>
+    <string name="weapon">Оружие%d</string>
+    <string name="impact_wood">Удар по дереву (%d%%)</string>
+    <string name="impact_metal">Удар по металлу (%d%%)</string>
+    <string name="impact_rubber">Удар по резине (%d%%)</string>
+    <string name="textture">Текстура%d</string>
+    <string name="engine1">Двигатель1 (%d%%)</string>
+    <string name="engine2">Двигатель2 (%d%%)</string>
+    <string name="engine3">Двигатель3 (%d%%)</string>
+    <string name="engine4">Двигатель4 (%d%%)</string>
+    <string name="ramp_up">Нарастание (%d сек)</string>
+    <string name="fast_periodic_ramp_up">Быстро-пульсирующее нарастание (%d сек)</string>
+    <string name="slow_periodic_ramp_up">Медленно-пульсирующее нарастание (%d сек)</string>
+	<string name="ramp_up_and_keep">Наростание и удержание</string>
+    <string name="fast_periodic_ramp_up_keep">Быстро-пульсирующее нарастание и удержание</string>
+    <string name="slow_periodic_ramp_up_keep">Медленно-пульсирующее нарастание и удержание</string>
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- "ACTION BAR" -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ab_transparent_dark_holo"
+        android:minHeight="@dimen/action_bar_default_height" >
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="2dip"
+            android:drawablePadding="0dip"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/step2"
+            android:paddingRight="@dimen/step2"
+            android:text="@string/donate"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary_text_holo_dark"
+            android:textSize="@dimen/action_bar_title_text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- TEXT -->
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2"
+        android:drawablePadding="0dip"
+        android:text="@string/donate_message" />
+
+    <Button
+        android:id="@+id/btn_rate"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2"
+        android:background="@drawable/btn_default_holo_dark"
+        android:text="@string/rate_app"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btn_donate_1"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2"
+        android:background="@drawable/btn_default_holo_dark"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btn_donate_2"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2"
+        android:background="@drawable/btn_default_holo_dark"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btn_donate_3"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2"
+        android:background="@drawable/btn_default_holo_dark"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/menu_new_vibration"
+        android:title="@string/create_new_vibration"
+        android:icon="@drawable/ic_menu_new"/>
+</menu>

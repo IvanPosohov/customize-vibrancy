@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- "ACTION BAR" -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ab_transparent_dark_holo"
+        android:minHeight="@dimen/action_bar_default_height" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="2dip"
+            android:layout_weight="0"
+            android:drawablePadding="0dip"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/step2"
+            android:paddingRight="@dimen/step2"
+            android:text="@string/tap_recorder"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary_text_holo_dark"
+            android:textSize="@dimen/action_bar_title_text_size"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/prgb_dot"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/record_dot" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/img_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:background="@drawable/item_background_holo_dark"
+            android:focusable="true"
+            android:paddingLeft="@dimen/step2"
+            android:paddingRight="@dimen/step2"
+            android:scaleType="center"
+            android:src="@drawable/ic_settings" />
+    </LinearLayout>
+
+    <!-- TIMERS -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2" >
+
+        <TextView
+            android:id="@+id/text_time_current"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:includeFontPadding="false"
+            android:text="00:00.0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/gray" />
+
+        <TextView
+            android:id="@+id/text_time_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/step"
+            android:includeFontPadding="false"
+            android:text="00:00.0"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+    </LinearLayout>
+
+    <!-- TOUCH PANEL -->
+
+    <RelativeLayout
+        android:id="@+id/layout_touch"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/step2"
+        android:layout_marginRight="@dimen/step2"
+        android:layout_marginTop="@dimen/step2"
+        android:layout_weight="1"
+        android:background="@drawable/recorder_touch_panel" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/rec_touch" />
+
+        <!-- Intensity level -->
+
+        <TextView
+            android:id="@+id/text_intensity_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/step2"
+            android:layout_marginTop="@dimen/step2"
+            android:includeFontPadding="false"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white" />
+
+        <!-- Recorder state -->
+
+        <TextView
+            android:id="@+id/text_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/step2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/primary_text_holo_dark" />
+    </RelativeLayout>
+
+    <!-- BUTTON PANEL -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/step2"
+        android:background="@drawable/ab_bottom_solid_dark_holo"
+        android:minHeight="@dimen/action_bar_default_height" >
+
+        <ImageView
+            android:id="@+id/img_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/item_background_holo_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_rec" />
+
+        <ImageView
+            android:id="@+id/img_play"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/item_background_holo_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_play" />
+
+        <ImageView
+            android:id="@+id/img_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/item_background_holo_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_stop" />
+
+        <ImageView
+            android:id="@+id/img_save"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/item_background_holo_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_save" />
+    </LinearLayout>
+
+</LinearLayout>

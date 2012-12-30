@@ -1,0 +1,114 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.ivanp.vibro"
+    android:versionCode="3"
+    android:versionName="2.0 (beta)" >
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-sdk android:minSdkVersion="7" />
+
+    <application
+        android:name="ru.ivanp.vibro.App"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/CustomizeVibrancy" >
+
+        <!-- MAIN -->
+        <activity
+            android:name="ru.ivanp.vibro.MainActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- SELECT VIBRATION -->
+        <activity
+            android:name="ru.ivanp.vibro.SelectVibrationActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- ABOUT -->
+        <activity
+            android:name="ru.ivanp.vibro.AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- DONATE -->
+        <activity
+            android:name="ru.ivanp.vibro.DonateActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- SETTINGS -->
+        <activity
+            android:name="ru.ivanp.vibro.SettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- TOUCH RECORDER -->
+        <activity
+            android:name="ru.ivanp.vibro.RecorderActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- TOUCH RECORDER SETTINGS -->
+        <activity
+            android:name="ru.ivanp.vibro.RecorderSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- MORSE RECORDER -->
+        <activity
+            android:name="ru.ivanp.vibro.MorseActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- MORSE RECORDER SETTINGS -->
+        <activity
+            android:name="ru.ivanp.vibro.MorseSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- RECEIVERS -->
+        <!-- InApp purchase -->
+        <receiver android:name="ru.ivanp.vibro.inapp.BillingReceiver" >
+            <intent-filter>
+                <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+                <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+                <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Internet state changed -->
+        <receiver android:name="ru.ivanp.vibro.telephony.InternetStateReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Incoming sms -->
+        <receiver android:name="ru.ivanp.vibro.telephony.SmsReceiver" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Incoming call -->
+        <receiver android:name="ru.ivanp.vibro.telephony.CallReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- SERVICES -->
+        <service android:name="ru.ivanp.vibro.inapp.BillingService" />
+        <service android:name="ru.ivanp.vibro.telephony.SmsService" />
+        <service android:name="ru.ivanp.vibro.telephony.CallService" />
+        <service android:name="ru.ivanp.vibro.telephony.VibrationService" />
+    </application>
+
+</manifest>
