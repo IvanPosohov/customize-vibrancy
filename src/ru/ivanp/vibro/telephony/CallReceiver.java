@@ -81,7 +81,25 @@ public class CallReceiver extends BroadcastReceiver {
 		}
 
 		/*
-		 * 2) RINGING -> OFFHOOK. Incoming call, user picked up the phone, stop
+		 * 2) IDLE -> OFFHOOK. Outgoing call. Start log watcher to know when
+		 * user on the over side pick up the phone
+		 */
+		else if (oldState.equals(TelephonyManager.EXTRA_STATE_IDLE)
+				&& newState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
+			CallService.start(context, true);
+		}
+
+		/*
+		 * 3) RINGING -> IDLE. Incoming call, user cancel it, stop incoming call
+		 * vibration
+		 */
+		else if (oldState.equals(TelephonyManager.EXTRA_STATE_RINGING)
+				&& newState.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
+			VibrationService.stop(context);
+		}
+
+		/*
+		 * 4) RINGING -> OFFHOOK. Incoming call, user picked up the phone, stop
 		 * incoming call vibration, check if this call the first one if it start
 		 * minute interval timer, otherwise do nothing
 		 */
@@ -91,15 +109,6 @@ public class CallReceiver extends BroadcastReceiver {
 			if (!pref.getBoolean(SECOND_CALL_KEY, false)) {
 				CallService.start(context, false);
 			}
-		}
-
-		/*
-		 * 3) IDLE -> OFFHOOK. Outgoing call. Start log watcher to know when
-		 * user on the over side pick up the phone
-		 */
-		else if (oldState.equals(TelephonyManager.EXTRA_STATE_IDLE)
-				&& newState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-			CallService.start(context, true);
 		}
 
 		/*
