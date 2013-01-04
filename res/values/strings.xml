@@ -20,6 +20,8 @@
     <string name="about_authors">Authors</string>
     <string name="about_code">Posohov Ivan (code)</string>
     <string name="about_design">Lihachev Ivan (design)</string>
+    <string name="about_translation">Help in translation</string>
+    <string name="about_ukrainian"></string>
     <string name="about_desc">Description</string>
     <string name="about_desc_text">This application allows you to customize your phone vibrations. You can choose one of default vibrations or create your own and set it to:\n
         1) incoming call;\n

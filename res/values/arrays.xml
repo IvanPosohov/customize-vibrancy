@@ -7,12 +7,12 @@
         <item>@string/second_55</item>
         <item>@string/second_60</item>
     </string-array>
-    <string-array name="list_seconds_values">
+    <integer-array name="list_seconds_values">
         <item>45</item>
         <item>50</item>
         <item>55</item>
         <item>60</item>
-    </string-array>
+    </integer-array>
     <string-array name="list_minutes">
         <item>@string/minute_5</item>
         <item>@string/minute_10</item>
@@ -20,13 +20,13 @@
         <item>@string/minute_30</item>
         <item>@string/minute_60</item>
     </string-array>
-    <string-array name="list_minutes_values">
+    <integer-array name="list_minutes_values">
         <item>5</item>
         <item>10</item>
         <item>20</item>
         <item>30</item>
         <item>60</item>
-    </string-array>
+    </integer-array>
     <string-array name="list_recorders">
         <item>@string/tap_recorder</item>
         <item>@string/morse_recorder</item>

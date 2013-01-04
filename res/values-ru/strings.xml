@@ -19,6 +19,8 @@
     <string name="about_authors">Авторы</string>
     <string name="about_code">Посоход Иван (код)</string>
     <string name="about_design">Лихачев Иван (дизайн)</string>
+    <string name="about_translation">Помощь в переводе</string>
+    <string name="about_ukrainian"></string>
     <string name="about_desc">Описание</string>
     <string name="about_desc_text">Приложение позволяет индивидуально настроить вибрацию телефона. Вы можете выбрать одну из стандартных вибраций или создать свою и установить ее на:\n
         1) входящий вызов;\n

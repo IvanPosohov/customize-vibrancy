@@ -97,6 +97,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about_design"
                 android:textColor="@color/white" />
+            
+            <!-- TRANSLATION -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="@string/about_translation"
+                android:textColor="@color/blue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_ukrainian"
+                android:textColor="@color/white" />
 
             <!-- DESCRIPTION -->
 

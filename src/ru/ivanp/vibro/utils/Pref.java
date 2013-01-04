@@ -17,8 +17,6 @@ public class Pref {
 	// ========================================================================
 	private final static String VIBRATION_ENABLED_KEY = "vibration_enabled";
 	private final static String MINUTE_INTERVAL_KEY = "minute_interval";
-	private final static String MISSED_CALL_INTERVAL_KEY = "missed_call_interval";
-	private final static String MISSED_SMS_INTERVAL_KEY = "missed_sms_interval";
 	private final static String CANCEL_SMS_VIBRATION_KEY = "cancel_sms_vibration_on_read";
 
 	// ========================================================================
@@ -26,8 +24,6 @@ public class Pref {
 	// ========================================================================
 	public static boolean vibrationEnabled;
 	public static int minuteInterval;
-	public static int missedCallInterval;
-	public static int missedSmsInterval;
 	public static boolean cancelSmsVibration;
 
 	// ========================================================================
@@ -38,12 +34,7 @@ public class Pref {
 				.getDefaultSharedPreferences(_context);
 
 		vibrationEnabled = pref.getBoolean(VIBRATION_ENABLED_KEY, true);
-		minuteInterval = Integer.valueOf(pref.getString(MINUTE_INTERVAL_KEY,
-				"55"));
-		missedCallInterval = Integer.valueOf(pref.getString(
-				MISSED_CALL_INTERVAL_KEY, "10"));
-		missedSmsInterval = Integer.valueOf(pref.getString(
-				MISSED_SMS_INTERVAL_KEY, "10"));
+		minuteInterval = pref.getInt(MINUTE_INTERVAL_KEY, 55);
 		cancelSmsVibration = pref.getBoolean(CANCEL_SMS_VIBRATION_KEY, true);
 
 		if (App.DEBUG) {
