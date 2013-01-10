@@ -6,6 +6,7 @@ import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.TriggerManager;
 import ru.ivanp.vibro.vibrations.UserVibration;
 import ru.ivanp.vibro.vibrations.Vibration;
+import ru.ivanp.vibro.vibrations.VibrationsManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,7 +38,9 @@ public class SelectVibrationActivity extends Activity implements
 	// CONSTANTS
 	// ========================================================================
 	public static final String TRIGGER_ID_KEY = "trigger_id";
+	public static final String VIBRATION_ID_KEY = "vibration_id";
 	private static final int MI_REMOVE = 0;
+	private static final int RECODER_ACTIVITY_REQUEST_CODE = 0;
 
 	// ========================================================================
 	// FIELDS
@@ -78,6 +81,8 @@ public class SelectVibrationActivity extends Activity implements
 			Vibration vibration = list.get(i);
 			lv.setItemChecked(i, vibration.id == trigger.vibrationID);
 			if (vibration.id == trigger.vibrationID) {
+				// scrolls to checked item
+				lv.setSelection(i);
 				selectedPosition = i;
 			}
 		}
@@ -120,6 +125,16 @@ public class SelectVibrationActivity extends Activity implements
 		return false;
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == RECODER_ACTIVITY_REQUEST_CODE && data != null) {
+			int createdID = data.getIntExtra(VIBRATION_ID_KEY,
+					VibrationsManager.NO_VIBRATION_ID);
+			App.getTriggerManager().setTrigger(trigger.id, createdID);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	// ========================================================================
 	// MENU
 	// ========================================================================
@@ -153,7 +168,8 @@ public class SelectVibrationActivity extends Activity implements
 		AdapterView.AdapterContextMenuInfo info;
 		try {
 			info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			Vibration vibration = (Vibration) lv.getItemAtPosition(info.position);
+			Vibration vibration = (Vibration) lv
+					.getItemAtPosition(info.position);
 			if (vibration instanceof UserVibration) {
 				menu.add(Menu.NONE, MI_REMOVE, Menu.NONE, R.string.remove);
 			}
@@ -228,13 +244,15 @@ public class SelectVibrationActivity extends Activity implements
 							public void onClick(DialogInterface dialog,
 									int which) {
 								if (which == 0) {
-									startActivity(new Intent(
+									startActivityForResult(new Intent(
 											SelectVibrationActivity.this,
-											RecorderActivity.class));
+											RecorderActivity.class),
+											RECODER_ACTIVITY_REQUEST_CODE);
 								} else {
-									startActivity(new Intent(
+									startActivityForResult(new Intent(
 											SelectVibrationActivity.this,
-											MorseActivity.class));
+											MorseActivity.class),
+											RECODER_ACTIVITY_REQUEST_CODE);
 								}
 							}
 						}).create().show();

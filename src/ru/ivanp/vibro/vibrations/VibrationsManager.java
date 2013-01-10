@@ -405,8 +405,13 @@ public class VibrationsManager extends EventDispatcher {
 	}
 
 	public int getEmptyId() {
-		Vibration last = vibrations.get(vibrations.size() - 1);
-		return last.id + 1;
+		int res = NO_VIBRATION_ID;
+		for (Vibration vibration : vibrations) {
+			if (vibration.id > res) {
+				res = vibration.id;
+			}
+		}
+		return res + 1;
 	}
 
 	public void add(UserVibration _vibration) {
