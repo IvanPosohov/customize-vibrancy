@@ -34,7 +34,7 @@ public class Pref {
 				.getDefaultSharedPreferences(_context);
 
 		vibrationEnabled = pref.getBoolean(VIBRATION_ENABLED_KEY, true);
-		minuteInterval = pref.getInt(MINUTE_INTERVAL_KEY, 55);
+		minuteInterval = Integer.valueOf(pref.getString(MINUTE_INTERVAL_KEY, "55"));
 		cancelSmsVibration = pref.getBoolean(CANCEL_SMS_VIBRATION_KEY, true);
 
 		if (App.DEBUG) {
