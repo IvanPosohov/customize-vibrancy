@@ -133,4 +133,7 @@
 	<string name="ramp_up_and_keep">Наростание и удержание</string>
     <string name="fast_periodic_ramp_up_keep">Быстро-пульсирующее нарастание и удержание</string>
     <string name="slow_periodic_ramp_up_keep">Медленно-пульсирующее нарастание и удержание</string>
+    <string name="ramp_up_ramp_down">Нарастание и убывание (%d сек)</string>
+    <string name="fast_periodic_ramp_up_ramp_down">Быстро-пульсирующее нарастание и убывание (%d сек)</string>
+    <string name="slow_periodic_ramp_up_ramp_down">Медленно-пульсирующее нарастание и убывание (%d сек)</string>
 </resources>

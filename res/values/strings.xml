@@ -134,4 +134,7 @@
 	<string name="ramp_up_and_keep">Ramp up and keep</string>
     <string name="fast_periodic_ramp_up_keep">Fast periodic ramp up and keep</string>
     <string name="slow_periodic_ramp_up_keep">Slow periodic ramp up and keep</string>
+    <string name="ramp_up_ramp_down">Up down (%d sec)</string>
+    <string name="fast_periodic_ramp_up_ramp_down">Fast periodic up down (%d sec)</string>
+    <string name="slow_periodic_ramp_up_ramp_down">Slow periodic up down (%d sec)</string>
 </resources>
