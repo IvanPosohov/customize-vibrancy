@@ -3,9 +3,14 @@ package ru.ivanp.vibro.telephony;
 import java.lang.ref.WeakReference;
 
 import ru.ivanp.vibro.App;
+import ru.ivanp.vibro.MainActivity;
+import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -27,12 +32,14 @@ public class VibrationService extends Service {
 	private static final String VIBRATION_ID_KEY = "vibration_id";
 	private static final String REPEAT_KEY = "repeat";
 	private static final String STOP_SELF_DELAY_KEY = "stop_self_delay";
+	private static final int NOTIFICATION_ID = 16030901;
 
 	// ========================================================================
 	// FIELDS
 	// ========================================================================
 	private LocalHandler handler;
 	private PowerManager.WakeLock wakeLock;
+	private NotificationManager notificationManager;
 
 	// ========================================================================
 	// OVERRIDDEN
@@ -48,6 +55,27 @@ public class VibrationService extends Service {
 		if (vibrationID == VibrationsManager.NO_VIBRATION_ID) {
 			stopSelf();
 		}
+		
+		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+		// set the icon, scrolling text and timestamp
+		Notification notification = new Notification(R.drawable.ic_launcher,
+				getText(R.string.app_name), System.currentTimeMillis());
+
+		// the PendingIntent to launch our activity if the user selects this
+		// notification
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+				new Intent(this, MainActivity.class), 0);
+
+		// set the info for the views that show in the notification panel.
+		notification.setLatestEventInfo(this, getText(R.string.app_name),
+				getText(R.string.app_name), contentIntent);
+
+		// send the notification.
+		notificationManager.notify(NOTIFICATION_ID, notification);
+		
+		// start this service as foreground
+		startForeground(NOTIFICATION_ID, notification);
 
 		handler = new LocalHandler(this);
 		// create wake lock to keep screen on
@@ -55,7 +83,7 @@ public class VibrationService extends Service {
 		wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
 				| PowerManager.ON_AFTER_RELEASE, "Customize Vibrancy");
 		wakeLock.acquire();
-		
+
 		// stop self after delay if need
 		if (stopSelfDelay != -1) {
 			handler.sendEmptyMessageDelayed(Player.EVENT_PLAYING_FINISHED,
@@ -86,10 +114,13 @@ public class VibrationService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 
+		// stop foreground service and remove notification from statusBar
+		stopForeground(true);
+
 		if (wakeLock.isHeld()) {
 			wakeLock.release();
 		}
-		
+
 		App.getPlayer().removeEventListener(handler);
 		App.getPlayer().stop();
 
@@ -126,7 +157,7 @@ public class VibrationService extends Service {
 		intent.putExtra(STOP_SELF_DELAY_KEY, _stopSelfDelay);
 		_context.startService(intent);
 	}
-	
+
 	/**
 	 * Gracefully stop service
 	 * 

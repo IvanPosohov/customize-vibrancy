@@ -383,7 +383,9 @@ public class RecorderActivity extends Activity implements OnClickListener,
 					App.getVibrationManager().add(recording);
 					App.getVibrationManager().storeUserVibrations();
 					dialog.dismiss();
-					setResult(Activity.RESULT_OK);
+					Intent data = new Intent();
+					data.putExtra(SelectVibrationActivity.VIBRATION_ID_KEY, recording.id);
+					setResult(Activity.RESULT_OK, data);
 					finish();
 				}
 			}

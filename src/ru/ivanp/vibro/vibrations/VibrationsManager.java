@@ -294,6 +294,16 @@ public class VibrationsManager extends EventDispatcher {
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 21, Vibration.TYPE_LONG, res.getString(R.string.ramp_up_and_keep), 34));
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 22, Vibration.TYPE_LONG, res.getString(R.string.fast_periodic_ramp_up_keep), 35));
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 23, Vibration.TYPE_LONG, res.getString(R.string.slow_periodic_ramp_up_keep), 36));
+		
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 24, Vibration.TYPE_LONG, String.format(res.getString(R.string.ramp_up_ramp_down), 3), 37));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 25, Vibration.TYPE_LONG, String.format(res.getString(R.string.ramp_up_ramp_down), 5), 38));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 26, Vibration.TYPE_LONG, String.format(res.getString(R.string.ramp_up_ramp_down), 10), 39));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 27, Vibration.TYPE_LONG, String.format(res.getString(R.string.fast_periodic_ramp_up_ramp_down), 3), 40));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 28, Vibration.TYPE_LONG, String.format(res.getString(R.string.fast_periodic_ramp_up_ramp_down), 5), 41));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 29, Vibration.TYPE_LONG, String.format(res.getString(R.string.fast_periodic_ramp_up_ramp_down), 10), 42));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 30, Vibration.TYPE_LONG, String.format(res.getString(R.string.slow_periodic_ramp_up_ramp_down), 3), 43));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 31, Vibration.TYPE_LONG, String.format(res.getString(R.string.slow_periodic_ramp_up_ramp_down), 5), 44));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 32, Vibration.TYPE_LONG, String.format(res.getString(R.string.slow_periodic_ramp_up_ramp_down), 10), 45));
 	}
 
 	private void loadUserVibrations(Context _context) {
@@ -395,8 +405,13 @@ public class VibrationsManager extends EventDispatcher {
 	}
 
 	public int getEmptyId() {
-		Vibration last = vibrations.get(vibrations.size() - 1);
-		return last.id + 1;
+		int res = NO_VIBRATION_ID;
+		for (Vibration vibration : vibrations) {
+			if (vibration.id > res) {
+				res = vibration.id;
+			}
+		}
+		return res + 1;
 	}
 
 	public void add(UserVibration _vibration) {
