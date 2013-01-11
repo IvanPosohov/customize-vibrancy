@@ -55,12 +55,13 @@ public class VibrationService extends Service {
 		if (vibrationID == VibrationsManager.NO_VIBRATION_ID) {
 			stopSelf();
 		}
-		
+
 		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 		// set the icon, scrolling text and timestamp
-		Notification notification = new Notification(R.drawable.ic_notification,
-				getText(R.string.app_name), System.currentTimeMillis());
+		Notification notification = new Notification(
+				R.drawable.ic_notification, getText(R.string.app_name),
+				System.currentTimeMillis());
 
 		// the PendingIntent to launch our activity if the user selects this
 		// notification
@@ -73,7 +74,7 @@ public class VibrationService extends Service {
 
 		// send the notification.
 		notificationManager.notify(NOTIFICATION_ID, notification);
-		
+
 		// start this service as foreground
 		startForeground(NOTIFICATION_ID, notification);
 
@@ -95,10 +96,10 @@ public class VibrationService extends Service {
 				vibrationID);
 
 		// start vibration
+		App.getPlayer().addEventListener(handler);
 		if (repeat) {
-			App.getPlayer().playRepeatOrStop(vibration);
+			App.getPlayer().playRepeat(vibration);
 		} else {
-			App.getPlayer().addEventListener(handler);
 			App.getPlayer().playOrStop(vibration);
 		}
 

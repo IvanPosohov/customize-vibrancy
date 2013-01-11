@@ -103,7 +103,7 @@ public class Player extends EventDispatcher {
 			effectHandle.modifyPlayingMagSweepEffect(effect);
 		}
 	}
-	
+
 	/**
 	 * If there aren't playing vibrations start to play passed. If passed
 	 * vibration is matched to playing - stop playing. If passed vibration is
@@ -130,19 +130,9 @@ public class Player extends EventDispatcher {
 	 * @param _vibration
 	 *            vibration to play
 	 */
-	public void playRepeatOrStop(Vibration _vibration) {
-		if (playing == null) {
-			repeat = true;
-			play(_vibration);
-		} else {
-			if (_vibration == playing) {
-				stop();
-			} else {
-				stop();
-				repeat = true;
-				play(_vibration);
-			}
-		}
+	public void playRepeat(Vibration _vibration) {
+		repeat = true;
+		play(_vibration);
 	}
 
 	/**
@@ -207,8 +197,12 @@ public class Player extends EventDispatcher {
 	private void onChangeMagnitude() {
 		playingElementIndex++;
 		if (playingElementIndex == playingElementCount) {
-			stop();
-			dispatchEvent(EVENT_PLAYING_FINISHED);
+			if (repeat) {
+				play(playing);
+			} else {
+				stop();
+				dispatchEvent(EVENT_PLAYING_FINISHED);
+			}
 		} else {
 			UserVibration vibration = (UserVibration) playing;
 			VibrationElement element = vibration.getElements()[playingElementIndex];
