@@ -4,9 +4,6 @@ import java.lang.ref.WeakReference;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.vibrations.Player;
-import ru.ivanp.vibro.vibrations.Trigger;
-import ru.ivanp.vibro.vibrations.Vibration;
-import ru.ivanp.vibro.vibrations.VibrationsManager;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -20,8 +17,7 @@ import android.os.Message;
 import android.util.Log;
 
 /**
- * Vibration management service at SMS <br>
- * Service starts with from SmsReceiver. Stop self after job has done.
+ * Watching for unread SMS count
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
@@ -57,10 +53,11 @@ public class SmsService extends Service {
 					// if all SMS are read stop self
 					int count = getUnreadSmsCount(getApplicationContext());
 					if (App.DEBUG) {
-						Log.d("SmsService.onStartCommand", "unreaded count=" + count);
+						Log.d("SmsService.onStartCommand", "unreaded count="
+								+ count);
 					}
 					if (count == 0) {
-						App.getPlayer().stop();
+						VibrationService.stop(SmsService.this);
 						stopSelf();
 					}
 				}
@@ -68,17 +65,11 @@ public class SmsService extends Service {
 			resolver = getContentResolver();
 			resolver.registerContentObserver(SMS_URI, true, observer);
 		}
-		// start vibration
-		int imcomingSmsVibrationID = App.getTriggerManager().getVibrationID(Trigger.INCOMING_SMS);
-		if (imcomingSmsVibrationID != VibrationsManager.NO_VIBRATION_ID) {
-			Vibration imcomingSmsVibration = App.getVibrationManager().getVibration(imcomingSmsVibrationID);
-			App.getPlayer().playRepeatOrStop(imcomingSmsVibration);
-		}
 
 		if (App.DEBUG) {
 			Log.d("SmsService.onStartCommand", "Service started");
 		}
-		
+
 		return START_NOT_STICKY;
 	}
 
@@ -89,8 +80,7 @@ public class SmsService extends Service {
 			resolver.unregisterContentObserver(observer);
 		}
 		App.getPlayer().removeEventListener(handler);
-		App.getPlayer().stop();
-		
+
 		if (App.DEBUG) {
 			Log.d("SmsService.onDestroy", "Service destroyed");
 		}

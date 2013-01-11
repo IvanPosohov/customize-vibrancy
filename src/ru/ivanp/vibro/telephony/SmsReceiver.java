@@ -12,7 +12,8 @@ import android.util.Log;
 
 /**
  * New SMS notify receiver <br>
- * Receiver register broadcasts and start SmsService if needs.
+ * Receiver register broadcasts, start VibrationService if needs. It also may
+ * start SmsService if cancelSmsVibration = true
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
@@ -33,27 +34,35 @@ public class SmsReceiver extends BroadcastReceiver {
 					.getSystemService(Context.TELEPHONY_SERVICE);
 			if (manager.getCallState() == TelephonyManager.CALL_STATE_IDLE) {
 				// if there are no calls in this moment
-				if (Pref.cancelSmsVibration) {
-					// start service, it will stop self after read sms or
-					// vibration finished
-					SmsService.start(context);
+				int imcomingSmsVibrationID = App.getTriggerManager()
+						.getVibrationID(Trigger.INCOMING_SMS);
+				if (imcomingSmsVibrationID != VibrationsManager.NO_VIBRATION_ID) {
+					// if vibration pattern is set
+					if (Pref.cancelSmsVibration) {
+						// start service, it will stop self after read sms or
+						// vibration finished
+						SmsService.start(context);
+					}
+					// start vibration service, it will be stopped after
+					// vibration finished or after 30 seconds delay
+					VibrationService.start(context, imcomingSmsVibrationID,
+							false, 30);
 				} else {
-					// start vibration service, it will be stopped after vibration
-					// finished or after 30 seconds delay
-					int imcomingSmsVibrationID = App.getTriggerManager().getVibrationID(Trigger.INCOMING_SMS);
-					if (imcomingSmsVibrationID != VibrationsManager.NO_VIBRATION_ID) {
-						VibrationService.start(context, imcomingSmsVibrationID, false, 30);
+					if (App.DEBUG) {
+						Log.d("SmsReceiver.onReceive",
+								"Can't start vibration because vibration pattern not set");
 					}
 				}
 			} else {
-				if (App.DEBUG)
+				if (App.DEBUG) {
 					Log.d("SmsReceiver.onReceive",
-							"Can't start SmsService because call state is not IDLE");
+							"Can't start vibration because call state is not IDLE");
+				}
 			}
 		} else {
 			if (App.DEBUG) {
 				Log.d("SmsReceiver.onReceive",
-						"Can't start SmsService according to preferences");
+						"Can't start vibration according to preferences");
 			}
 		}
 	}
