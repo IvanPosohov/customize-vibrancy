@@ -59,7 +59,7 @@ public class VibrationService extends Service {
 		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 		// set the icon, scrolling text and timestamp
-		Notification notification = new Notification(R.drawable.ic_launcher,
+		Notification notification = new Notification(R.drawable.ic_notification,
 				getText(R.string.app_name), System.currentTimeMillis());
 
 		// the PendingIntent to launch our activity if the user selects this
