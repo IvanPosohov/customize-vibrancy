@@ -12,17 +12,27 @@ public class Vibration {
 	/**
 	 * Type of vibrations includes all other types
 	 */
-	public static final int TYPE_ALL = 0;
+	public static final byte TYPE_ALL = 127;
+	
+	/**
+	 * Type of NO_VIBRATION
+	 */
+	public static final byte TYPE_SERVICE = 1;
 	
 	/**
 	 * Type of short vibrations, used for triggers like CallFinished etc.
 	 */
-	public static final int TYPE_SHORT = 1;
+	public static final byte TYPE_SHORT = 2;
 	
 	/**
 	 * Type of long vibrations, used for triggers like IncommingCall etc.
 	 */
-	public static final int TYPE_LONG = 2;
+	public static final byte TYPE_LONG = 4;
+	
+	/**
+	 * Type of infinity or too long (more than 10sec) vibrations, used only for IncommingCall trigger.
+	 */
+	public static final byte TYPE_INFINITY = 8;
 	
 	// ========================================================================
 	// FIELDS
@@ -35,7 +45,7 @@ public class Vibration {
 	/**
 	 * Vibration type, for opportunity to separate list of vibration views
 	 */
-	public final int type;
+	public final byte type;
 	
 	/**
 	 * Human-readable vibration name
@@ -78,7 +88,7 @@ public class Vibration {
 	 * @param _name
 	 *            human-readable vibration name
 	 */
-	public Vibration(int _id, int _type, String _name) {
+	public Vibration(int _id, byte _type, String _name) {
 		id = _id;
 		type = _type;
 		name = _name;

@@ -49,7 +49,7 @@
     <string name="minute_30">Каждые 30 минут</string>
     <string name="minute_60">Каждые 60 минут</string>
     <string name="cancel_sms_vibration_on_read">Прерывать СМС вибрацию при прочтении</string>
-    <string name="cancel_sms_vibration_on_read_desc">Прерывать вибрацию на входящую СМС когда Вы начинаете читать ее. Если отключено будте осторожны с бесконечными вибрациями</string>
+    <string name="cancel_sms_vibration_on_read_desc">Прерывать вибрацию на входящую СМС когда Вы начинаете читать ее</string>
 
     <!-- RECORDER -->
     <string name="select_recorder">Выберите метод записи</string>

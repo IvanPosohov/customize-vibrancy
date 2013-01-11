@@ -3,7 +3,6 @@ package ru.ivanp.vibro;
 import java.util.ArrayList;
 
 import ru.ivanp.vibro.vibrations.Trigger;
-import ru.ivanp.vibro.vibrations.TriggerManager;
 import ru.ivanp.vibro.vibrations.UserVibration;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
@@ -49,7 +48,6 @@ public class SelectVibrationActivity extends Activity implements
 	private ArrayList<Vibration> list;
 	private Trigger trigger;
 	private int selectedPosition;
-	private int triggerGroupID;
 
 	// ========================================================================
 	// OVERRIDDEN
@@ -62,19 +60,13 @@ public class SelectVibrationActivity extends Activity implements
 		Bundle data = getIntent().getExtras();
 		int triggerID = data.getInt(TRIGGER_ID_KEY, -1);
 		trigger = App.getTriggerManager().getTrigger(triggerID);
-		triggerGroupID = App.getTriggerManager().getTypeID(triggerID);
 
 		setupWidgets();
 	}
 
 	@Override
 	protected void onResume() {
-		if (triggerGroupID == TriggerManager.TYPE_SHORT) {
-			list = App.getVibrationManager()
-					.getVibrations(Vibration.TYPE_SHORT);
-		} else if (triggerGroupID == TriggerManager.TYPE_LONG) {
-			list = App.getVibrationManager().getVibrations(Vibration.TYPE_LONG);
-		}
+		list = App.getVibrationManager().getVibrations(trigger.id);
 		lv.setAdapter(new ArrayAdapter<Vibration>(this,
 				R.layout.selectable_list_item_view, R.id.text, list));
 		for (int i = 0; i < list.size(); i++) {
@@ -140,7 +132,7 @@ public class SelectVibrationActivity extends Activity implements
 	// ========================================================================
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (triggerGroupID == TriggerManager.TYPE_LONG) {
+		if (App.getTriggerManager().isCustomVibrationAllowed(trigger.id)) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.activity_select_vibration, menu);
 		}
@@ -214,7 +206,7 @@ public class SelectVibrationActivity extends Activity implements
 
 	private void setupWidgets() {
 		ImageView img_new = (ImageView) findViewById(R.id.img_new);
-		if (triggerGroupID == TriggerManager.TYPE_SHORT) {
+		if (App.getTriggerManager().isCustomVibrationAllowed(trigger.id)) {
 			img_new.setVisibility(View.GONE);
 		} else {
 			img_new.setOnClickListener(this);

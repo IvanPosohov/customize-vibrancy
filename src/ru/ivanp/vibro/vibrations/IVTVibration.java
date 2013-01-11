@@ -29,7 +29,7 @@ public class IVTVibration extends Vibration {
 	 * @param _ivtID
 	 *            vibration identifier in IVT file
 	 */
-	public IVTVibration(int _id, int _type, String _name, int _ivtID) {
+	public IVTVibration(int _id, byte _type, String _name, int _ivtID) {
 		super(_id, _type, _name);
 		ivtID = _ivtID;
 	}

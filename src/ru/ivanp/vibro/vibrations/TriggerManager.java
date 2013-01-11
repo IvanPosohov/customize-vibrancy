@@ -29,25 +29,24 @@ public final class TriggerManager {
 	// default vibration identifiers
 	// TODO set default
 	private final static int DEFAULT_INCOMING_CALL = 135; // Imperial march
-	private final static int DEFAULT_PICK_UP_THE_PHONE = 21; // triple strong click
+	private final static int DEFAULT_PICK_UP_THE_PHONE = 21; // triple strong
+																// click
 	private final static int DEFAULT_CALL_FINISHED = 74; // explosion2
 	private final static int DEFAULT_CALL_TIME_INTERVAL = 4; // strong click 66
 	// private final static int DEFAULT_MISSED_CALL = -1;
 	private final static int DEFAULT_INCOMING_SMS = 129; // Mission impossible
 	// private final static int DEFAULT_MISSED_SMS = -1;
-	private final static int DEFAULT_INTERNET_UNAVAILABLE = 40; // short transition ramp down 66
-	private final static int DEFAULT_INTERNET_AVAILABLE_WIFI = 37; // short transition ramp up 66
-	private final static int DEFAULT_INTERNET_AVAILABLE_MOBILE = 34; // long transition ramp up 66
-
-	/**
-	 * Group identifier of short duration triggers
-	 */
-	public final static int TYPE_SHORT = 0;
-
-	/**
-	 * Group identifier of long duration triggers
-	 */
-	public final static int TYPE_LONG = 1;
+	private final static int DEFAULT_INTERNET_UNAVAILABLE = 40; // short
+																// transition
+																// ramp down 66
+	private final static int DEFAULT_INTERNET_AVAILABLE_WIFI = 37; // short
+																	// transition
+																	// ramp up
+																	// 66
+	private final static int DEFAULT_INTERNET_AVAILABLE_MOBILE = 34; // long
+																		// transition
+																		// ramp
+																		// up 66
 
 	// ==========================================================================
 	// FIELDS
@@ -217,28 +216,16 @@ public final class TriggerManager {
 	}
 
 	/**
-	 * Returns trigger type identifier
+	 * Checks if user is allowed to create custom vibration
 	 * 
 	 * @param _triggerID
 	 *            trigger identifier (use this class constants)
-	 * @return trigger group identifier
+	 * @return true if user is allowed to create custom vibration, false
+	 *         otherwise
 	 */
-	public int getTypeID(int _triggerID) {
-		switch (_triggerID) {
-		case Trigger.PICK_UP_THE_PHONE:
-		case Trigger.CALL_FINISHED:
-		case Trigger.CALL_TIME_INTERVAL:
-		case Trigger.INTERNET_UNAVAILABLE:
-		case Trigger.INTERNET_AVAILABLE_WIFI:
-		case Trigger.INTERNET_AVAILABLE_MOBILE:
-			return TYPE_SHORT;
-		case Trigger.INCOMING_CALL:
-		case Trigger.INCOMING_SMS:
-		// case Trigger.MISSED_CALL:
-		// case Trigger.MISSED_SMS:
-			return TYPE_LONG;
-		}
-		return -1;
+	public boolean isCustomVibrationAllowed(int _triggerID) {
+		return _triggerID != Trigger.INCOMING_CALL
+				&& _triggerID != Trigger.INCOMING_SMS;
 	}
 
 	/**

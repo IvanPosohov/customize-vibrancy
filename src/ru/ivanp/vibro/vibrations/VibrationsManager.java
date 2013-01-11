@@ -63,10 +63,31 @@ public class VibrationsManager extends EventDispatcher {
 		return vibrations;
 	}
 
-	public ArrayList<Vibration> getVibrations(int _type) {
+	/**
+	 * Returns vibrations list allowed to passed trigger
+	 * 
+	 * @param _triggerID
+	 *            trigger identifier (use this class constants)
+	 * @return list of vibrations
+	 */
+	public ArrayList<Vibration> getVibrations(int _triggerID) {
+		// service and short by default
+		byte type = Vibration.TYPE_SERVICE | Vibration.TYPE_SHORT;
+		switch (_triggerID) {
+		case Trigger.INCOMING_CALL:
+			// all
+			type |= Vibration.TYPE_ALL;
+			break;
+		case Trigger.INCOMING_SMS:
+			// all, excluding TYPE_INFINITY
+			type |= Vibration.TYPE_ALL & ~Vibration.TYPE_INFINITY;
+			break;
+		}
+		
+		// select vibrations by type
 		ArrayList<Vibration> res = new ArrayList<Vibration>();
 		for (Vibration vibration : vibrations) {
-			if (vibration.type == _type || vibration.type == Vibration.TYPE_ALL) {
+			if ((vibration.type & type) == vibration.type) {
 				res.add(vibration);
 			}
 		}
@@ -83,7 +104,7 @@ public class VibrationsManager extends EventDispatcher {
 	public VibrationsManager(Context _context) {
 		context = _context;
 		vibrations = new ArrayList<Vibration>();
-		vibrations.add(new Vibration(NO_VIBRATION_ID, Vibration.TYPE_ALL,
+		vibrations.add(new Vibration(NO_VIBRATION_ID, Vibration.TYPE_SERVICE,
 				context.getString(R.string.do_not_vibrate)));
 		loadIVTVibrations(_context);
 		loadImmersionDefaultVibrations();
@@ -170,9 +191,9 @@ public class VibrationsManager extends EventDispatcher {
 		vibrations.add(new Vibration(Launcher.TRANSITION_BOUNCE_33,Vibration.TYPE_SHORT, String.format(res.getString(R.string.transition_bounce), 33)));
 		vibrations.add(new Vibration(Launcher.ALERT1, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 1)));
 		vibrations.add(new Vibration(Launcher.ALERT2, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 2)));
-		vibrations.add(new Vibration(Launcher.ALERT3, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 3)));
+		vibrations.add(new Vibration(Launcher.ALERT3, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.alert), 3)));
 		vibrations.add(new Vibration(Launcher.ALERT4, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 4)));
-		vibrations.add(new Vibration(Launcher.ALERT5, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 5)));
+		vibrations.add(new Vibration(Launcher.ALERT5, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.alert), 5)));
 		vibrations.add(new Vibration(Launcher.ALERT6, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 6)));
 		vibrations.add(new Vibration(Launcher.ALERT7, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 7)));
 		vibrations.add(new Vibration(Launcher.ALERT8, Vibration.TYPE_LONG, String.format(res.getString(R.string.alert), 8)));
@@ -188,9 +209,9 @@ public class VibrationsManager extends EventDispatcher {
 		vibrations.add(new Vibration(Launcher.EXPLOSION8, Vibration.TYPE_SHORT, String.format(res.getString(R.string.explosion), 8)));
 		vibrations.add(new Vibration(Launcher.EXPLOSION9, Vibration.TYPE_SHORT, String.format(res.getString(R.string.explosion), 9)));
 		vibrations.add(new Vibration(Launcher.EXPLOSION10, Vibration.TYPE_SHORT, String.format(res.getString(R.string.explosion), 10)));
-		vibrations.add(new Vibration(Launcher.WEAPON1, Vibration.TYPE_LONG, String.format(res.getString(R.string.weapon), 1)));
-		vibrations.add(new Vibration(Launcher.WEAPON2, Vibration.TYPE_LONG, String.format(res.getString(R.string.weapon), 2)));
-		vibrations.add(new Vibration(Launcher.WEAPON3, Vibration.TYPE_LONG, String.format(res.getString(R.string.weapon), 3)));
+		vibrations.add(new Vibration(Launcher.WEAPON1, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.weapon), 1)));
+		vibrations.add(new Vibration(Launcher.WEAPON2, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.weapon), 2)));
+		vibrations.add(new Vibration(Launcher.WEAPON3, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.weapon), 3)));
 		vibrations.add(new Vibration(Launcher.WEAPON4, Vibration.TYPE_SHORT, String.format(res.getString(R.string.weapon), 4)));
 		vibrations.add(new Vibration(Launcher.WEAPON5, Vibration.TYPE_SHORT, String.format(res.getString(R.string.weapon), 5)));
 		vibrations.add(new Vibration(Launcher.WEAPON6, Vibration.TYPE_SHORT, String.format(res.getString(R.string.weapon), 6)));
@@ -207,28 +228,28 @@ public class VibrationsManager extends EventDispatcher {
 		vibrations.add(new Vibration(Launcher.IMPACT_RUBBER_100, Vibration.TYPE_SHORT, String.format(res.getString(R.string.impact_rubber), 100)));
 		vibrations.add(new Vibration(Launcher.IMPACT_RUBBER_66, Vibration.TYPE_SHORT, String.format(res.getString(R.string.impact_rubber), 66)));
 		vibrations.add(new Vibration(Launcher.IMPACT_RUBBER_33, Vibration.TYPE_SHORT, String.format(res.getString(R.string.impact_rubber), 33)));
-		vibrations.add(new Vibration(Launcher.TEXTURE1, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 1)));
-		vibrations.add(new Vibration(Launcher.TEXTURE2, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 2)));
-		vibrations.add(new Vibration(Launcher.TEXTURE3, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 3)));
-		vibrations.add(new Vibration(Launcher.TEXTURE4, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 4)));
-		vibrations.add(new Vibration(Launcher.TEXTURE5, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 5)));
-		vibrations.add(new Vibration(Launcher.TEXTURE6, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 6)));
-		vibrations.add(new Vibration(Launcher.TEXTURE7, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 7)));
-		vibrations.add(new Vibration(Launcher.TEXTURE8, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 8)));
-		vibrations.add(new Vibration(Launcher.TEXTURE9, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 9)));
-		vibrations.add(new Vibration(Launcher.TEXTURE10, Vibration.TYPE_LONG, String.format(res.getString(R.string.textture), 10)));
-		vibrations.add(new Vibration(Launcher.ENGINE1_100, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine1), 100)));
-		vibrations.add(new Vibration(Launcher.ENGINE1_66, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine1), 66)));
-		vibrations.add(new Vibration(Launcher.ENGINE1_33, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine1), 33)));
-		vibrations.add(new Vibration(Launcher.ENGINE2_100, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine2), 100)));
-		vibrations.add(new Vibration(Launcher.ENGINE2_66, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine2), 66)));
-		vibrations.add(new Vibration(Launcher.ENGINE2_33, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine2), 33)));
-		vibrations.add(new Vibration(Launcher.ENGINE3_100, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine3), 100)));
-		vibrations.add(new Vibration(Launcher.ENGINE3_66, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine3), 66)));
-		vibrations.add(new Vibration(Launcher.ENGINE3_33, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine3), 33)));
-		vibrations.add(new Vibration(Launcher.ENGINE4_100, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine4), 100)));
-		vibrations.add(new Vibration(Launcher.ENGINE4_66, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine4), 66)));
-		vibrations.add(new Vibration(Launcher.ENGINE4_33, Vibration.TYPE_LONG, String.format(res.getString(R.string.engine4), 33)));
+		vibrations.add(new Vibration(Launcher.TEXTURE1, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 1)));
+		vibrations.add(new Vibration(Launcher.TEXTURE2, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 2)));
+		vibrations.add(new Vibration(Launcher.TEXTURE3, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 3)));
+		vibrations.add(new Vibration(Launcher.TEXTURE4, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 4)));
+		vibrations.add(new Vibration(Launcher.TEXTURE5, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 5)));
+		vibrations.add(new Vibration(Launcher.TEXTURE6, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 6)));
+		vibrations.add(new Vibration(Launcher.TEXTURE7, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 7)));
+		vibrations.add(new Vibration(Launcher.TEXTURE8, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 8)));
+		vibrations.add(new Vibration(Launcher.TEXTURE9, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 9)));
+		vibrations.add(new Vibration(Launcher.TEXTURE10, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.textture), 10)));
+		vibrations.add(new Vibration(Launcher.ENGINE1_100, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine1), 100)));
+		vibrations.add(new Vibration(Launcher.ENGINE1_66, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine1), 66)));
+		vibrations.add(new Vibration(Launcher.ENGINE1_33, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine1), 33)));
+		vibrations.add(new Vibration(Launcher.ENGINE2_100, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine2), 100)));
+		vibrations.add(new Vibration(Launcher.ENGINE2_66, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine2), 66)));
+		vibrations.add(new Vibration(Launcher.ENGINE2_33, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine2), 33)));
+		vibrations.add(new Vibration(Launcher.ENGINE3_100, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine3), 100)));
+		vibrations.add(new Vibration(Launcher.ENGINE3_66, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine3), 66)));
+		vibrations.add(new Vibration(Launcher.ENGINE3_33, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine3), 33)));
+		vibrations.add(new Vibration(Launcher.ENGINE4_100, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine4), 100)));
+		vibrations.add(new Vibration(Launcher.ENGINE4_66, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine4), 66)));
+		vibrations.add(new Vibration(Launcher.ENGINE4_33, Vibration.TYPE_INFINITY, String.format(res.getString(R.string.engine4), 33)));
 	}
 
 	private void loadIVTVibrations(Context _context) {
@@ -291,9 +312,9 @@ public class VibrationsManager extends EventDispatcher {
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 18, Vibration.TYPE_LONG, String.format(res.getString(R.string.slow_periodic_ramp_up), 3), 31));
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 19, Vibration.TYPE_LONG, String.format(res.getString(R.string.slow_periodic_ramp_up), 5), 32));
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 20, Vibration.TYPE_LONG, String.format(res.getString(R.string.slow_periodic_ramp_up), 10), 33));
-		vibrations.add(new IVTVibration(MAGIC_NUMBER + 21, Vibration.TYPE_LONG, res.getString(R.string.ramp_up_and_keep), 34));
-		vibrations.add(new IVTVibration(MAGIC_NUMBER + 22, Vibration.TYPE_LONG, res.getString(R.string.fast_periodic_ramp_up_keep), 35));
-		vibrations.add(new IVTVibration(MAGIC_NUMBER + 23, Vibration.TYPE_LONG, res.getString(R.string.slow_periodic_ramp_up_keep), 36));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 21, Vibration.TYPE_INFINITY, res.getString(R.string.ramp_up_and_keep), 34));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 22, Vibration.TYPE_INFINITY, res.getString(R.string.fast_periodic_ramp_up_keep), 35));
+		vibrations.add(new IVTVibration(MAGIC_NUMBER + 23, Vibration.TYPE_INFINITY, res.getString(R.string.slow_periodic_ramp_up_keep), 36));
 		
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 24, Vibration.TYPE_LONG, String.format(res.getString(R.string.ramp_up_ramp_down), 3), 37));
 		vibrations.add(new IVTVibration(MAGIC_NUMBER + 25, Vibration.TYPE_LONG, String.format(res.getString(R.string.ramp_up_ramp_down), 5), 38));
