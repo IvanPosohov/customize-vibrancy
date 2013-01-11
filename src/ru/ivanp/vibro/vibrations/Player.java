@@ -79,8 +79,13 @@ public class Player extends EventDispatcher {
 	 */
 	public void stop() {
 		// stop play
-		device.stopAllPlayingEffects();
-		launcher.stop();
+		try {
+			device.stopAllPlayingEffects();
+		} catch (RuntimeException e) {
+			if (App.DEBUG) {
+				Log.d("Player.stop", "stopAllPlayingEffects RuntimeException", e);
+			}
+		}
 		// remove delayed "playing finished" event
 		removeDelayedEvent(EVENT_PLAYING_FINISHED);
 
