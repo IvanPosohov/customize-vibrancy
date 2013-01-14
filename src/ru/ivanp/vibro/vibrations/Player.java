@@ -81,6 +81,7 @@ public class Player extends EventDispatcher {
 		// stop play
 		try {
 			device.stopAllPlayingEffects();
+			launcher.stop();
 		} catch (RuntimeException e) {
 			if (App.DEBUG) {
 				Log.d("Player.stop", "stopAllPlayingEffects RuntimeException", e);

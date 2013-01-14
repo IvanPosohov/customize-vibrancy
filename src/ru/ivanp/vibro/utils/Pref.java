@@ -18,6 +18,7 @@ public class Pref {
 	private final static String VIBRATION_ENABLED_KEY = "vibration_enabled";
 	private final static String MINUTE_INTERVAL_KEY = "minute_interval";
 	private final static String CANCEL_SMS_VIBRATION_KEY = "cancel_sms_vibration_on_read";
+	private final static String ENABLE_HIGH_PRIORITY = "enable_high_priority";
 
 	// ========================================================================
 	// FIELDS
@@ -25,6 +26,7 @@ public class Pref {
 	public static boolean vibrationEnabled;
 	public static int minuteInterval;
 	public static boolean cancelSmsVibration;
+	public static boolean enableHighPriority;
 
 	// ========================================================================
 	// SAVE LOAD METHODS
@@ -36,6 +38,7 @@ public class Pref {
 		vibrationEnabled = pref.getBoolean(VIBRATION_ENABLED_KEY, true);
 		minuteInterval = Integer.valueOf(pref.getString(MINUTE_INTERVAL_KEY, "55"));
 		cancelSmsVibration = pref.getBoolean(CANCEL_SMS_VIBRATION_KEY, true);
+		enableHighPriority = pref.getBoolean(ENABLE_HIGH_PRIORITY, true);
 
 		if (App.DEBUG) {
 			Log.d("Pref.load", "Preferences loaded");

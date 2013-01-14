@@ -98,6 +98,12 @@
                 android:text="@string/about_design"
                 android:textColor="@color/white" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_thank_to_Max"
+                android:textColor="@color/white" />
+
             <!-- TRANSLATION -->
             <!--
             <TextView
@@ -111,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/about_ukrainian"
-                android:textColor="@color/white" />
+                android:textColor="@color/white" />
             -->
 
 

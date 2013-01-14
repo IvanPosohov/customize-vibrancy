@@ -201,6 +201,8 @@ public class RecorderActivity extends Activity implements OnClickListener,
 				long now = SystemClock.elapsedRealtime();
 				int diff = (int) (now - lastTouchTime);
 				elements.add(new VibrationElement(diff, lastIntensity));
+				/*Log.d("Recorder.onTouch", "diff=" + diff + ", intensity="
+						+ lastIntensity);*/
 				lastTouchTime = now;
 				lastIntensity = intensity;
 				return true;
@@ -208,7 +210,7 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		}
 		return false;
 	}
-	
+
 	// ========================================================================
 	// MENU
 	// ========================================================================
@@ -300,13 +302,14 @@ public class RecorderActivity extends Activity implements OnClickListener,
 								R.drawable.recorder_touch_panel));
 
 		if (state == RecorderState.IDLE) {
-			text_state.setText(isBlockedFromTap ? R.string.rec_to_start : R.string.touch_to_start);
+			text_state.setText(isBlockedFromTap ? R.string.rec_to_start
+					: R.string.touch_to_start);
 		} else if (state == RecorderState.PLAYING) {
 			text_state.setText(R.string.playing);
 		} else {
 			text_state.setText("");
 		}
-			
+
 		img_rec.setEnabled(state == RecorderState.IDLE);
 		img_play.setVisibility(state == RecorderState.IDLE ? View.VISIBLE
 				: View.GONE);
@@ -384,7 +387,8 @@ public class RecorderActivity extends Activity implements OnClickListener,
 					App.getVibrationManager().storeUserVibrations();
 					dialog.dismiss();
 					Intent data = new Intent();
-					data.putExtra(SelectVibrationActivity.VIBRATION_ID_KEY, recording.id);
+					data.putExtra(SelectVibrationActivity.VIBRATION_ID_KEY,
+							recording.id);
 					setResult(Activity.RESULT_OK, data);
 					finish();
 				}
@@ -394,7 +398,7 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		builder.setNegativeButton(getString(R.string.cancel), null);
 		builder.create().show();
 	}
-	
+
 	private void startTimer() {
 		timerStartTime = SystemClock.elapsedRealtime();
 		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT,
@@ -408,6 +412,7 @@ public class RecorderActivity extends Activity implements OnClickListener,
 
 	private void onTimerTick() {
 		int diff = (int) (SystemClock.elapsedRealtime() - timerStartTime);
+		/*Log.d("Recoreder.onTimerTick", "diff=" + diff);*/
 		text_time_cur.setText(formatTimer(diff));
 		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT,
 				INTERVAL_TIMER_TICK);

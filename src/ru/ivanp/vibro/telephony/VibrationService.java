@@ -5,6 +5,7 @@ import java.lang.ref.WeakReference;
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.MainActivity;
 import ru.ivanp.vibro.R;
+import ru.ivanp.vibro.utils.Pref;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
@@ -56,27 +57,30 @@ public class VibrationService extends Service {
 			stopSelf();
 		}
 
-		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		// start foreground only if High priority enabled
+		if (Pref.enableHighPriority) {
+			notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-		// set the icon, scrolling text and timestamp
-		Notification notification = new Notification(
-				R.drawable.ic_notification, getText(R.string.app_name),
-				System.currentTimeMillis());
+			// set the icon, scrolling text and timestamp
+			Notification notification = new Notification(
+					R.drawable.ic_notification, getText(R.string.app_name),
+					System.currentTimeMillis());
 
-		// the PendingIntent to launch our activity if the user selects this
-		// notification
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
+			// the PendingIntent to launch our activity if the user selects this
+			// notification
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+					new Intent(this, MainActivity.class), 0);
 
-		// set the info for the views that show in the notification panel.
-		notification.setLatestEventInfo(this, getText(R.string.app_name),
-				getText(R.string.app_name), contentIntent);
+			// set the info for the views that show in the notification panel.
+			notification.setLatestEventInfo(this, getText(R.string.app_name),
+					getText(R.string.app_name), contentIntent);
 
-		// send the notification.
-		notificationManager.notify(NOTIFICATION_ID, notification);
+			// send the notification.
+			notificationManager.notify(NOTIFICATION_ID, notification);
 
-		// start this service as foreground
-		startForeground(NOTIFICATION_ID, notification);
+			// start this service as foreground
+			startForeground(NOTIFICATION_ID, notification);
+		}
 
 		handler = new LocalHandler(this);
 		// create wake lock to keep screen on

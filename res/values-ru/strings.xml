@@ -19,6 +19,7 @@
     <string name="about_authors">Авторы</string>
     <string name="about_code">Посоход Иван (код)</string>
     <string name="about_design">Лихачев Иван (дизайн)</string>
+    <string name="about_thank_to_Max">Отдельное спасибо Пономарёву Максиму за помощь в тестировании</string>
     <string name="about_translation">Помощь в переводе</string>
     <string name="about_ukrainian"></string>
     <string name="about_desc">Описание</string>
@@ -50,6 +51,8 @@
     <string name="minute_60">Каждые 60 минут</string>
     <string name="cancel_sms_vibration_on_read">Прерывать СМС вибрацию при прочтении</string>
     <string name="cancel_sms_vibration_on_read_desc">Прерывать вибрацию на входящую СМС когда Вы начинаете читать ее</string>
+    <string name="enable_high_priority">Высокий приоритет</string>
+	<string name="enable_high_priority_desc">Если выбрано, то вибрация будет более стабильнее, но появится иконка в строке уведомлений</string>
 
     <!-- RECORDER -->
     <string name="select_recorder">Выберите метод записи</string>

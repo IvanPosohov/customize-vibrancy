@@ -20,6 +20,7 @@
     <string name="about_authors">Authors</string>
     <string name="about_code">Posohov Ivan (code)</string>
     <string name="about_design">Lihachev Ivan (design)</string>
+    <string name="about_thank_to_Max">Special thanks to Max Ponomaryov for help in testing</string>
     <string name="about_translation">Help in translation</string>
     <string name="about_ukrainian"></string>
     <string name="about_desc">Description</string>
@@ -51,14 +52,16 @@
     <string name="minute_60">Every 60 minutes</string>
     <string name="cancel_sms_vibration_on_read">Cancel SMS vibration on read</string>
     <string name="cancel_sms_vibration_on_read_desc">Cancel incoming SMS vibration when you start to read it</string>
-
+	<string name="enable_high_priority">High priority</string>
+	<string name="enable_high_priority_desc">If checked vibration will be more stable, but appear icon in status bar</string>
+    
     <!-- RECORDER -->
     <string name="select_recorder">Select recorder</string>
     <string name="create_new_vibration">Create new vibration</string>
     <string name="vibration_name">Vibration name</string>
     <string name="tap_recorder">Tap recorder</string>
     <string name="touch_to_start">Touch to start recording</string>
-    <string name="press_rec_to_start">Press Rec button to start recording</string>
+    <string name="rec_to_start">Press Rec button to start recording</string>
     <string name="playing">Playing</string>
     <string name="tap_recorder_settings">Tap recorder settings</string>
     <string name="vibration_magnitude">Vibration magnitude</string>

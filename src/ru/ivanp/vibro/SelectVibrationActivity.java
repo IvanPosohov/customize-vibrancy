@@ -48,6 +48,7 @@ public class SelectVibrationActivity extends Activity implements
 	private ArrayList<Vibration> list;
 	private Trigger trigger;
 	private int selectedPosition;
+	private int longClickedID;
 
 	// ========================================================================
 	// OVERRIDDEN
@@ -78,7 +79,8 @@ public class SelectVibrationActivity extends Activity implements
 				selectedPosition = i;
 			}
 		}
-
+		longClickedID = VibrationsManager.NO_VIBRATION_ID;
+		
 		super.onResume();
 	}
 
@@ -111,6 +113,7 @@ public class SelectVibrationActivity extends Activity implements
 			int position, long id) {
 		Vibration vibration = (Vibration) adapter.getItemAtPosition(position);
 		if (vibration instanceof UserVibration) {
+			longClickedID = vibration.id;
 			lv.showContextMenu();
 			return true;
 		}
@@ -157,16 +160,8 @@ public class SelectVibrationActivity extends Activity implements
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		AdapterView.AdapterContextMenuInfo info;
-		try {
-			info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			Vibration vibration = (Vibration) lv
-					.getItemAtPosition(info.position);
-			if (vibration instanceof UserVibration) {
-				menu.add(Menu.NONE, MI_REMOVE, Menu.NONE, R.string.remove);
-			}
-		} catch (ClassCastException e) {
-			/* doesn't matter */
+		if (longClickedID != VibrationsManager.NO_VIBRATION_ID) {
+			menu.add(Menu.NONE, MI_REMOVE, Menu.NONE, R.string.remove);
 		}
 	}
 
@@ -174,17 +169,20 @@ public class SelectVibrationActivity extends Activity implements
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MI_REMOVE:
-			AdapterView.AdapterContextMenuInfo info;
-			try {
-				info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-				int id = list.get(info.position).id;
-				App.getVibrationManager().remove(id);
-			} catch (ClassCastException e) {
-				return false;
+			if (longClickedID != VibrationsManager.NO_VIBRATION_ID) {
+				App.getVibrationManager().remove(longClickedID);
+				// dirty hack to reload listview items
+				onResume();
 			}
 			break;
 		}
 		return true;
+	}
+
+	@Override
+	public void onContextMenuClosed(Menu menu) {
+		super.onContextMenuClosed(menu);
+		longClickedID = VibrationsManager.NO_VIBRATION_ID;
 	}
 
 	// ========================================================================

@@ -29,24 +29,15 @@ public final class TriggerManager {
 	// default vibration identifiers
 	// TODO set default
 	private final static int DEFAULT_INCOMING_CALL = 135; // Imperial march
-	private final static int DEFAULT_PICK_UP_THE_PHONE = 21; // triple strong
-																// click
-	private final static int DEFAULT_CALL_FINISHED = 74; // explosion2
+	private final static int DEFAULT_PICK_UP_THE_PHONE = 21; // triple strong click
+	private final static int DEFAULT_CALL_FINISHED = 74; // explosion2 
 	private final static int DEFAULT_CALL_TIME_INTERVAL = 4; // strong click 66
 	// private final static int DEFAULT_MISSED_CALL = -1;
 	private final static int DEFAULT_INCOMING_SMS = 129; // Mission impossible
 	// private final static int DEFAULT_MISSED_SMS = -1;
-	private final static int DEFAULT_INTERNET_UNAVAILABLE = 40; // short
-																// transition
-																// ramp down 66
-	private final static int DEFAULT_INTERNET_AVAILABLE_WIFI = 37; // short
-																	// transition
-																	// ramp up
-																	// 66
-	private final static int DEFAULT_INTERNET_AVAILABLE_MOBILE = 34; // long
-																		// transition
-																		// ramp
-																		// up 66
+	private final static int DEFAULT_INTERNET_UNAVAILABLE = 40; // short transition ramp down 66
+	private final static int DEFAULT_INTERNET_AVAILABLE_WIFI = 37; // short transition ramp up 66 
+	private final static int DEFAULT_INTERNET_AVAILABLE_MOBILE = 34; // long transition ramp up 66
 
 	// ==========================================================================
 	// FIELDS
