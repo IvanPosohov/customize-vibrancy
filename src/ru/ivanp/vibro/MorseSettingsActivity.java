@@ -13,11 +13,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MorseSettingsActivity extends PreferenceActivity implements
-		OnSeekBarChangeListener {
-	// ========================================================================
+public class MorseSettingsActivity extends PreferenceActivity implements OnSeekBarChangeListener {
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	// preference keys
 	public static final String MORSE_MAGNITUDE = "morse_magnitude";
 	public static final String MORSE_TIME_UNIT_LENGTH = "morse_time_unit_length";
@@ -25,9 +24,9 @@ public class MorseSettingsActivity extends PreferenceActivity implements
 	public static final int DEFAULT_MORSE_MAGNITUDE = 100;
 	public static final int DEFAULT_MORSE_TIME_UNIT_LENGTH = 100;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,19 +45,15 @@ public class MorseSettingsActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress,
-			boolean fromUser) {
-		App.getPlayer().play();
-		int initialIntensity = progress * ImmVibe.VIBE_MAX_MAGNITUDE / 100;
-		App.getPlayer().setMagnitude(initialIntensity);
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		int magnitude = progress * ImmVibe.VIBE_MAX_MAGNITUDE / 100;
+		App.getPlayer().playMagnitude(magnitude);
 	}
 
 	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {
-		App.getPlayer().play();
-		int initialIntensity = seekBar.getProgress()
-				* ImmVibe.VIBE_MAX_MAGNITUDE / 100;
-		App.getPlayer().setMagnitude(initialIntensity);
+		int magnitude = seekBar.getProgress() * ImmVibe.VIBE_MAX_MAGNITUDE / 100;
+		App.getPlayer().playMagnitude(magnitude);
 	}
 
 	@Override

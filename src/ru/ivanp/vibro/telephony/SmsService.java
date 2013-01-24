@@ -22,23 +22,22 @@ import android.util.Log;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class SmsService extends Service {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
-	private final static Uri SMS_URI = Uri
-			.parse("content://mms-sms/conversations/");
+	// ============================================================================================
+	private final static Uri SMS_URI = Uri.parse("content://mms-sms/conversations/");
 	private final static Uri SMS_INBOX = Uri.parse("content://sms/inbox");
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private ContentObserver observer;
 	private ContentResolver resolver;
 	private LocalHandler handler;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		handler = new LocalHandler(this);
@@ -53,8 +52,7 @@ public class SmsService extends Service {
 					// if all SMS are read stop self
 					int count = getUnreadSmsCount(getApplicationContext());
 					if (App.DEBUG) {
-						Log.d("SmsService.onStartCommand", "unreaded count="
-								+ count);
+						Log.d("SmsService.onStartCommand", "unreaded count=" + count);
 					}
 					if (count == 0) {
 						VibrationService.stop(SmsService.this);
@@ -91,9 +89,9 @@ public class SmsService extends Service {
 		return null;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Start service with needed arguments
 	 * 
@@ -113,8 +111,8 @@ public class SmsService extends Service {
 	 * @return unread SMS count
 	 */
 	synchronized private int getUnreadSmsCount(Context _context) {
-		Cursor cursor = _context.getContentResolver().query(SMS_INBOX, null,
-				"read = 0", null, null);
+		Cursor cursor = _context.getContentResolver()
+				.query(SMS_INBOX, null, "read = 0", null, null);
 		int count = 0;
 		if (cursor != null) {
 			count = cursor.getCount();
@@ -123,9 +121,9 @@ public class SmsService extends Service {
 		return count;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Local event handler
 	 */

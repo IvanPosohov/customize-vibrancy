@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.ivanp.vibro"
-    android:versionCode="5"
-    android:versionName="2.0" >
+    android:versionCode="6"
+    android:versionName="2.1" >
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -71,6 +71,11 @@
         <!-- MORSE RECORDER SETTINGS -->
         <activity
             android:name="ru.ivanp.vibro.MorseSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- TEST -->
+        <activity
+            android:name="ru.ivanp.vibro.TestActivity"
             android:screenOrientation="portrait" />
 
         <!-- RECEIVERS -->

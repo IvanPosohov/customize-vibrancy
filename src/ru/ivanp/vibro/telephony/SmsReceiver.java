@@ -18,14 +18,14 @@ import android.util.Log;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class SmsReceiver extends BroadcastReceiver {
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if (App.DEBUG) {
-			Log.d("SmsReceiver.onReceive",
-					"Action = " + intent != null ? intent.getAction() : "null");
+			Log.d("SmsReceiver.onReceive", "Action = " + intent != null ? intent.getAction()
+					: "null");
 		}
 
 		if (Pref.vibrationEnabled) {
@@ -34,8 +34,8 @@ public class SmsReceiver extends BroadcastReceiver {
 					.getSystemService(Context.TELEPHONY_SERVICE);
 			if (manager.getCallState() == TelephonyManager.CALL_STATE_IDLE) {
 				// if there are no calls in this moment
-				int imcomingSmsVibrationID = App.getTriggerManager()
-						.getVibrationID(Trigger.INCOMING_SMS);
+				int imcomingSmsVibrationID = App.getTriggerManager().getVibrationID(
+						Trigger.INCOMING_SMS);
 				if (imcomingSmsVibrationID != VibrationsManager.NO_VIBRATION_ID) {
 					// if vibration pattern is set
 					if (Pref.cancelSmsVibration) {
@@ -45,8 +45,7 @@ public class SmsReceiver extends BroadcastReceiver {
 					}
 					// start vibration service, it will be stopped after
 					// vibration finished or after 30 seconds delay
-					VibrationService.start(context, imcomingSmsVibrationID,
-							false, 30);
+					VibrationService.start(context, imcomingSmsVibrationID, false, 30);
 				} else {
 					if (App.DEBUG) {
 						Log.d("SmsReceiver.onReceive",
@@ -61,8 +60,7 @@ public class SmsReceiver extends BroadcastReceiver {
 			}
 		} else {
 			if (App.DEBUG) {
-				Log.d("SmsReceiver.onReceive",
-						"Can't start vibration according to preferences");
+				Log.d("SmsReceiver.onReceive", "Can't start vibration according to preferences");
 			}
 		}
 	}

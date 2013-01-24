@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class UserVibration extends Vibration {
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Return pattern length in millisecond
 	 */
@@ -21,9 +21,9 @@ public class UserVibration extends Vibration {
 	 */
 	private VibrationElement[] elements;
 
-	// ========================================================================
+	// ============================================================================================
 	// GETTERS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Return pattern length in millisecond
 	 */
@@ -38,9 +38,9 @@ public class UserVibration extends Vibration {
 		return elements;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// SETTERS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Set array of vibration elements
 	 */
@@ -49,9 +49,9 @@ public class UserVibration extends Vibration {
 		elements = _elements.toArray(new VibrationElement[_elements.size()]);
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// CONSTRUCTOR
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Creates new instance of BasePattern
 	 * 
@@ -64,8 +64,7 @@ public class UserVibration extends Vibration {
 	 * @param _elements
 	 *            array of vibration elements
 	 */
-	public UserVibration(int _id, String _name, int _length,
-			VibrationElement[] _elements) {
+	public UserVibration(int _id, String _name, int _length, VibrationElement[] _elements) {
 		super(_id, Vibration.TYPE_LONG, _name);
 		length = _length;
 		elements = _elements;
@@ -83,9 +82,9 @@ public class UserVibration extends Vibration {
 		super(_id, Vibration.TYPE_LONG, "");
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// CONSTRUCTOR
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Counts vibration length
 	 * 

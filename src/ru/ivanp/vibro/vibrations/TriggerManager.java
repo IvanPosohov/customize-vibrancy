@@ -17,9 +17,9 @@ import ru.ivanp.vibro.R;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public final class TriggerManager {
-	// ==========================================================================
+	// ==============================================================================================
 	// CONSTANTS
-	// ==========================================================================
+	// ==============================================================================================
 	private final int TRIGGERS_COUNT = 8;
 	/**
 	 * Key to store pattern IDs matched to triggers in SharedPreferences
@@ -27,27 +27,34 @@ public final class TriggerManager {
 	private final static String PATTERN_IDS_KEY = "triggers_pids";
 
 	// default vibration identifiers
-	// TODO set default
-	private final static int DEFAULT_INCOMING_CALL = 135; // Imperial march
-	private final static int DEFAULT_PICK_UP_THE_PHONE = 21; // triple strong click
-	private final static int DEFAULT_CALL_FINISHED = 74; // explosion2 
-	private final static int DEFAULT_CALL_TIME_INTERVAL = 4; // strong click 66
+	// Imperial march
+	private final static int DEFAULT_INCOMING_CALL = 135;
+	// triple strong click
+	private final static int DEFAULT_PICK_UP_THE_PHONE = 21;
+	// explosion2
+	private final static int DEFAULT_CALL_FINISHED = 74; 
+	// strong click 66
+	private final static int DEFAULT_CALL_TIME_INTERVAL = 4; 
 	// private final static int DEFAULT_MISSED_CALL = -1;
-	private final static int DEFAULT_INCOMING_SMS = 129; // Mission impossible
+	// Mission impossible
+	private final static int DEFAULT_INCOMING_SMS = 129; 
 	// private final static int DEFAULT_MISSED_SMS = -1;
-	private final static int DEFAULT_INTERNET_UNAVAILABLE = 40; // short transition ramp down 66
-	private final static int DEFAULT_INTERNET_AVAILABLE_WIFI = 37; // short transition ramp up 66 
-	private final static int DEFAULT_INTERNET_AVAILABLE_MOBILE = 34; // long transition ramp up 66
+	// short transition ramp down 66
+	private final static int DEFAULT_INTERNET_UNAVAILABLE = 40; 
+	// short transition ramp up 66
+	private final static int DEFAULT_INTERNET_AVAILABLE_WIFI = 37; 
+	// long transition ramp up 66
+	private final static int DEFAULT_INTERNET_AVAILABLE_MOBILE = 34; 
 
-	// ==========================================================================
+	// ==============================================================================================
 	// FIELDS
-	// ==========================================================================
+	// ==============================================================================================
 	private Context context;
 	private ArrayList<Trigger> triggers;
 
-	// ==========================================================================
+	// ==============================================================================================
 	// GETTERS
-	// ==========================================================================
+	// ==============================================================================================
 	/**
 	 * @return trigger list
 	 */
@@ -55,9 +62,9 @@ public final class TriggerManager {
 		return triggers;
 	}
 
-	// ==========================================================================
+	// ==============================================================================================
 	// CONSTRUCTOR
-	// ==========================================================================
+	// ==============================================================================================
 	public TriggerManager(Context _context) {
 		context = _context;
 		triggers = new ArrayList<Trigger>();
@@ -66,8 +73,7 @@ public final class TriggerManager {
 		 * pattern identifiers matched to triggers stored in SharedPreferences
 		 * the same for magnitudes
 		 */
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(_context);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
 
 		// pattern IDs
 		String[] pidsRaw = pref.getString(PATTERN_IDS_KEY, "").split(",");
@@ -95,9 +101,10 @@ public final class TriggerManager {
 		}
 
 		// fill pattern list
-		triggers.add(Trigger.INCOMING_CALL, new Trigger(Trigger.INCOMING_CALL,
-				context.getString(R.string.trigger_incoming_call),
-				pids[Trigger.INCOMING_CALL]));
+		triggers.add(
+				Trigger.INCOMING_CALL,
+				new Trigger(Trigger.INCOMING_CALL, context
+						.getString(R.string.trigger_incoming_call), pids[Trigger.INCOMING_CALL]));
 
 		triggers.add(
 				Trigger.PICK_UP_THE_PHONE,
@@ -105,9 +112,9 @@ public final class TriggerManager {
 						.getString(R.string.trigger_pick_up_the_phone),
 						pids[Trigger.PICK_UP_THE_PHONE]));
 
-		triggers.add(Trigger.CALL_FINISHED, new Trigger(Trigger.CALL_FINISHED,
-				context.getString(R.string.trigger_call_ends),
-				pids[Trigger.CALL_FINISHED]));
+		triggers.add(Trigger.CALL_FINISHED,
+				new Trigger(Trigger.CALL_FINISHED, context.getString(R.string.trigger_call_ends),
+						pids[Trigger.CALL_FINISHED]));
 
 		triggers.add(
 				Trigger.CALL_TIME_INTERVAL,
@@ -121,9 +128,9 @@ public final class TriggerManager {
 		 * pids[Trigger.MISSED_CALL]));
 		 */
 
-		triggers.add(Trigger.INCOMING_SMS, new Trigger(Trigger.INCOMING_SMS,
-				context.getString(R.string.trigger_incoming_sms),
-				pids[Trigger.INCOMING_SMS]));
+		triggers.add(Trigger.INCOMING_SMS,
+				new Trigger(Trigger.INCOMING_SMS, context.getString(R.string.trigger_incoming_sms),
+						pids[Trigger.INCOMING_SMS]));
 
 		/*
 		 * triggers.add(Trigger.MISSED_SMS, new Trigger(Trigger.MISSED_SMS,
@@ -131,17 +138,13 @@ public final class TriggerManager {
 		 * pids[Trigger.MISSED_SMS]));
 		 */
 
-		triggers.add(
-				Trigger.INTERNET_UNAVAILABLE,
-				new Trigger(Trigger.INTERNET_UNAVAILABLE, context
-						.getString(R.string.trigger_internet_unavailable),
-						pids[Trigger.INTERNET_UNAVAILABLE]));
+		triggers.add(Trigger.INTERNET_UNAVAILABLE, new Trigger(Trigger.INTERNET_UNAVAILABLE,
+				context.getString(R.string.trigger_internet_unavailable),
+				pids[Trigger.INTERNET_UNAVAILABLE]));
 
-		triggers.add(
-				Trigger.INTERNET_AVAILABLE_WIFI,
-				new Trigger(Trigger.INTERNET_AVAILABLE_WIFI, context
-						.getString(R.string.trigger_internet_available_wifi),
-						pids[Trigger.INTERNET_AVAILABLE_WIFI]));
+		triggers.add(Trigger.INTERNET_AVAILABLE_WIFI, new Trigger(Trigger.INTERNET_AVAILABLE_WIFI,
+				context.getString(R.string.trigger_internet_available_wifi),
+				pids[Trigger.INTERNET_AVAILABLE_WIFI]));
 
 		triggers.add(
 				Trigger.INTERNET_AVAILABLE_MOBILE,
@@ -150,9 +153,9 @@ public final class TriggerManager {
 						pids[Trigger.INTERNET_AVAILABLE_MOBILE]));
 	}
 
-	// ==========================================================================
+	// ==============================================================================================
 	// METHODS
-	// ==========================================================================
+	// ==============================================================================================
 	/**
 	 * Store trigger array to preferences
 	 */
@@ -164,8 +167,7 @@ public final class TriggerManager {
 			patternIDs.append(trigger.vibrationID).append(',');
 		}
 		// store to SharedPreferences
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(context);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(PATTERN_IDS_KEY, patternIDs.toString());
 
@@ -215,8 +217,7 @@ public final class TriggerManager {
 	 *         otherwise
 	 */
 	public boolean isCustomVibrationAllowed(int _triggerID) {
-		return _triggerID != Trigger.INCOMING_CALL
-				&& _triggerID != Trigger.INCOMING_SMS;
+		return _triggerID != Trigger.INCOMING_CALL && _triggerID != Trigger.INCOMING_SMS;
 	}
 
 	/**

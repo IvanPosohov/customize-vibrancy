@@ -14,11 +14,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,17 +30,17 @@ import android.widget.TextView;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MainActivity extends Activity implements OnItemClickListener,
+public class MainActivity extends Activity implements OnClickListener, OnItemClickListener,
 		OnItemLongClickListener {
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private ListView lv;
 	private TriggerAdapter adapter;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,27 +63,34 @@ public class MainActivity extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> _adapter, View _view, int _position,
-			long _id) {
+	public void onItemClick(AdapterView<?> _adapter, View _view, int _position, long _id) {
 		// play pattern on click
 		Trigger trigger = (Trigger) _adapter.getItemAtPosition(_position);
-		Vibration vibration = App.getVibrationManager().getVibration(
-				trigger.vibrationID);
+		Vibration vibration = App.getVibrationManager().getVibration(trigger.vibrationID);
 		App.getPlayer().playOrStop(vibration);
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> _adapter, View _view,
-			int _position, long _id) {
+	public boolean onItemLongClick(AdapterView<?> _adapter, View _view, int _position, long _id) {
 		// open SelectVibrationActivity on long click
 		Trigger trigger = (Trigger) _adapter.getItemAtPosition(_position);
 		SelectVibrationActivity.start(this, trigger.id);
 		return true;
 	}
 
-	// ========================================================================
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.img_logo:
+			startActivity(new Intent(this, TestActivity.class));
+			break;
+		}
+
+	}
+
+	// ============================================================================================
 	// MAIN MENU
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -105,9 +114,9 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		return true;
 	};
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Process widgets setup
 	 */
@@ -116,11 +125,16 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		lv.setAdapter(adapter);
+		
+		if (App.DEBUG) {
+			ImageView img_logo = (ImageView)findViewById(R.id.img_logo);
+			img_logo.setOnClickListener(this);
+		}
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Custom adapter for list
 	 */
@@ -157,14 +171,12 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View itemView = inflater.inflate(R.layout.trigger_view, null);
-			final TextView text_name = (TextView) itemView
-					.findViewById(R.id.text_name);
+			final TextView text_name = (TextView) itemView.findViewById(R.id.text_name);
 			final TextView text_pattern_name = (TextView) itemView
 					.findViewById(R.id.text_pattern_name);
 
 			Trigger model = list.get(position);
-			Vibration vibration = App.getVibrationManager().getVibration(
-					model.vibrationID);
+			Vibration vibration = App.getVibrationManager().getVibration(model.vibrationID);
 			text_name.setText(model.name);
 			text_pattern_name.setText(vibration != null ? vibration.getName()
 					: getString(R.string.do_not_vibrate));

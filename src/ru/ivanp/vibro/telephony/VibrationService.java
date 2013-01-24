@@ -27,28 +27,29 @@ import android.util.Log;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class VibrationService extends Service {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	private static final String VIBRATION_ID_KEY = "vibration_id";
 	private static final String REPEAT_KEY = "repeat";
 	private static final String STOP_SELF_DELAY_KEY = "stop_self_delay";
 	private static final int NOTIFICATION_ID = 16030901;
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private LocalHandler handler;
 	private PowerManager.WakeLock wakeLock;
 	private NotificationManager notificationManager;
+	private static VibrationService instance;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		int vibrationID = intent.getIntExtra(VIBRATION_ID_KEY,
-				VibrationsManager.NO_VIBRATION_ID);
+		instance = this;
+		int vibrationID = intent.getIntExtra(VIBRATION_ID_KEY, VibrationsManager.NO_VIBRATION_ID);
 		boolean repeat = intent.getBooleanExtra(REPEAT_KEY, false);
 		int stopSelfDelay = intent.getIntExtra(STOP_SELF_DELAY_KEY, -1);
 
@@ -62,14 +63,13 @@ public class VibrationService extends Service {
 			notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 			// set the icon, scrolling text and timestamp
-			Notification notification = new Notification(
-					R.drawable.ic_notification, getText(R.string.app_name),
-					System.currentTimeMillis());
+			Notification notification = new Notification(R.drawable.ic_notification,
+					getText(R.string.app_name), System.currentTimeMillis());
 
 			// the PendingIntent to launch our activity if the user selects this
 			// notification
-			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-					new Intent(this, MainActivity.class), 0);
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+					MainActivity.class), 0);
 
 			// set the info for the views that show in the notification panel.
 			notification.setLatestEventInfo(this, getText(R.string.app_name),
@@ -85,19 +85,18 @@ public class VibrationService extends Service {
 		handler = new LocalHandler(this);
 		// create wake lock to keep screen on
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
-				| PowerManager.ON_AFTER_RELEASE, "Customize Vibrancy");
+		wakeLock = pm.newWakeLock(
+				PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+				"Customize Vibrancy");
 		wakeLock.acquire();
 
 		// stop self after delay if need
 		if (stopSelfDelay != -1) {
-			handler.sendEmptyMessageDelayed(Player.EVENT_PLAYING_FINISHED,
-					stopSelfDelay * 1000);
+			handler.sendEmptyMessageDelayed(Player.EVENT_PLAYING_FINISHED, stopSelfDelay * 1000);
 		}
 
 		// get vibration
-		Vibration vibration = App.getVibrationManager().getVibration(
-				vibrationID);
+		Vibration vibration = App.getVibrationManager().getVibration(vibrationID);
 
 		// start vibration
 		App.getPlayer().addEventListener(handler);
@@ -108,8 +107,7 @@ public class VibrationService extends Service {
 		}
 
 		if (App.DEBUG) {
-			Log.d("VibroService.onStartCommand",
-					"Service started, vibrationID=" + vibrationID);
+			Log.d("VibroService.onStartCommand", "Service started, vibrationID=" + vibrationID);
 		}
 
 		return START_NOT_STICKY;
@@ -119,15 +117,15 @@ public class VibrationService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 
+		App.getPlayer().removeEventListener(handler);
+		App.getPlayer().stop();
+
 		// stop foreground service and remove notification from statusBar
 		stopForeground(true);
 
 		if (wakeLock.isHeld()) {
 			wakeLock.release();
 		}
-
-		App.getPlayer().removeEventListener(handler);
-		App.getPlayer().stop();
 
 		if (App.DEBUG) {
 			Log.d("VibroService.onDestroy", "Service destriyed");
@@ -139,9 +137,9 @@ public class VibrationService extends Service {
 		return null;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Start service with needed arguments
 	 * 
@@ -154,8 +152,7 @@ public class VibrationService extends Service {
 	 * @param _stopSelfDelay
 	 *            delay to automatic stop service in seconds, -1 if not used
 	 */
-	public static void start(Context _context, int _vibrationID,
-			boolean _repeat, int _stopSelfDelay) {
+	public static void start(Context _context, int _vibrationID, boolean _repeat, int _stopSelfDelay) {
 		Intent intent = new Intent(_context, VibrationService.class);
 		intent.putExtra(VIBRATION_ID_KEY, _vibrationID);
 		intent.putExtra(REPEAT_KEY, _repeat);
@@ -170,12 +167,16 @@ public class VibrationService extends Service {
 	 *            application context
 	 */
 	public static void stop(Context _context) {
-		_context.stopService(new Intent(_context, VibrationService.class));
+		if (instance != null) {
+			instance.stopSelf();
+		} else {
+			_context.stopService(new Intent(_context, VibrationService.class));
+		}
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Local event handler
 	 */

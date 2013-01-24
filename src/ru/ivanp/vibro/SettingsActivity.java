@@ -10,9 +10,9 @@ import android.preference.PreferenceActivity;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class SettingsActivity extends PreferenceActivity {
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

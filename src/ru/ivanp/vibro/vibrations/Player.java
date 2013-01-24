@@ -23,15 +23,28 @@ import com.immersion.uhl.internal.ImmVibeAPI;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class Player extends EventDispatcher {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
+	/**
+	 * Playing finished event code. Event with such code occurs when vibration
+	 * stops (manually or in the end of not repeated pattern)
+	 */
 	public static final int EVENT_PLAYING_FINISHED = 100;
-	private static final int EVENT_CHANGE_MAGNITUDE = 101;
+	/**
+	 * Pattern finished event code. Event with such code occurs every time when
+	 * pattern finished playing
+	 */
+	private static final int EVENT_PATTERN_FINISHED = 101;
+	/**
+	 * Element finished event code. Event with such code occurs when one of the
+	 * user vibration element finished playing
+	 */
+	private static final int EVENT_ELEMENT_FINISHED = 102;
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private Device device;
 	private Launcher launcher;
 	private ImmVibeAPI immVibe;
@@ -43,27 +56,16 @@ public class Player extends EventDispatcher {
 	private int playingElementIndex;
 	private int playingElementCount;
 
-	// ========================================================================
-	// GETTERS
-	// ========================================================================
-	public boolean getIsPlaying() {
-		return playing != null;
-	}
-
-	public Vibration getPlayingVibration() {
-		return playing;
-	}
-
-	// ========================================================================
+	// ============================================================================================
 	// CONSTRUCTOR
-	// ========================================================================
+	// ============================================================================================
 	public Player(Context _context) {
 		try {
 			device = Device.newDevice(_context);
 			launcher = new Launcher(_context);
 			immVibe = ImmVibe.getInstance();
-			effect = new MagSweepEffectDefinition(Integer.MAX_VALUE, 0,
-					ImmVibe.VIBE_STYLE_SMOOTH, 0, 0, 0, 0, 0);
+			effect = new MagSweepEffectDefinition(Integer.MAX_VALUE, 0, ImmVibe.VIBE_STYLE_SMOOTH,
+					0, 0, 0, 0, 0);
 		} catch (RuntimeException e) {
 			Log.e("Player.init", "Create new device failed!", e);
 		}
@@ -71,40 +73,38 @@ public class Player extends EventDispatcher {
 		addEventListener(handler);
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Stop vibration
 	 */
 	public void stop() {
-		// stop play
 		try {
-			device.stopAllPlayingEffects();
-			launcher.stop();
-		} catch (RuntimeException e) {
-			if (App.DEBUG) {
-				Log.d("Player.stop", "stopAllPlayingEffects RuntimeException", e);
+			if (playing == null || playing instanceof IVTVibration
+					|| playing instanceof UserVibration) {
+				device.stopAllPlayingEffects();
+			} else {
+				launcher.stop();
 			}
+		} catch (RuntimeException e) {
+			/* what could I do? nothing =( */
 		}
-		// remove delayed "playing finished" event
-		removeDelayedEvent(EVENT_PLAYING_FINISHED);
-
-		handler.removeMessages(EVENT_CHANGE_MAGNITUDE);
+		handler.removeMessages(EVENT_ELEMENT_FINISHED);
+		handler.removeMessages(EVENT_PATTERN_FINISHED);
+		repeat = false;
 		effectHandle = null;
 		playing = null;
-		repeat = false;
+		dispatchEvent(EVENT_PLAYING_FINISHED);
 	}
 
-	// start vibrate
-	public void play() {
-		effectHandle = device.playMagSweepEffect(effect);
-	}
-
-	public void setMagnitude(int _magnitude) {
+	/**
+	 * Enable vibration with passed magnitude, if vibration is disabled
+	 */
+	public void playMagnitude(int _magnitude) {
 		effect.setMagnitude(_magnitude);
 		if (effectHandle == null) {
-			play();
+			effectHandle = device.playMagSweepEffect(effect);
 		} else {
 			effectHandle.modifyPlayingMagSweepEffect(effect);
 		}
@@ -114,8 +114,6 @@ public class Player extends EventDispatcher {
 	 * If there aren't playing vibrations start to play passed. If passed
 	 * vibration is matched to playing - stop playing. If passed vibration is
 	 * not matched to playing - play passed vibration
-	 * 
-	 * @param _vibration
 	 */
 	public void playOrStop(Vibration _vibration) {
 		if (playing == null) {
@@ -131,10 +129,7 @@ public class Player extends EventDispatcher {
 	}
 
 	/**
-	 * Play vibration in cycle until stop() call
-	 * 
-	 * @param _vibration
-	 *            vibration to play
+	 * Play passed vibration in cycle until stop() call
 	 */
 	public void playRepeat(Vibration _vibration) {
 		repeat = true;
@@ -142,86 +137,82 @@ public class Player extends EventDispatcher {
 	}
 
 	/**
-	 * Play or stop current playing vibration
-	 * 
-	 * @param _vibration
-	 *            vibration to play
+	 * Play passed vibration, if passed is null playing will be stopped
 	 */
 	private void play(Vibration _vibration) {
-		/* for this vibration type we play one of default Immersion vibration */
-		if (_vibration == null)
+		if (_vibration == null) {
 			stop();
-		if (_vibration instanceof IVTVibration) {
+			// call play method according to vibration type
+		} else if (_vibration instanceof IVTVibration) {
 			playIVT((IVTVibration) _vibration);
 		} else if (_vibration instanceof UserVibration) {
 			playUser((UserVibration) _vibration);
 		} else {
-
-			try {
-				// start playing
-				launcher.play(_vibration.id);
-				// find duration of vibration
-				int duration = immVibe.getUHLEffectDuration(_vibration.id);
-				// fire event after playing finished
-				dispatchEvent(EVENT_PLAYING_FINISHED, duration);
-				playing = _vibration;
-			} catch (RuntimeException e) {
-				/* doesn't matter */
-			}
+			playImmersion(_vibration);
 		}
 	}
 
 	/**
-	 * Play one of default vibrations stored in IVT file
+	 * Play one of preset vibrations stored in IVT file
 	 */
 	private void playIVT(IVTVibration _ivtVibration) {
-		// start playing
-		device.playIVTEffect(App.getVibrationManager().getIVTBuffer(),
-				_ivtVibration.ivtID);
-		// find duration of vibration
+		playing = _ivtVibration;
+		device.playIVTEffect(App.getVibrationManager().getIVTBuffer(), _ivtVibration.ivtID);
 		int duration = App.getVibrationManager().getIVTBuffer()
 				.getEffectDuration(_ivtVibration.ivtID);
 		// fire event after playing finished
-		dispatchEvent(EVENT_PLAYING_FINISHED, duration);
-		playing = _ivtVibration;
+		handler.sendEmptyMessageDelayed(EVENT_PATTERN_FINISHED, duration);
 	}
 
 	/**
-	 * Play one of user vibrations
+	 * Play one of user created vibrations stored in the file
 	 */
 	private void playUser(UserVibration _userVibration) {
+		playing = _userVibration;
+		/*
+		 * user vibration are stored like array of [[magnitude,time]...]
+		 * elements, so to play user vibration we just play each element of it
+		 */
 		playingElementIndex = 0;
 		playingElementCount = _userVibration.getElements().length;
-		VibrationElement element = _userVibration.getElements()[playingElementIndex];
-		effect.setMagnitude(element.magnitude);
-		effectHandle = device.playMagSweepEffect(effect);
-		handler.sendEmptyMessageDelayed(EVENT_CHANGE_MAGNITUDE,
-				element.duration);
-		playing = _userVibration;
+		playNextElement();
 	}
 
-	private void onChangeMagnitude() {
-		playingElementIndex++;
+	/**
+	 * Find next element of playing user vibration and play it, or finish
+	 * vibration if there are no more elements
+	 */
+	private void playNextElement() {
 		if (playingElementIndex == playingElementCount) {
-			if (repeat) {
-				play(playing);
-			} else {
-				stop();
-				dispatchEvent(EVENT_PLAYING_FINISHED);
-			}
+			handler.sendEmptyMessage(EVENT_PATTERN_FINISHED);
 		} else {
 			UserVibration vibration = (UserVibration) playing;
 			VibrationElement element = vibration.getElements()[playingElementIndex];
-			effect.setMagnitude(element.magnitude);
-			effectHandle.modifyPlayingMagSweepEffect(effect);
-			handler.sendEmptyMessageDelayed(EVENT_CHANGE_MAGNITUDE,
-					element.duration);
+			playMagnitude(element.magnitude);
+			// fire event after element has played
+			handler.sendEmptyMessageDelayed(EVENT_ELEMENT_FINISHED, element.duration);
+		}
+		playingElementIndex++;
+	}
+
+	/**
+	 * Play Immersion preset vibration
+	 */
+	private void playImmersion(Vibration _vibration) {
+		playing = _vibration;
+		try {
+			launcher.play(_vibration.id);
+			int duration = immVibe.getUHLEffectDuration(_vibration.id);
+			// fire event after playing finished
+			handler.sendEmptyMessageDelayed(EVENT_PATTERN_FINISHED, duration);
+		} catch (RuntimeException e) {
+			/* doesn't matter */
 		}
 	}
 
-	// ========================================================================
-	// INTERNAL CLASS
-	// ========================================================================
+	// ============================================================================================
+	// INTERNAL CLASSES
+	// ============================================================================================
 	private static class LocalHandler extends Handler {
 		private WeakReference<Player> mTarget;
 
@@ -233,15 +224,19 @@ public class Player extends EventDispatcher {
 		public void handleMessage(Message msg) {
 			Player target = mTarget.get();
 			switch (msg.what) {
-			case EVENT_PLAYING_FINISHED:
+			case EVENT_PATTERN_FINISHED:
+				/*
+				 * if need to play pattern in cycle just call play() with
+				 * current playing pattern argument, otherwise call stop()
+				 */
 				if (target.repeat) {
 					target.play(target.playing);
 				} else {
-					target.playing = null;
+					target.stop();
 				}
 				break;
-			case EVENT_CHANGE_MAGNITUDE:
-				target.onChangeMagnitude();
+			case EVENT_ELEMENT_FINISHED:
+				target.playNextElement();
 				break;
 			}
 			super.handleMessage(msg);

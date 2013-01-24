@@ -21,9 +21,9 @@ import android.util.Log;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class InternetStateReceiver extends BroadcastReceiver {
-	// ==================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ==================================================================
+	// ============================================================================================
 	/**
 	 * Key to store current Internet state value
 	 */
@@ -44,9 +44,9 @@ public class InternetStateReceiver extends BroadcastReceiver {
 	 */
 	public static final int STATE_MOBILE = 2;
 
-	// ==================================================================
+	// ============================================================================================
 	// OVERRIDEN
-	// ==================================================================
+	// ============================================================================================
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if (intent == null) {
@@ -57,8 +57,7 @@ public class InternetStateReceiver extends BroadcastReceiver {
 			Log.d("InternetStateReceiver.onReceive", "Action = " + action);
 		}
 
-		if (action == null
-				|| !action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+		if (action == null || !action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
 			return;
 		}
 
@@ -70,18 +69,15 @@ public class InternetStateReceiver extends BroadcastReceiver {
 				// if there are no calls in this moment
 
 				// get old Internet state, stored in preferences
-				SharedPreferences pref = PreferenceManager
-						.getDefaultSharedPreferences(context);
+				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 				int oldState = pref.getInt(STATE_KEY, STATE_NONE);
 				ConnectivityManager connectivityManager = (ConnectivityManager) context
 						.getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo networkInfo = connectivityManager
-						.getActiveNetworkInfo();
+				NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
 				// get current Internet state
 				int currentState = STATE_NONE;
-				if (networkInfo != null
-						&& networkInfo.getState() == State.CONNECTED) {
+				if (networkInfo != null && networkInfo.getState() == State.CONNECTED) {
 					currentState = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE ? STATE_MOBILE
 							: STATE_WIFI;
 				}
@@ -109,7 +105,6 @@ public class InternetStateReceiver extends BroadcastReceiver {
 								Trigger.INTERNET_AVAILABLE_MOBILE);
 						break;
 					}
-
 					if (vibrationID != VibrationsManager.NO_VIBRATION_ID) {
 						// start vibration
 						VibrationService.start(context, vibrationID, false, -1);

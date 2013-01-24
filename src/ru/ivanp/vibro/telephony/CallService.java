@@ -25,26 +25,25 @@ import android.util.Log;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class CallService extends Service {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	private final static String START_LOG_WATCHER_KEY = "start_log_watcher";
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private TimerHandler handler;
 	private LogThread logThread;
 	private int callTimeIntervalVibrationID;
 	private long callStartTime;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		boolean startLogWatcher = intent.getBooleanExtra(START_LOG_WATCHER_KEY,
-				false);
+		boolean startLogWatcher = intent.getBooleanExtra(START_LOG_WATCHER_KEY, false);
 
 		handler = new TimerHandler(this);
 
@@ -60,8 +59,8 @@ public class CallService extends Service {
 		}
 
 		if (App.DEBUG) {
-			Log.d("CallService.onStartCommand",
-					"Service started, startLogWatcher=" + startLogWatcher);
+			Log.d("CallService.onStartCommand", "Service started, startLogWatcher="
+					+ startLogWatcher);
 		}
 
 		return START_NOT_STICKY;
@@ -73,8 +72,9 @@ public class CallService extends Service {
 
 		App.getPlayer().stop();
 		handler.removeMessages(0);
-		if (logThread != null)
+		if (logThread != null) {
 			logThread.kill();
+		}
 
 		if (App.DEBUG) {
 			Log.d("CallService.onDestroy", "Service destriyed");
@@ -86,9 +86,9 @@ public class CallService extends Service {
 		return null;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Start service with needed arguments
 	 * 
@@ -138,18 +138,16 @@ public class CallService extends Service {
 
 	private void onTimerTick() {
 		// find difference between real time and start time in seconds
-		long diff = Math
-				.round((SystemClock.elapsedRealtime() - callStartTime) / 1000.0);
+		long diff = Math.round((SystemClock.elapsedRealtime() - callStartTime) / 1000.0);
 		if (App.DEBUG) {
 			Log.d("CallService.onTimerTick", "diff = " + diff);
 		}
 		if (diff % 60 == Pref.minuteInterval) {
 			if (App.DEBUG) {
-				Log.d("CallService.onTimerTick",
-						"play call time interval vibration, diff = " + diff);
+				Log.d("CallService.onTimerTick", "play call time interval vibration, diff = "
+						+ diff);
 			}
-			VibrationService.start(getApplicationContext(),
-					callTimeIntervalVibrationID, false, -1);
+			VibrationService.start(getApplicationContext(), callTimeIntervalVibrationID, false, -1);
 		}
 	}
 
@@ -163,16 +161,15 @@ public class CallService extends Service {
 			if (App.DEBUG) {
 				Log.d("CallService.onPick", "play picked up vibration");
 			}
-			VibrationService.start(getApplicationContext(),
-					pickedUpPhoneVibrationID, false, -1);
+			VibrationService.start(getApplicationContext(), pickedUpPhoneVibrationID, false, -1);
 		}
 
 		startTimer();
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Timer event handler
 	 */
@@ -227,8 +224,7 @@ public class CallService extends Service {
 						// used to log logcat =)
 						// Log.d("LOGCAT", str);
 					}
-					if (str.contains("GET_CURRENT_CALLS")
-							&& str.contains("ACTIVE")) {
+					if (str.contains("GET_CURRENT_CALLS") && str.contains("ACTIVE")) {
 						// ACTIVE string arrives too fast, so it seems like old
 						// log message has been read
 						if (SystemClock.elapsedRealtime() - startTime < 1000) {

@@ -14,14 +14,14 @@ import android.util.Log;
 
 /**
  * Receive call state changes, registering them and do processing stuff like
- * start vibration service or call service etc. <br>
+ * start vibration service or call service etc.
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class CallReceiver extends BroadcastReceiver {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Key to store last call state in SharedPreferences
 	 */
@@ -32,9 +32,9 @@ public class CallReceiver extends BroadcastReceiver {
 	 */
 	private static final String SECOND_CALL_KEY = "second_call";
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	public void onReceive(Context context, Intent intent) {
 		// at first check preferences
 		if (!Pref.vibrationEnabled) {
@@ -46,10 +46,8 @@ public class CallReceiver extends BroadcastReceiver {
 		}
 
 		// find old and new call state
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		String oldState = pref.getString(STATE_KEY,
-				TelephonyManager.EXTRA_STATE_IDLE);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		String oldState = pref.getString(STATE_KEY, TelephonyManager.EXTRA_STATE_IDLE);
 		String newState = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
 
 		// store new state
@@ -58,8 +56,8 @@ public class CallReceiver extends BroadcastReceiver {
 
 		// process state change
 		if (App.DEBUG) {
-			Log.d("CallReceiver.onReceive", "Start processing, oldState = "
-					+ oldState + ", newState = " + newState);
+			Log.d("CallReceiver.onReceive", "Start processing, oldState = " + oldState
+					+ ", newState = " + newState);
 		}
 
 		/*
@@ -68,15 +66,13 @@ public class CallReceiver extends BroadcastReceiver {
 		 */
 		if (oldState.equals(TelephonyManager.EXTRA_STATE_IDLE)
 				&& newState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-			int imcomingCallVibrationID = App.getTriggerManager()
-					.getVibrationID(Trigger.INCOMING_CALL);
+			int imcomingCallVibrationID = App.getTriggerManager().getVibrationID(
+					Trigger.INCOMING_CALL);
 			if (imcomingCallVibrationID != VibrationsManager.NO_VIBRATION_ID) {
 				if (App.DEBUG) {
-					Log.d("CallReceiver.onReceive",
-							"play incoming call vibration");
+					Log.d("CallReceiver.onReceive", "play incoming call vibration");
 				}
-				VibrationService.start(context, imcomingCallVibrationID, true,
-						-1);
+				VibrationService.start(context, imcomingCallVibrationID, true, -1);
 			}
 		}
 
@@ -120,15 +116,13 @@ public class CallReceiver extends BroadcastReceiver {
 			// stop call service
 			CallService.stop(context);
 			// play call finished vibration if need
-			int callFinishedVibrationID = App.getTriggerManager()
-					.getVibrationID(Trigger.CALL_FINISHED);
+			int callFinishedVibrationID = App.getTriggerManager().getVibrationID(
+					Trigger.CALL_FINISHED);
 			if (callFinishedVibrationID != VibrationsManager.NO_VIBRATION_ID) {
 				if (App.DEBUG) {
-					Log.d("CallReceiver.onReceive",
-							"play call finished vibration");
+					Log.d("CallReceiver.onReceive", "play call finished vibration");
 				}
-				VibrationService.start(context, callFinishedVibrationID, false,
-						-1);
+				VibrationService.start(context, callFinishedVibrationID, false, -1);
 			}
 			// erase second call flag
 			editor.putBoolean(SECOND_CALL_KEY, false);

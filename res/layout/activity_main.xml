@@ -13,11 +13,13 @@
         android:minHeight="@dimen/action_bar_default_height" >
 
         <ImageView
+            android:id="@+id/img_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/step2"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:clickable="true" />
     </LinearLayout>
 
     <!-- LIST -->

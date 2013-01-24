@@ -23,9 +23,9 @@ import java.util.ArrayList;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public final class Morse {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Dot character
 	 */
@@ -71,46 +71,56 @@ public final class Morse {
 	 * Array of available Morse characters
 	 */
 	public final static MorseCharacter[] characters = {
-			new MorseCharacter('A', ".-", 	 1 * DOT_LENGTH + 1 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
-			new MorseCharacter('B', "-...",  3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('C', "-.-.",  2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('D', "-..", 	 2 * DOT_LENGTH + 1 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('E', ".", 	 1 * DOT_LENGTH + 0 * DASH_LENGTH + 0 * INNER_GAP_LENGTH),
-			new MorseCharacter('F', "..-.",  3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('G', "--.", 	 1 * DOT_LENGTH + 2 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('H', "....",  4 * DOT_LENGTH + 0 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('I', "..",	 2 * DOT_LENGTH + 0 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
-			new MorseCharacter('J', ".---",  1 * DOT_LENGTH + 3 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('K', "-.-",	 1 * DOT_LENGTH + 2 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('L', ".-..",  3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('M', "--", 	 0 * DOT_LENGTH + 2 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
-			new MorseCharacter('N', "-.", 	 1 * DOT_LENGTH + 1 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
-			new MorseCharacter('O', "---", 	 0 * DOT_LENGTH + 3 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('P', ".--.",  2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('Q', "--.-",  1 * DOT_LENGTH + 3 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('R', ".-.", 	 2 * DOT_LENGTH + 1 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('S', "...", 	 3 * DOT_LENGTH + 0 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('T', "-", 	 0 * DOT_LENGTH + 1 * DASH_LENGTH + 0 * INNER_GAP_LENGTH),
-			new MorseCharacter('U', "..-", 	 2 * DOT_LENGTH + 1 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('V', "...-",  3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('W', ".--", 	 1 * DOT_LENGTH + 2 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
-			new MorseCharacter('X', "-..-",  2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('Y', "-.--",  1 * DOT_LENGTH + 3 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('Z', "--..",  2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
-			new MorseCharacter('0', "-----", 0 * DOT_LENGTH + 5 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('1', ".----", 1 * DOT_LENGTH + 4 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('2', "..---", 2 * DOT_LENGTH + 3 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('3', "...--", 3 * DOT_LENGTH + 2 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('4', "....-", 4 * DOT_LENGTH + 1 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('5', ".....", 5 * DOT_LENGTH + 0 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('6', "-....", 4 * DOT_LENGTH + 1 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('7', "--...", 3 * DOT_LENGTH + 2 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('8', "---..", 2 * DOT_LENGTH + 3 * DASH_LENGTH + 4 * INNER_GAP_LENGTH),
-			new MorseCharacter('9', "----.", 1 * DOT_LENGTH + 4 * DASH_LENGTH + 4 * INNER_GAP_LENGTH) };
+			new MorseCharacter('A', ".-", 1 * DOT_LENGTH + 1 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
+			new MorseCharacter('B', "-...", 3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('C', "-.-.", 2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('D', "-..", 2 * DOT_LENGTH + 1 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('E', ".", 1 * DOT_LENGTH + 0 * DASH_LENGTH + 0 * INNER_GAP_LENGTH),
+			new MorseCharacter('F', "..-.", 3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('G', "--.", 1 * DOT_LENGTH + 2 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('H', "....", 4 * DOT_LENGTH + 0 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('I', "..", 2 * DOT_LENGTH + 0 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
+			new MorseCharacter('J', ".---", 1 * DOT_LENGTH + 3 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('K', "-.-", 1 * DOT_LENGTH + 2 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('L', ".-..", 3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('M', "--", 0 * DOT_LENGTH + 2 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
+			new MorseCharacter('N', "-.", 1 * DOT_LENGTH + 1 * DASH_LENGTH + 1 * INNER_GAP_LENGTH),
+			new MorseCharacter('O', "---", 0 * DOT_LENGTH + 3 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('P', ".--.", 2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('Q', "--.-", 1 * DOT_LENGTH + 3 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('R', ".-.", 2 * DOT_LENGTH + 1 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('S', "...", 3 * DOT_LENGTH + 0 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('T', "-", 0 * DOT_LENGTH + 1 * DASH_LENGTH + 0 * INNER_GAP_LENGTH),
+			new MorseCharacter('U', "..-", 2 * DOT_LENGTH + 1 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('V', "...-", 3 * DOT_LENGTH + 1 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('W', ".--", 1 * DOT_LENGTH + 2 * DASH_LENGTH + 2 * INNER_GAP_LENGTH),
+			new MorseCharacter('X', "-..-", 2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('Y', "-.--", 1 * DOT_LENGTH + 3 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('Z', "--..", 2 * DOT_LENGTH + 2 * DASH_LENGTH + 3 * INNER_GAP_LENGTH),
+			new MorseCharacter('0', "-----", 0 * DOT_LENGTH + 5 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('1', ".----", 1 * DOT_LENGTH + 4 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('2', "..---", 2 * DOT_LENGTH + 3 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('3', "...--", 3 * DOT_LENGTH + 2 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('4', "....-", 4 * DOT_LENGTH + 1 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('5', ".....", 5 * DOT_LENGTH + 0 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('6', "-....", 4 * DOT_LENGTH + 1 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('7', "--...", 3 * DOT_LENGTH + 2 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('8', "---..", 2 * DOT_LENGTH + 3 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH),
+			new MorseCharacter('9', "----.", 1 * DOT_LENGTH + 4 * DASH_LENGTH + 4
+					* INNER_GAP_LENGTH) };
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Gets time units count in specified char
 	 * 
@@ -123,8 +133,7 @@ public final class Morse {
 			if (characters[i].character == _char)
 				return characters[i].timeUnitCount;
 		}
-		throw new IllegalArgumentException(
-				"Character must be one of Morse permitted characters");
+		throw new IllegalArgumentException("Character must be one of Morse permitted characters");
 	}
 
 	/**
@@ -139,8 +148,7 @@ public final class Morse {
 			if (characters[i].character == _char)
 				return characters[i].translation;
 		}
-		throw new IllegalArgumentException(
-				"Character must be one of Morse permitted characters");
+		throw new IllegalArgumentException("Character must be one of Morse permitted characters");
 	}
 
 	/**
@@ -196,8 +204,8 @@ public final class Morse {
 	 *            long of one time unit in milliseconds
 	 * @return vibration pattern
 	 */
-	public static ArrayList<VibrationElement> translate(String _text,
-			int _intensity, int _timeUnitLong) {
+	public static ArrayList<VibrationElement> translate(String _text, int _intensity,
+			int _timeUnitLong) {
 		ArrayList<VibrationElement> res = new ArrayList<VibrationElement>();
 		// for each letter in text
 		for (int i = 0; i < _text.length(); i++) {
@@ -216,27 +224,26 @@ public final class Morse {
 			// for each dot/dash in letter
 			for (int j = 0; j < transcription.length(); j++) {
 				if (j > 0) {
-					// add inner-element gap between the dots and dashes within a
+					// add inner-element gap between the dots and dashes within
+					// a
 					// character
 					res.add(new VibrationElement(_timeUnitLong * INNER_GAP_LENGTH, 0));
 				}
 				char element = transcription.charAt(j);
 				// add dot or dash
 				if (element == DOT) {
-					res.add(new VibrationElement(_timeUnitLong * DOT_LENGTH,
-							_intensity));
+					res.add(new VibrationElement(_timeUnitLong * DOT_LENGTH, _intensity));
 				} else if (element == DASH) {
-					res.add(new VibrationElement(_timeUnitLong * DASH_LENGTH,
-							_intensity));
+					res.add(new VibrationElement(_timeUnitLong * DASH_LENGTH, _intensity));
 				}
 			}
 		}
 		return res;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INNER CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Contains dot/dash representation of character and count of time units in
 	 * char
@@ -259,8 +266,7 @@ public final class Morse {
 		 * @param _timeUnitCount
 		 *            count of time units in char
 		 */
-		public MorseCharacter(char _character, String _translation,
-				int _timeUnitCount) {
+		public MorseCharacter(char _character, String _translation, int _timeUnitCount) {
 			character = _character;
 			translation = _translation;
 			timeUnitCount = _timeUnitCount;

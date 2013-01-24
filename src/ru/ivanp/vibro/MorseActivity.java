@@ -40,9 +40,9 @@ import android.widget.TextView;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class MorseActivity extends Activity implements OnClickListener {
-	// ========================================================================
+	// ============================================================================================
 	// ENUMS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Enumerates all possible activity states
 	 */
@@ -59,18 +59,18 @@ public class MorseActivity extends Activity implements OnClickListener {
 		PLAYING
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	private static final int TIMER_TICK_WHAT = 0;
 	/**
 	 * Timer text update interval in milliseconds
 	 */
 	private static final int INTERVAL_TIMER_TICK = 100;
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	// widgets
 	private TextView text_time_cur;
 	private TextView text_time_total;
@@ -88,9 +88,9 @@ public class MorseActivity extends Activity implements OnClickListener {
 	private int vibrationLength;
 	private UserVibration recording;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,9 +136,9 @@ public class MorseActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// MENU
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -160,9 +160,9 @@ public class MorseActivity extends Activity implements OnClickListener {
 		return true;
 	};
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Process widgets setup
 	 */
@@ -189,13 +189,11 @@ public class MorseActivity extends Activity implements OnClickListener {
 	 * Initialize activity specific preferences
 	 */
 	private void loadPreferences() {
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
 		intensityLevel = pref.getInt(MorseSettingsActivity.MORSE_MAGNITUDE,
 				MorseSettingsActivity.DEFAULT_MORSE_MAGNITUDE);
-		timeUnitLong = pref.getInt(
-				MorseSettingsActivity.MORSE_TIME_UNIT_LENGTH,
+		timeUnitLong = pref.getInt(MorseSettingsActivity.MORSE_TIME_UNIT_LENGTH,
 				MorseSettingsActivity.DEFAULT_MORSE_TIME_UNIT_LENGTH);
 	}
 
@@ -209,16 +207,13 @@ public class MorseActivity extends Activity implements OnClickListener {
 		state = _state;
 		boolean gotVibration = vibrationLength > 0;
 
-		text_time_cur.setTextColor(state == MorseState.IDLE ? getResources()
-				.getColor(R.color.gray) : getResources()
-				.getColor(R.color.white));
+		text_time_cur.setTextColor(state == MorseState.IDLE ? getResources().getColor(R.color.gray)
+				: getResources().getColor(R.color.white));
 
 		txt_input.setEnabled(state == MorseState.IDLE);
 
-		img_play.setVisibility(state == MorseState.IDLE ? View.VISIBLE
-				: View.GONE);
-		img_stop.setVisibility(state == MorseState.IDLE ? View.GONE
-				: View.VISIBLE);
+		img_play.setVisibility(state == MorseState.IDLE ? View.VISIBLE : View.GONE);
+		img_stop.setVisibility(state == MorseState.IDLE ? View.GONE : View.VISIBLE);
 
 		img_play.setEnabled(gotVibration);
 		img_save.setEnabled(state == MorseState.IDLE && gotVibration);
@@ -229,8 +224,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 	 */
 	private void help() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.morse_recorder_help)
-				.setMessage(R.string.morse_recorder_help_msg)
+		builder.setTitle(R.string.morse_recorder_help).setMessage(R.string.morse_recorder_help_msg)
 				.setPositiveButton("OK", null).create().show();
 	}
 
@@ -248,9 +242,8 @@ public class MorseActivity extends Activity implements OnClickListener {
 	}
 
 	private void startPlay() {
-		recording.setElements(Morse
-				.translate(txt_input.getText().toString(), intensityLevel
-						* ImmVibe.VIBE_MAX_MAGNITUDE / 100, timeUnitLong));
+		recording.setElements(Morse.translate(txt_input.getText().toString(), intensityLevel
+				* ImmVibe.VIBE_MAX_MAGNITUDE / 100, timeUnitLong));
 		App.getPlayer().playOrStop(recording);
 		startTimer();
 		setState(MorseState.PLAYING);
@@ -264,8 +257,8 @@ public class MorseActivity extends Activity implements OnClickListener {
 				LayoutParams.FILL_PARENT));
 
 		final EditText txt = new EditText(this);
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT);
 		lp.setMargins(30, 30, 30, 30);
 		txt.setLayoutParams(lp);
 		String baseName = txt_input.getText().toString();
@@ -284,9 +277,8 @@ public class MorseActivity extends Activity implements OnClickListener {
 				String name = txt.getText().toString().trim();
 				if (!name.equals("")) {
 					recording.setName(name);
-					recording.setElements(Morse
-							.translate(txt_input.getText().toString(), intensityLevel
-									* ImmVibe.VIBE_MAX_MAGNITUDE / 100, timeUnitLong));
+					recording.setElements(Morse.translate(txt_input.getText().toString(),
+							intensityLevel * ImmVibe.VIBE_MAX_MAGNITUDE / 100, timeUnitLong));
 					App.getVibrationManager().add(recording);
 					App.getVibrationManager().storeUserVibrations();
 					dialog.dismiss();
@@ -304,8 +296,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 
 	private void startTimer() {
 		timerStartTime = SystemClock.elapsedRealtime();
-		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT,
-				INTERVAL_TIMER_TICK);
+		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
 	}
 
 	private void stopTimer() {
@@ -316,8 +307,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 	private void onTimerTick() {
 		int diff = (int) (SystemClock.elapsedRealtime() - timerStartTime);
 		text_time_cur.setText(formatTimer(diff));
-		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT,
-				INTERVAL_TIMER_TICK);
+		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
 	}
 
 	/**
@@ -336,16 +326,16 @@ public class MorseActivity extends Activity implements OnClickListener {
 		return String.format("%02d:%02d.%d", min, sec, ms);
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Morse permitted characters filter
 	 */
 	private class MorseFilter implements InputFilter {
 		@Override
-		public CharSequence filter(CharSequence source, int start, int end,
-				Spanned dest, int dstart, int dend) {
+		public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+				int dstart, int dend) {
 			char[] v = new char[end - start];
 			TextUtils.getChars(source, start, end, v, 0);
 			// to upper case
@@ -370,16 +360,13 @@ public class MorseActivity extends Activity implements OnClickListener {
 		}
 
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
 
 		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			// refreshing pattern length
-			vibrationLength = Morse.stringToTimeUnits(s.toString())
-					* timeUnitLong;
+			vibrationLength = Morse.stringToTimeUnits(s.toString()) * timeUnitLong;
 			text_time_total.setText(formatTimer(vibrationLength));
 
 			// enable/disable buttons if need

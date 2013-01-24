@@ -24,22 +24,22 @@ import android.widget.Button;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class DonateActivity extends Activity implements OnClickListener {
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	public final static String[] CATALOG = { "donate_1_dollar",
 			"donate_2_dollar", "donate_3_dollar" };
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private InappPurchaseObserver mInnapPurchaseObserver;
 	private Handler mHandler;
 	private BillingService mBillingService;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -97,9 +97,9 @@ public class DonateActivity extends Activity implements OnClickListener {
 
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Process widgets setup
 	 */
@@ -127,9 +127,9 @@ public class DonateActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Used for receiving callbacks from Android Market application
 	 */
@@ -144,8 +144,8 @@ public class DonateActivity extends Activity implements OnClickListener {
 			}
 		}
 
-		public void onPurchaseStateChange(PurchaseState purchaseState,
-				String itemId, int quantity, long purchaseTime,
+		public void onPurchaseStateChange(PurchaseState purchaseState, String itemId, int quantity,
+				long purchaseTime,
 				String developerPayload) {
 		}
 

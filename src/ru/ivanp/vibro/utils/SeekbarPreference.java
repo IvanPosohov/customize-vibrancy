@@ -17,19 +17,18 @@ import android.preference.Preference;
  * Main idea http://habrahabr.ru/post/114733/ with some my changes
  * 
  * @author Posohov Ivan (posohof@gmail.com)
- *
+ * 
  */
-public class SeekbarPreference extends Preference implements
-		OnSeekBarChangeListener {
-	// ========================================================================
+public class SeekbarPreference extends Preference implements OnSeekBarChangeListener {
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	private static final int DEFAULT_MIN_VALUE = 1;
 	private static final int DEFAULT_MAX_VALUE = 100;
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private int minValue;
 	private int maxValue;
 	private int defValue;
@@ -41,9 +40,9 @@ public class SeekbarPreference extends Preference implements
 	private TextView text_value;
 	private OnSeekBarChangeListener outerListener;
 
-	// ========================================================================
+	// ============================================================================================
 	// SETTERS
-	// ========================================================================
+	// ============================================================================================
 	public void setMinValue(int _value) {
 		minValue = _value;
 	}
@@ -51,7 +50,7 @@ public class SeekbarPreference extends Preference implements
 	public void setMaxValue(int _value) {
 		maxValue = _value;
 	}
-	
+
 	public void setDefaultValue(int _value) {
 		defValue = _value;
 	}
@@ -60,9 +59,9 @@ public class SeekbarPreference extends Preference implements
 		currentValueText = _value;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// CONSTRUCTOR
-	// ========================================================================
+	// ============================================================================================
 	public SeekbarPreference(Context context) {
 		super(context);
 		setWidgetLayoutResource(R.layout.seekbar_preference);
@@ -73,25 +72,22 @@ public class SeekbarPreference extends Preference implements
 
 		TypedArray arr = context.obtainStyledAttributes(attrs,
 				R.styleable.ru_ivanp_vibro_SeekbarPreference);
-		minValue = arr.getInt(
-				R.styleable.ru_ivanp_vibro_SeekbarPreference_minValue,
+		minValue = arr.getInt(R.styleable.ru_ivanp_vibro_SeekbarPreference_minValue,
 				DEFAULT_MIN_VALUE);
-		maxValue = arr.getInt(
-				R.styleable.ru_ivanp_vibro_SeekbarPreference_maxValue,
+		maxValue = arr.getInt(R.styleable.ru_ivanp_vibro_SeekbarPreference_maxValue,
 				DEFAULT_MAX_VALUE);
 		currentValueText = arr
 				.getString(R.styleable.ru_ivanp_vibro_SeekbarPreference_currentValueText);
 		arr.recycle();
 
-		defValue = attrs.getAttributeIntValue(
-				"http://schemas.android.com/apk/res/android", "defaultValue",
-				DEFAULT_MAX_VALUE);
+		defValue = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/android",
+				"defaultValue", DEFAULT_MAX_VALUE);
 		setWidgetLayoutResource(R.layout.seekbar_preference);
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	protected void onBindView(View view) {
 		super.onBindView(view);
@@ -133,8 +129,7 @@ public class SeekbarPreference extends Preference implements
 		if (_fromTouch) {
 			value = _value + minValue;
 			persistInt(value);
-			text_value.setText(String.format(currentValueText,
-					getPersistedInt(maxValue)));
+			text_value.setText(String.format(currentValueText, getPersistedInt(maxValue)));
 		}
 		if (outerListener != null) {
 			outerListener.onProgressChanged(_seek, _value, _fromTouch);
@@ -153,9 +148,9 @@ public class SeekbarPreference extends Preference implements
 		}
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
 		outerListener = l;
 	}

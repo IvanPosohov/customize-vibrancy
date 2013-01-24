@@ -31,28 +31,28 @@ import android.widget.ListView;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class SelectVibrationActivity extends Activity implements
-		OnClickListener, OnItemClickListener, OnItemLongClickListener {
-	// ========================================================================
+public class SelectVibrationActivity extends Activity implements OnClickListener,
+		OnItemClickListener, OnItemLongClickListener {
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	public static final String TRIGGER_ID_KEY = "trigger_id";
 	public static final String VIBRATION_ID_KEY = "vibration_id";
 	private static final int MI_REMOVE = 0;
 	private static final int RECODER_ACTIVITY_REQUEST_CODE = 0;
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	private ListView lv;
 	private ArrayList<Vibration> list;
 	private Trigger trigger;
 	private int selectedPosition;
 	private int longClickedID;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,8 +68,8 @@ public class SelectVibrationActivity extends Activity implements
 	@Override
 	protected void onResume() {
 		list = App.getVibrationManager().getVibrations(trigger.id);
-		lv.setAdapter(new ArrayAdapter<Vibration>(this,
-				R.layout.selectable_list_item_view, R.id.text, list));
+		lv.setAdapter(new ArrayAdapter<Vibration>(this, R.layout.selectable_list_item_view,
+				R.id.text, list));
 		for (int i = 0; i < list.size(); i++) {
 			Vibration vibration = list.get(i);
 			lv.setItemChecked(i, vibration.id == trigger.vibrationID);
@@ -80,7 +80,7 @@ public class SelectVibrationActivity extends Activity implements
 			}
 		}
 		longClickedID = VibrationsManager.NO_VIBRATION_ID;
-		
+
 		super.onResume();
 	}
 
@@ -102,15 +102,13 @@ public class SelectVibrationActivity extends Activity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> adapter, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 		App.getPlayer().playOrStop(list.get(position));
 		selectedPosition = position;
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> adapter, View view,
-			int position, long id) {
+	public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
 		Vibration vibration = (Vibration) adapter.getItemAtPosition(position);
 		if (vibration instanceof UserVibration) {
 			longClickedID = vibration.id;
@@ -123,16 +121,15 @@ public class SelectVibrationActivity extends Activity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == RECODER_ACTIVITY_REQUEST_CODE && data != null) {
-			int createdID = data.getIntExtra(VIBRATION_ID_KEY,
-					VibrationsManager.NO_VIBRATION_ID);
+			int createdID = data.getIntExtra(VIBRATION_ID_KEY, VibrationsManager.NO_VIBRATION_ID);
 			App.getTriggerManager().setTrigger(trigger.id, createdID);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// MENU
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (App.getTriggerManager().isCustomVibrationAllowed(trigger.id)) {
@@ -153,12 +150,11 @@ public class SelectVibrationActivity extends Activity implements
 		return true;
 	};
 
-	// ========================================================================
+	// ============================================================================================
 	// CONTEXT MENU
-	// ========================================================================
+	// ============================================================================================
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (longClickedID != VibrationsManager.NO_VIBRATION_ID) {
 			menu.add(Menu.NONE, MI_REMOVE, Menu.NONE, R.string.remove);
@@ -185,9 +181,9 @@ public class SelectVibrationActivity extends Activity implements
 		longClickedID = VibrationsManager.NO_VIBRATION_ID;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Start activity with needed arguments
 	 * 
@@ -223,28 +219,20 @@ public class SelectVibrationActivity extends Activity implements
 		builder.setTitle(R.string.select_recorder)
 				.setNegativeButton(getString(R.string.cancel),
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
+							public void onClick(DialogInterface dialog, int which) {
 								dialog.dismiss();
 							}
-						})
-				.setItems(R.array.list_recorders,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								if (which == 0) {
-									startActivityForResult(new Intent(
-											SelectVibrationActivity.this,
-											RecorderActivity.class),
-											RECODER_ACTIVITY_REQUEST_CODE);
-								} else {
-									startActivityForResult(new Intent(
-											SelectVibrationActivity.this,
-											MorseActivity.class),
-											RECODER_ACTIVITY_REQUEST_CODE);
-								}
-							}
-						}).create().show();
+						}).setItems(R.array.list_recorders, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (which == 0) {
+							startActivityForResult(new Intent(SelectVibrationActivity.this,
+									RecorderActivity.class), RECODER_ACTIVITY_REQUEST_CODE);
+						} else {
+							startActivityForResult(new Intent(SelectVibrationActivity.this,
+									MorseActivity.class), RECODER_ACTIVITY_REQUEST_CODE);
+						}
+					}
+				}).create().show();
 	}
 }

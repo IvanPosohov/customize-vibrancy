@@ -7,9 +7,9 @@ package ru.ivanp.vibro.vibrations;
  * @author Posohov Ivan (posohof@gmail.com)
  */
 public class Trigger {
-	// ==========================================================================
+	// ==============================================================================================
 	// CONSTANTS
-	// ==========================================================================
+	// ==============================================================================================
 	// Call
 	/**
 	 * Occurs when we got new incoming call
@@ -30,7 +30,7 @@ public class Trigger {
 	/**
 	 * Occurs after specified interval when we got missing call
 	 */
-	//public static final int MISSED_CALL = 4;
+	// public static final int MISSED_CALL = 4;
 	// SMS
 	/**
 	 * Occurs when we got new incoming SMS
@@ -39,7 +39,7 @@ public class Trigger {
 	/**
 	 * Occurs after specified interval when we got missing SMS
 	 */
-	//public static final int MISSED_SMS = 6;
+	// public static final int MISSED_SMS = 6;
 	// Internet
 	/**
 	 * Occurs when Internet became unavailable
@@ -54,9 +54,9 @@ public class Trigger {
 	 */
 	public static final int INTERNET_AVAILABLE_MOBILE = 7;
 
-	// ==========================================================================
+	// ==============================================================================================
 	// FIELDS
-	// ==========================================================================
+	// ==============================================================================================
 	/**
 	 * Trigger identifier, one of this class constants
 	 */
@@ -71,10 +71,10 @@ public class Trigger {
 	 * Pattern identifier matched to trigger
 	 */
 	public int vibrationID;
-	
-	// ==========================================================================
+
+	// ==============================================================================================
 	// CONSTRUCTOR
-	// ==========================================================================
+	// ==============================================================================================
 	/**
 	 * Creates new instance of Trigger class
 	 * 

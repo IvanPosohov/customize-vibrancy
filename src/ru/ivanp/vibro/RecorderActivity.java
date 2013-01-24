@@ -41,11 +41,10 @@ import android.widget.TextView;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class RecorderActivity extends Activity implements OnClickListener,
-		OnTouchListener {
-	// ========================================================================
+public class RecorderActivity extends Activity implements OnClickListener, OnTouchListener {
+	// ============================================================================================
 	// ENUMS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Enumerates all possible recorder states
 	 */
@@ -68,18 +67,18 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		PLAYING
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// CONSTANTS
-	// ========================================================================
+	// ============================================================================================
 	private static final int TIMER_TICK_WHAT = 0;
 	/**
 	 * Timer text update interval in milliseconds
 	 */
 	private static final int INTERVAL_TIMER_TICK = 100;
 
-	// ========================================================================
+	// ============================================================================================
 	// FIELDS
-	// ========================================================================
+	// ============================================================================================
 	// widgets
 	private ProgressBar prgb_dot;
 	private ImageView img_settings;
@@ -107,9 +106,9 @@ public class RecorderActivity extends Activity implements OnClickListener,
 	private UserVibration recording;
 	private boolean isBlockedFromTap;
 
-	// ========================================================================
+	// ============================================================================================
 	// OVERRIDDEN
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -173,25 +172,22 @@ public class RecorderActivity extends Activity implements OnClickListener,
 					intensity = ImmVibe.VIBE_MAX_MAGNITUDE;
 					if (isIntensityFixed) {
 						// cause intensityLevel is a percentage value
-						intensity = intensityLevel * ImmVibe.VIBE_MAX_MAGNITUDE
-								/ 100;
-						text_intensity_current.setText(String.format("%d%%",
-								intensityLevel));
+						intensity = intensityLevel * ImmVibe.VIBE_MAX_MAGNITUDE / 100;
+						text_intensity_current.setText(String.format("%d%%", intensityLevel));
 					} else {
 						int y = (int) event.getY();
 						int height = v.getMeasuredHeight();
-						float percent = y < 0 ? 1 : y > height ? 0
-								: (height - y) / (float) height;
+						float percent = y < 0 ? 1 : y > height ? 0 : (height - y) / (float) height;
 						intensity = (int) (percent * ImmVibe.VIBE_MAX_MAGNITUDE);
-						text_intensity_current.setText(String.format("%d%%",
-								(int) (percent * 100)));
+						text_intensity_current
+								.setText(String.format("%d%%", (int) (percent * 100)));
 					}
 
-					App.getPlayer().setMagnitude(intensity);
+					App.getPlayer().playMagnitude(intensity);
 					break;
 				case MotionEvent.ACTION_UP:
 					intensity = 0;
-					App.getPlayer().setMagnitude(intensity);
+					App.getPlayer().playMagnitude(intensity);
 					text_intensity_current.setText("0%");
 					break;
 				default:
@@ -201,8 +197,10 @@ public class RecorderActivity extends Activity implements OnClickListener,
 				long now = SystemClock.elapsedRealtime();
 				int diff = (int) (now - lastTouchTime);
 				elements.add(new VibrationElement(diff, lastIntensity));
-				/*Log.d("Recorder.onTouch", "diff=" + diff + ", intensity="
-						+ lastIntensity);*/
+				/*
+				 * Log.d("Recorder.onTouch", "diff=" + diff + ", intensity=" +
+				 * lastIntensity);
+				 */
 				lastTouchTime = now;
 				lastIntensity = intensity;
 				return true;
@@ -211,9 +209,9 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		return false;
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// MENU
-	// ========================================================================
+	// ============================================================================================
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -231,9 +229,9 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		return true;
 	};
 
-	// ========================================================================
+	// ============================================================================================
 	// METHODS
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Process widgets setup
 	 */
@@ -262,16 +260,12 @@ public class RecorderActivity extends Activity implements OnClickListener,
 	 * Initialize activity specific preferences
 	 */
 	private void loadPreferences() {
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		isIntensityFixed = pref.getBoolean(
-				RecorderSettingsActivity.RECORDER_FIXED_MAGNITUDE, false);
-		intensityLevel = pref.getInt(
-				RecorderSettingsActivity.RECORDER_MAGNITUDE, 100);
-		isLengthLimited = pref.getBoolean(
-				RecorderSettingsActivity.RECORDER_LIMIT_DURATION, false);
-		lengthPatternLimit = pref.getInt(
-				RecorderSettingsActivity.RECORDER_DURATION, 60);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		isIntensityFixed = pref
+				.getBoolean(RecorderSettingsActivity.RECORDER_FIXED_MAGNITUDE, false);
+		intensityLevel = pref.getInt(RecorderSettingsActivity.RECORDER_MAGNITUDE, 100);
+		isLengthLimited = pref.getBoolean(RecorderSettingsActivity.RECORDER_LIMIT_DURATION, false);
+		lengthPatternLimit = pref.getInt(RecorderSettingsActivity.RECORDER_DURATION, 60);
 	}
 
 	/**
@@ -284,26 +278,20 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		state = _state;
 		boolean gotVibration = elements.size() > 0;
 
-		prgb_dot.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE
-				: View.GONE);
-		text_time_cur.setTextColor(state == RecorderState.IDLE ? getResources()
-				.getColor(R.color.gray) : getResources()
-				.getColor(R.color.white));
-		text_intensity_current
-				.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE
-						: View.INVISIBLE);
-		text_time_total.setVisibility(state == RecorderState.RECORDING
-				|| !gotVibration ? View.GONE : View.VISIBLE);
+		prgb_dot.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.GONE);
+		text_time_cur.setTextColor(state == RecorderState.IDLE ? getResources().getColor(
+				R.color.gray) : getResources().getColor(R.color.white));
+		text_intensity_current.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE
+				: View.INVISIBLE);
+		text_time_total.setVisibility(state == RecorderState.RECORDING || !gotVibration ? View.GONE
+				: View.VISIBLE);
 
-		layout_touch
-				.setBackgroundDrawable(state == RecorderState.RECORDING ? getResources()
-						.getDrawable(R.drawable.recorder_touch_panel_active)
-						: getResources().getDrawable(
-								R.drawable.recorder_touch_panel));
+		layout_touch.setBackgroundDrawable(state == RecorderState.RECORDING ? getResources()
+				.getDrawable(R.drawable.recorder_touch_panel_active) : getResources().getDrawable(
+				R.drawable.recorder_touch_panel));
 
 		if (state == RecorderState.IDLE) {
-			text_state.setText(isBlockedFromTap ? R.string.rec_to_start
-					: R.string.touch_to_start);
+			text_state.setText(isBlockedFromTap ? R.string.rec_to_start : R.string.touch_to_start);
 		} else if (state == RecorderState.PLAYING) {
 			text_state.setText(R.string.playing);
 		} else {
@@ -311,10 +299,8 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		}
 
 		img_rec.setEnabled(state == RecorderState.IDLE);
-		img_play.setVisibility(state == RecorderState.IDLE ? View.VISIBLE
-				: View.GONE);
-		img_stop.setVisibility(state == RecorderState.IDLE ? View.GONE
-				: View.VISIBLE);
+		img_play.setVisibility(state == RecorderState.IDLE ? View.VISIBLE : View.GONE);
+		img_stop.setVisibility(state == RecorderState.IDLE ? View.GONE : View.VISIBLE);
 
 		img_play.setEnabled(gotVibration);
 		img_save.setEnabled(state == RecorderState.IDLE && gotVibration);
@@ -362,12 +348,11 @@ public class RecorderActivity extends Activity implements OnClickListener,
 				LayoutParams.FILL_PARENT));
 
 		final EditText txt = new EditText(this);
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT);
 		lp.setMargins(30, 30, 30, 30);
 		txt.setLayoutParams(lp);
-		String baseName = "Untitled-"
-				+ new SimpleDateFormat("HH:mm:ss").format(new Date());
+		String baseName = "Untitled-" + new SimpleDateFormat("HH:mm:ss").format(new Date());
 		txt.setText(baseName);
 		txt.setSelection(baseName.length());
 
@@ -387,8 +372,7 @@ public class RecorderActivity extends Activity implements OnClickListener,
 					App.getVibrationManager().storeUserVibrations();
 					dialog.dismiss();
 					Intent data = new Intent();
-					data.putExtra(SelectVibrationActivity.VIBRATION_ID_KEY,
-							recording.id);
+					data.putExtra(SelectVibrationActivity.VIBRATION_ID_KEY, recording.id);
 					setResult(Activity.RESULT_OK, data);
 					finish();
 				}
@@ -401,8 +385,7 @@ public class RecorderActivity extends Activity implements OnClickListener,
 
 	private void startTimer() {
 		timerStartTime = SystemClock.elapsedRealtime();
-		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT,
-				INTERVAL_TIMER_TICK);
+		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
 	}
 
 	private void stopTimer() {
@@ -412,10 +395,9 @@ public class RecorderActivity extends Activity implements OnClickListener,
 
 	private void onTimerTick() {
 		int diff = (int) (SystemClock.elapsedRealtime() - timerStartTime);
-		/*Log.d("Recoreder.onTimerTick", "diff=" + diff);*/
+		/* Log.d("Recoreder.onTimerTick", "diff=" + diff); */
 		text_time_cur.setText(formatTimer(diff));
-		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT,
-				INTERVAL_TIMER_TICK);
+		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
 
 		if (isLengthLimited && diff > lengthPatternLimit * 1000) {
 			// stop by interval and block from tap
@@ -440,9 +422,9 @@ public class RecorderActivity extends Activity implements OnClickListener,
 		return String.format("%02d:%02d.%d", min, sec, ms);
 	}
 
-	// ========================================================================
+	// ============================================================================================
 	// INTERNAL CLASSES
-	// ========================================================================
+	// ============================================================================================
 	/**
 	 * Message handler for RecorderActivity
 	 */
