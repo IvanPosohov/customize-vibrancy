@@ -107,7 +107,7 @@ public class TestActivity extends Activity implements OnClickListener, OnSeekBar
 			App.getPlayer().playRepeat(App.getVibrationManager().getVibration(157));
 			break;
 		case R.id.btn_triggers_kill_service:
-			VibrationService.stop(this);
+			App.getPlayer().stop();
 			break;
 		case R.id.btn_triggers_incoming_call:
 			int imcomingCallVibrationID = App.getTriggerManager().getVibrationID(

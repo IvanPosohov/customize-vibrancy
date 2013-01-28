@@ -55,7 +55,7 @@ public class SmsService extends Service {
 						Log.d("SmsService.onStartCommand", "unreaded count=" + count);
 					}
 					if (count == 0) {
-						VibrationService.stop(SmsService.this);
+						App.getPlayer().stop();
 						stopSelf();
 					}
 				}

@@ -91,7 +91,8 @@ public class CallReceiver extends BroadcastReceiver {
 		 */
 		else if (oldState.equals(TelephonyManager.EXTRA_STATE_RINGING)
 				&& newState.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
-			VibrationService.stop(context);
+			// VibrationService will be killed automatically
+			App.getPlayer().stop();
 		}
 
 		/*
@@ -101,7 +102,8 @@ public class CallReceiver extends BroadcastReceiver {
 		 */
 		else if (oldState.equals(TelephonyManager.EXTRA_STATE_RINGING)
 				&& newState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-			VibrationService.stop(context);
+			// VibrationService will be killed automatically
+			App.getPlayer().stop();
 			if (!pref.getBoolean(SECOND_CALL_KEY, false)) {
 				CallService.start(context, false);
 			}
@@ -113,8 +115,6 @@ public class CallReceiver extends BroadcastReceiver {
 		 */
 		else if (oldState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)
 				&& newState.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
-			// stop call service
-			CallService.stop(context);
 			// play call finished vibration if need
 			int callFinishedVibrationID = App.getTriggerManager().getVibrationID(
 					Trigger.CALL_FINISHED);
@@ -124,6 +124,8 @@ public class CallReceiver extends BroadcastReceiver {
 				}
 				VibrationService.start(context, callFinishedVibrationID, false, -1);
 			}
+			// stop call service
+			CallService.stop(context);
 			// erase second call flag
 			editor.putBoolean(SECOND_CALL_KEY, false);
 		}

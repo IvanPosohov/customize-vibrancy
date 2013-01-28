@@ -41,14 +41,12 @@ public class VibrationService extends Service {
 	private LocalHandler handler;
 	private PowerManager.WakeLock wakeLock;
 	private NotificationManager notificationManager;
-	private static VibrationService instance;
 
 	// ============================================================================================
 	// OVERRIDDEN
 	// ============================================================================================
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		instance = this;
 		int vibrationID = intent.getIntExtra(VIBRATION_ID_KEY, VibrationsManager.NO_VIBRATION_ID);
 		boolean repeat = intent.getBooleanExtra(REPEAT_KEY, false);
 		int stopSelfDelay = intent.getIntExtra(STOP_SELF_DELAY_KEY, -1);
@@ -158,20 +156,6 @@ public class VibrationService extends Service {
 		intent.putExtra(REPEAT_KEY, _repeat);
 		intent.putExtra(STOP_SELF_DELAY_KEY, _stopSelfDelay);
 		_context.startService(intent);
-	}
-
-	/**
-	 * Gracefully stop service
-	 * 
-	 * @param _context
-	 *            application context
-	 */
-	public static void stop(Context _context) {
-		if (instance != null) {
-			instance.stopSelf();
-		} else {
-			_context.stopService(new Intent(_context, VibrationService.class));
-		}
 	}
 
 	// ============================================================================================
