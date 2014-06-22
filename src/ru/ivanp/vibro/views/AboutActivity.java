@@ -1,45 +1,59 @@
 package ru.ivanp.vibro.views;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
-import android.app.Activity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.util.Linkify;
 import android.text.util.Linkify.TransformFilter;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends ActionBarActivity {
 	// ============================================================================================
-	// OVERRIDEN
+	// LIFECYCLE
 	// ============================================================================================
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		setContentView(R.layout.activity_about);
 
-		TextView text_version = (TextView) findViewById(R.id.about_text_version);
-		TextView text_feedback = (TextView) findViewById(R.id.about_text_feedback);
+		TextView textVersion = (TextView) findViewById(R.id.textVersion);
+		textVersion.setText(String.format("%s %s", getString(R.string.version), App.VERSION_NAME));
 
-		// find version name and set it to TextView
-		try {
-			PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			text_version.setText(String.format(getString(R.string.about_version), pinfo.versionName));
-		} catch (NameNotFoundException e) {
-			/* doesn't matter */
-		}
-
-		// using Linkify to detect mail-me URL
-		Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile("[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" + "\\@"
-				+ "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+");
+		TextView textFeedback = (TextView) findViewById(R.id.textFeedback);
 		TransformFilter addSubjFilter = new TransformFilter() {
 			public final String transformUrl(final Matcher match, String url) {
-				return url + "?subject=" + getString(R.string.app_name) + " feedback"; // &body=message
+				return url + "?subject=Customize Vibrancy feedback"; // &body=message
 			}
 		};
-		Linkify.addLinks(text_feedback, EMAIL_ADDRESS_PATTERN, "mailto:", null, addSubjFilter);
+		Linkify.addLinks(textFeedback, App.EMAIL_ADDRESS_PATTERN, "mailto:", null, addSubjFilter);
 	}
+
+	// ============================================================================================
+	// MENU
+	// ============================================================================================
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+    // ============================================================================================
+    // METHODS
+    // ============================================================================================
+    public static void startActivity(Context _context) {
+        Intent intent = new Intent(_context, AboutActivity.class);
+        _context.startActivity(intent);
+    }
 }

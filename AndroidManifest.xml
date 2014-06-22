@@ -25,7 +25,7 @@
         <!-- ABOUT -->
         <activity
             android:name=".views.AboutActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/about" />
 
         <!-- MAIN -->
         <activity
@@ -66,7 +66,7 @@
 
         <!-- SETTINGS -->
         <activity
-            android:name=".views.SettingsActivitytivity"
+            android:name=".views.SettingsActivity"
             android:screenOrientation="portrait" />
 
         <!-- TEST -->

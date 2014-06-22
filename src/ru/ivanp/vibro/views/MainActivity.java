@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
-import ru.ivanp.vibro.R.id;
-import ru.ivanp.vibro.R.layout;
-import ru.ivanp.vibro.R.menu;
-import ru.ivanp.vibro.R.string;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
 import android.app.Activity;
@@ -30,13 +26,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Application main activity. Allows to manage triggers vibration, opens
- * Preference, Donate, SelectVibration, Help activities
+ * Application main activity. Allows to manage triggers vibration, opens Preference, Donate,
+ * SelectVibration, Help activities
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MainActivity extends Activity implements OnClickListener, OnItemClickListener,
-		OnItemLongClickListener {
+public class MainActivity extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
 	// ============================================================================================
 	// FIELDS
 	// ============================================================================================
@@ -109,9 +104,6 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		case R.id.menu_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			break;
-		case R.id.menu_about:
-			startActivity(new Intent(this, AboutActivity.class));
-			break;
 		}
 		return true;
 	};
@@ -127,9 +119,9 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		lv.setOnItemClickListener(this);
 		lv.setOnItemLongClickListener(this);
 		lv.setAdapter(adapter);
-		
+
 		if (App.DEBUG) {
-			ImageView img_logo = (ImageView)findViewById(R.id.img_logo);
+			ImageView img_logo = (ImageView) findViewById(R.id.img_logo);
 			img_logo.setOnClickListener(this);
 		}
 	}
@@ -174,14 +166,12 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View itemView = inflater.inflate(R.layout.trigger_view, null);
 			final TextView text_name = (TextView) itemView.findViewById(R.id.text_name);
-			final TextView text_pattern_name = (TextView) itemView
-					.findViewById(R.id.text_pattern_name);
+			final TextView text_pattern_name = (TextView) itemView.findViewById(R.id.text_pattern_name);
 
 			Trigger model = list.get(position);
 			Vibration vibration = App.getVibrationManager().getVibration(model.vibrationID);
 			text_name.setText(model.name);
-			text_pattern_name.setText(vibration != null ? vibration.getName()
-					: getString(R.string.do_not_vibrate));
+			text_pattern_name.setText(vibration != null ? vibration.getName() : getString(R.string.do_not_vibrate));
 
 			return itemView;
 		}

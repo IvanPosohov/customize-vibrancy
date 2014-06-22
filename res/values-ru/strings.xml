@@ -15,15 +15,16 @@
 
     <!-- ABOUT ACTIVITY -->
     <string name="about">О программе</string>
-    <string name="about_version">Версия %s</string>
-    <string name="about_authors">Авторы</string>
-    <string name="about_code">Посоход Иван (код)</string>
-    <string name="about_design">Лихачев Иван (дизайн)</string>
-    <string name="about_thank_to_Max">Отдельное спасибо Пономарёву Максиму за помощь в тестировании</string>
-    <string name="about_translation">Помощь в переводе</string>
-    <string name="about_ukrainian"></string>
-    <string name="about_desc">Описание</string>
-    <string name="about_desc_text">Приложение позволяет индивидуально настроить вибрацию телефона. Вы можете выбрать одну из стандартных вибраций или создать свою и установить ее на:\n
+    <string name="about_summary">Показать информацию об этом приложении</string>
+    <string name="version">Версия:</string>
+    <string name="authors">Авторы</string>
+    <string name="author_code">Посоход Иван (код)</string>
+    <string name="author_design">Лихачев Иван (дизайн)</string>
+    <string name="thanks_to_Max">Отдельное спасибо Пономарёву Максиму за помощь в тестировании</string>
+    <string name="help_with_translation">Помощь в переводе</string>
+    <string name="help_with_ukrainian_thanslation"></string>
+    <string name="description">Описание</string>
+    <string name="decription_content">Приложение позволяет индивидуально настроить вибрацию телефона. Вы можете выбрать одну из стандартных вибраций или создать свою и установить ее на:\n
         1) входящий вызов;\n
         2) поднятие трубки;\n
         3) завершение вызова;\n
@@ -32,8 +33,8 @@
         6) Интернет становится недоступен;\n
         7) Интернет становится доступен через Wifi;\n
         8) Интернет становится доступен через 3G/GMS.</string>
-    <string name="about_feedback">Обратная связь</string>
-    <string name="about_feedback_text">Если вы нашли в программе ошибку или хотите чтобы в следующей версии появилась какая-то новая возможность или вам просто не с кем поговорть пожалуйста напишите мне posohof@gmail.com</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="feedback_content">Если вы обнаружите ошибку или хотите новую функцию в следующей версии не стесняйтесь написать мне posohof@gmail.com</string>
 
     <!-- SETTINGS -->
     <string name="settings">Настройки</string>

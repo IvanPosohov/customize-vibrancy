@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CustomizeVibrancy" parent="@android:style/Theme.Black.NoTitleBar">
+    <style name="CustomizeVibrancy" parent="@style/Theme.AppCompat">
         <item name="android:windowBackground">@android:color/black</item>
 	</style>
 </resources>

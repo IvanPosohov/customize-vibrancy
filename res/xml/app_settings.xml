@@ -19,12 +19,20 @@
         android:key="cancel_sms_vibration_on_read"
         android:summary="@string/cancel_sms_vibration_on_read_desc"
         android:title="@string/cancel_sms_vibration_on_read" />
-    
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="enable_high_priority"
         android:summary="@string/enable_high_priority_desc"
         android:title="@string/enable_high_priority" />
+
+    <!-- ABOUT -->
+
+    <PreferenceCategory android:title="@string/about" >
+        <Preference
+            android:key="about"
+            android:summary="@string/about_summary"
+            android:title="@string/about" />
+    </PreferenceCategory>
 
     <!--
         <ListPreference
