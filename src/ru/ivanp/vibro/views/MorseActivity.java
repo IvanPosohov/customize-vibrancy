@@ -1,13 +1,19 @@
-package ru.ivanp.vibro;
+package ru.ivanp.vibro.views;
 
 import java.lang.ref.WeakReference;
 
 import com.immersion.uhl.ImmVibe;
 
+import ru.ivanp.vibro.App;
+import ru.ivanp.vibro.R;
+import ru.ivanp.vibro.R.color;
+import ru.ivanp.vibro.R.id;
+import ru.ivanp.vibro.R.layout;
+import ru.ivanp.vibro.R.menu;
+import ru.ivanp.vibro.R.string;
 import ru.ivanp.vibro.vibrations.Morse;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.UserVibration;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

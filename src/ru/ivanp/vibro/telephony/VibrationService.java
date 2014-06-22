@@ -3,12 +3,12 @@ package ru.ivanp.vibro.telephony;
 import java.lang.ref.WeakReference;
 
 import ru.ivanp.vibro.App;
-import ru.ivanp.vibro.MainActivity;
 import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.utils.Pref;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
+import ru.ivanp.vibro.views.MainActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

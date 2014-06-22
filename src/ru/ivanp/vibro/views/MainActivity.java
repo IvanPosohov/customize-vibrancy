@@ -1,10 +1,15 @@
-package ru.ivanp.vibro;
+package ru.ivanp.vibro.views;
 
 import java.util.ArrayList;
 
+import ru.ivanp.vibro.App;
+import ru.ivanp.vibro.R;
+import ru.ivanp.vibro.R.id;
+import ru.ivanp.vibro.R.layout;
+import ru.ivanp.vibro.R.menu;
+import ru.ivanp.vibro.R.string;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

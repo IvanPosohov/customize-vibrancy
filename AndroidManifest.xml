@@ -12,8 +12,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-sdk android:minSdkVersion="7" 
-        android:targetSdkVersion="19"/>
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="19" />
 
     <application
         android:name="ru.ivanp.vibro.App"
@@ -21,9 +22,14 @@
         android:label="@string/app_name"
         android:theme="@style/CustomizeVibrancy" >
 
+        <!-- ABOUT -->
+        <activity
+            android:name=".views.AboutActivity"
+            android:screenOrientation="portrait" />
+
         <!-- MAIN -->
         <activity
-            android:name="ru.ivanp.vibro.MainActivity"
+            android:name=".views.MainActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,73 +38,68 @@
             </intent-filter>
         </activity>
 
-        <!-- SELECT VIBRATION -->
-        <activity
-            android:name="ru.ivanp.vibro.SelectVibrationActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- ABOUT -->
-        <activity
-            android:name="ru.ivanp.vibro.AboutActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- SETTINGS -->
-        <activity
-            android:name="ru.ivanp.vibro.SettingsActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- TOUCH RECORDER -->
-        <activity
-            android:name="ru.ivanp.vibro.RecorderActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- TOUCH RECORDER SETTINGS -->
-        <activity
-            android:name="ru.ivanp.vibro.RecorderSettingsActivity"
-            android:screenOrientation="portrait" />
-
         <!-- MORSE RECORDER -->
         <activity
-            android:name="ru.ivanp.vibro.MorseActivity"
+            android:name=".views.MorseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- MORSE RECORDER SETTINGS -->
         <activity
-            android:name="ru.ivanp.vibro.MorseSettingsActivity"
+            android:name=".views.MorseSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- TOUCH RECORDER -->
+        <activity
+            android:name=".views.RecorderActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- TOUCH RECORDER SETTINGS -->
+        <activity
+            android:name=".views.RecorderSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- SELECT VIBRATION -->
+        <activity
+            android:name=".views.SelectVibrationActivitytivity"
+            android:screenOrientation="portrait" />
+
+        <!-- SETTINGS -->
+        <activity
+            android:name=".views.SettingsActivitytivity"
             android:screenOrientation="portrait" />
 
         <!-- TEST -->
         <activity
-            android:name="ru.ivanp.vibro.TestActivity"
+            android:name="views.TestActivity"
             android:screenOrientation="portrait" />
 
         <!-- RECEIVERS -->
         <!-- Internet state changed -->
-        <receiver android:name="ru.ivanp.vibro.telephony.InternetStateReceiver" >
+        <receiver android:name=".telephony.InternetStateReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
         <!-- Incoming sms -->
-        <receiver android:name="ru.ivanp.vibro.telephony.SmsReceiver" >
+        <receiver android:name=".telephony.SmsReceiver" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
         <!-- Incoming call -->
-        <receiver android:name="ru.ivanp.vibro.telephony.CallReceiver" >
+        <receiver android:name=".telephony.CallReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
         <!-- SERVICES -->
-        <service android:name="ru.ivanp.vibro.telephony.SmsService" />
-        <service android:name="ru.ivanp.vibro.telephony.CallService" />
-        <service android:name="ru.ivanp.vibro.telephony.VibrationService" />
+        <service android:name=".telephony.SmsService" />
+        <service android:name=".telephony.CallService" />
+        <service android:name=".telephony.VibrationService" />
     </application>
 
 </manifest>
