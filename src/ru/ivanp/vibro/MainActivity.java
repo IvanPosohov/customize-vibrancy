@@ -104,9 +104,6 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		case R.id.menu_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			break;
-		case R.id.menu_donate:
-			startActivity(new Intent(this, DonateActivity.class));
-			break;
 		case R.id.menu_about:
 			startActivity(new Intent(this, AboutActivity.class));
 			break;

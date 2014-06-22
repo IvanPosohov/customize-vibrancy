@@ -84,11 +84,6 @@
     <string name="morse_recorder_help">Morse recorder help</string>
     <string name="morse_recorder_help_msg">Here used an international Morse code (more info on http://en.wikipedia.org/wiki/Morse_code), it is composed of five elements:\n - short mark, dot (·) — \"dot duration\" is one unit long;\n - longer mark, dash (–) — three units long;\n - inter-element gap between the dots and dashes within a character — one dot duration or one unit long;\n - short gap (between letters) — three units long;\n - medium gap (between words) — seven units long.\nLength of "one unit long" can be specified in settings.</string>
 
-    <!-- DONATE -->
-    <string name="donate">Donate</string>
-    <string name="donate_message">If you like this application, you can help author =)</string>
-    <string name="donate_amount">Donate %s$</string>
-
     <!-- TRIGGERS -->
     <string name="trigger_incoming_call">On incoming call</string>
     <string name="trigger_pick_up_the_phone">On off-hook</string>
