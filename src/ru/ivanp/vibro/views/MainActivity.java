@@ -6,54 +6,55 @@ import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Application main activity. Allows to manage triggers vibration, opens Preference, Donate,
- * SelectVibration, Help activities
- * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MainActivity extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
+public class MainActivity extends ActionBarActivity implements OnItemClickListener, OnItemLongClickListener {
 	// ============================================================================================
 	// FIELDS
 	// ============================================================================================
-	private ListView lv;
-	private TriggerAdapter adapter;
+	private ListView listView;
+	private TriggerAdapter triggerAdapter;
 
 	// ============================================================================================
-	// OVERRIDDEN
+	// LIFECYCLE
 	// ============================================================================================
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		if (App.DEBUG) {
+			// we able to launch TestActivity by clicking on header
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 		setContentView(R.layout.activity_main);
-		adapter = new TriggerAdapter();
-		setupWidgets();
+		listView = (ListView) findViewById(R.id.listView);
+		triggerAdapter = new TriggerAdapter();
+		listView.setAdapter(triggerAdapter);
+		listView.setOnItemClickListener(this);
+		listView.setOnItemLongClickListener(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// refresh trigger list to update trigger vibrations
-		adapter.notifyDataSetChanged();
+		triggerAdapter.update();
 	}
 
 	@Override
@@ -62,6 +63,31 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		App.getPlayer().stop();
 	}
 
+	// ============================================================================================
+	// MENU
+	// ============================================================================================
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	};
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			TestActivity.startActivity(this);
+			return true;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	// ============================================================================================
+	// WIDGET CALLBACKS
+	// ============================================================================================
 	@Override
 	public void onItemClick(AdapterView<?> _adapter, View _view, int _position, long _id) {
 		// play pattern on click
@@ -78,102 +104,61 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		return true;
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.img_logo:
-			startActivity(new Intent(this, TestActivity.class));
-			break;
-		}
-
-	}
-
 	// ============================================================================================
-	// MAIN MENU
+	// TRIGGER ADAPTER
 	// ============================================================================================
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.activity_main, menu);
-		return true;
-	};
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, SettingsActivity.class));
-			break;
-		}
-		return true;
-	};
-
-	// ============================================================================================
-	// METHODS
-	// ============================================================================================
-	/**
-	 * Process widgets setup
-	 */
-	private void setupWidgets() {
-		lv = (ListView) findViewById(R.id.lv);
-		lv.setOnItemClickListener(this);
-		lv.setOnItemLongClickListener(this);
-		lv.setAdapter(adapter);
-
-		if (App.DEBUG) {
-			ImageView img_logo = (ImageView) findViewById(R.id.img_logo);
-			img_logo.setOnClickListener(this);
-		}
-	}
-
-	// ============================================================================================
-	// INTERNAL CLASSES
-	// ============================================================================================
-	/**
-	 * Custom adapter for list
-	 */
 	private class TriggerAdapter extends BaseAdapter {
-		private ArrayList<Trigger> list;
+		private LayoutInflater inflater;
+		private ArrayList<Trigger> triggers;
 
 		public TriggerAdapter() {
 			super();
-			list = App.getTriggerManager().getTriggers();
+			inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 
 		@Override
-		public boolean areAllItemsEnabled() {
-			return true;
+		public int getCount() {
+			return triggers == null ? 0 : triggers.size();
 		}
 
 		@Override
-		public boolean isEnabled(int position) {
-			return true;
+		public Object getItem(int _position) {
+			return triggers.get(_position);
 		}
 
+		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		public int getCount() {
-			return list.size();
-		}
-
-		public Object getItem(int _position) {
-			return list.get(_position);
-		}
-
 		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View itemView = inflater.inflate(R.layout.trigger_view, null);
-			final TextView text_name = (TextView) itemView.findViewById(R.id.text_name);
-			final TextView text_pattern_name = (TextView) itemView.findViewById(R.id.text_pattern_name);
+			ViewHolder viewHolder;
+			if (convertView == null) {
+				convertView = inflater.inflate(R.layout.trigger_view, null);
+				viewHolder = new ViewHolder();
+				viewHolder.textTriggerName = (TextView) convertView.findViewById(R.id.textTriggerName);
+				viewHolder.textPatternName = (TextView) convertView.findViewById(R.id.textPatternName);
+				convertView.setTag(viewHolder);
+			} else {
+				viewHolder = (ViewHolder) convertView.getTag();
+			}
 
-			Trigger model = list.get(position);
-			Vibration vibration = App.getVibrationManager().getVibration(model.vibrationID);
-			text_name.setText(model.name);
-			text_pattern_name.setText(vibration != null ? vibration.getName() : getString(R.string.do_not_vibrate));
-
-			return itemView;
+			Trigger trigger = triggers.get(position);
+			Vibration vibration = App.getVibrationManager().getVibration(trigger.vibrationID);
+			viewHolder.textTriggerName.setText(trigger.name);
+			viewHolder.textPatternName.setText(vibration != null ? vibration.getName()
+					: getString(R.string.do_not_vibrate));
+			return convertView;
 		}
+
+		public void update() {
+			triggers = App.getTriggerManager().getTriggers();
+			notifyDataSetChanged();
+		}
+	}
+
+	static class ViewHolder {
+		TextView textTriggerName;
+		TextView textPatternName;
 	}
 }

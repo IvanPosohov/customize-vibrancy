@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <!-- ListView -->
+    <style name="CustomizeVibrancy.ListView" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:divider">@drawable/list_divider_holo_dark</item>
+        <item name="android:fadingEdgeLength">0dp</item>
+    </style>
 </resources>

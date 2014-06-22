@@ -4,12 +4,12 @@ import com.immersion.uhl.ImmVibe;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
-import ru.ivanp.vibro.R.id;
-import ru.ivanp.vibro.R.layout;
 import ru.ivanp.vibro.telephony.VibrationService;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -118,6 +118,13 @@ public class TestActivity extends Activity implements OnClickListener, OnSeekBar
 			VibrationService.start(this, imcomingCallVibrationID, true, -1);
 			break;
 		}
-
 	}
+	
+    // ============================================================================================
+    // METHODS
+    // ============================================================================================
+    public static void startActivity(Context _context) {
+        Intent intent = new Intent(_context, TestActivity.class);
+        _context.startActivity(intent);
+    }
 }

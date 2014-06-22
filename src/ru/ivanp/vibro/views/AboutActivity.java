@@ -13,6 +13,9 @@ import android.text.util.Linkify.TransformFilter;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * @author Posohov Ivan (posohof@gmail.com)
+ */
 public class AboutActivity extends ActionBarActivity {
 	// ============================================================================================
 	// LIFECYCLE

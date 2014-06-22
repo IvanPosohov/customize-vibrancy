@@ -30,7 +30,7 @@
         <!-- MAIN -->
         <activity
             android:name=".views.MainActivity"
-            android:screenOrientation="portrait" >
+            android:icon="@drawable/logo" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,7 +61,7 @@
 
         <!-- SELECT VIBRATION -->
         <activity
-            android:name=".views.SelectVibrationActivitytivity"
+            android:name=".views.SelectVibrationActivity"
             android:screenOrientation="portrait" />
 
         <!-- SETTINGS -->
@@ -71,7 +71,7 @@
 
         <!-- TEST -->
         <activity
-            android:name="views.TestActivity"
+            android:name=".views.TestActivity"
             android:screenOrientation="portrait" />
 
         <!-- RECEIVERS -->

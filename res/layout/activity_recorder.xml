@@ -52,7 +52,7 @@
             android:paddingLeft="@dimen/step2"
             android:paddingRight="@dimen/step2"
             android:scaleType="center"
-            android:src="@drawable/ic_settings" />
+            android:src="@drawable/ic_action_settings" />
     </LinearLayout>
 
     <!-- TIMERS -->

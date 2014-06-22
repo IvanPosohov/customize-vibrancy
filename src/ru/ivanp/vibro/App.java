@@ -19,7 +19,7 @@ public class App extends Application {
 	 * Something like preprocessor directive, used for enable/disable unstable code or debugging
 	 * features like logging. If true all debug stuff is enabled
 	 */
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	/**
 	 * App version name
 	 */

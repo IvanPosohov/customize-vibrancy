@@ -2,6 +2,8 @@ package ru.ivanp.vibro.views;
 
 import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.utils.Pref;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -40,4 +42,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
 		return false;
 	}
+	
+    // ============================================================================================
+    // METHODS
+    // ============================================================================================
+    public static void startActivity(Context _context) {
+        Intent intent = new Intent(_context, SettingsActivity.class);
+        _context.startActivity(intent);
+    }
 }

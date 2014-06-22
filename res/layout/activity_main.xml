@@ -1,32 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <!-- "ACTION BAR" -->
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ab_transparent_dark_holo"
-        android:minHeight="@dimen/action_bar_default_height" >
-
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/step2"
-            android:src="@drawable/logo"
-            android:clickable="true" />
-    </LinearLayout>
-
-    <!-- LIST -->
-
-    <ListView
-        android:id="@+id/lv"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-</LinearLayout>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:scrollbarStyle="outsideOverlay" 
+    android:padding="@dimen/step2" />

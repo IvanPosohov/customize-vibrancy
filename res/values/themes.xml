@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="CustomizeVibrancy" parent="@style/Theme.AppCompat">
         <item name="android:windowBackground">@android:color/black</item>
-	</style>
+        <!-- ListView -->
+        <item name="android:listViewStyle">@style/CustomizeVibrancy.ListView</item>
+    </style>
+
 </resources>
