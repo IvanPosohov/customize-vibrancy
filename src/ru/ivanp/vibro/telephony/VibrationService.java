@@ -1,10 +1,9 @@
 package ru.ivanp.vibro.telephony;
 
-import java.lang.ref.WeakReference;
-
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.utils.Pref;
+import ru.ivanp.vibro.utils.WeakEventHandler;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
@@ -15,9 +14,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
+import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
 
@@ -61,17 +59,16 @@ public class VibrationService extends Service {
 			notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 			// set the icon, scrolling text and timestamp
-			Notification notification = new Notification(R.drawable.ic_notification,
-					getText(R.string.app_name), System.currentTimeMillis());
+			Notification notification = new Notification(R.drawable.ic_notification, getText(R.string.app_name),
+					System.currentTimeMillis());
 
 			// the PendingIntent to launch our activity if the user selects this
 			// notification
-			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-					MainActivity.class), 0);
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
 			// set the info for the views that show in the notification panel.
-			notification.setLatestEventInfo(this, getText(R.string.app_name),
-					getText(R.string.app_name), contentIntent);
+			notification
+					.setLatestEventInfo(this, getText(R.string.app_name), getText(R.string.app_name), contentIntent);
 
 			// send the notification.
 			notificationManager.notify(NOTIFICATION_ID, notification);
@@ -83,8 +80,7 @@ public class VibrationService extends Service {
 		handler = new LocalHandler(this);
 		// create wake lock to keep screen on
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm.newWakeLock(
-				PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+		wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
 				"Customize Vibrancy");
 		wakeLock.acquire();
 
@@ -159,31 +155,21 @@ public class VibrationService extends Service {
 	}
 
 	// ============================================================================================
-	// INTERNAL CLASSES
+	// LOCAL HANDLER
 	// ============================================================================================
-	/**
-	 * Local event handler
-	 */
-	private static class LocalHandler extends Handler {
-		private WeakReference<VibrationService> mTarget;
-
-		private LocalHandler(VibrationService _target) {
-			mTarget = new WeakReference<VibrationService>(_target);
+	private static class LocalHandler extends WeakEventHandler<VibrationService> {
+		private LocalHandler(VibrationService _owner) {
+			super(_owner);
 		}
 
 		@Override
-		public void handleMessage(Message msg) {
-			VibrationService target = mTarget.get();
-			if (target == null) {
-				return;
-			}
-			switch (msg.what) {
+		public void handleEvent(VibrationService _owner, int _eventId, Bundle _data) {
+			switch (_eventId) {
 			case Player.EVENT_PLAYING_FINISHED:
 				// stops service after playing finished
-				target.stopSelf();
+				_owner.stopSelf();
 				break;
 			}
-			super.handleMessage(msg);
 		}
 	}
 }

@@ -1,13 +1,11 @@
 package ru.ivanp.vibro.vibrations;
 
-import java.lang.ref.WeakReference;
-
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.utils.EventDispatcher;
-
+import ru.ivanp.vibro.utils.WeakEventHandler;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.immersion.uhl.Device;
@@ -27,18 +25,18 @@ public class Player extends EventDispatcher {
 	// CONSTANTS
 	// ============================================================================================
 	/**
-	 * Playing finished event code. Event with such code occurs when vibration
-	 * stops (manually or in the end of not repeated pattern)
+	 * Playing finished event code. Event with such code occurs when vibration stops (manually or in
+	 * the end of not repeated pattern)
 	 */
 	public static final int EVENT_PLAYING_FINISHED = 100;
 	/**
-	 * Pattern finished event code. Event with such code occurs every time when
-	 * pattern finished playing
+	 * Pattern finished event code. Event with such code occurs every time when pattern finished
+	 * playing
 	 */
 	private static final int EVENT_PATTERN_FINISHED = 101;
 	/**
-	 * Element finished event code. Event with such code occurs when one of the
-	 * user vibration element finished playing
+	 * Element finished event code. Event with such code occurs when one of the user vibration
+	 * element finished playing
 	 */
 	private static final int EVENT_ELEMENT_FINISHED = 102;
 
@@ -64,8 +62,7 @@ public class Player extends EventDispatcher {
 			device = Device.newDevice(_context);
 			launcher = new Launcher(_context);
 			immVibe = ImmVibe.getInstance();
-			effect = new MagSweepEffectDefinition(Integer.MAX_VALUE, 0, ImmVibe.VIBE_STYLE_SMOOTH,
-					0, 0, 0, 0, 0);
+			effect = new MagSweepEffectDefinition(Integer.MAX_VALUE, 0, ImmVibe.VIBE_STYLE_SMOOTH, 0, 0, 0, 0, 0);
 		} catch (RuntimeException e) {
 			Log.e("Player.init", "Create new device failed!", e);
 		}
@@ -81,8 +78,7 @@ public class Player extends EventDispatcher {
 	 */
 	public void stop() {
 		try {
-			if (playing == null || playing instanceof IVTVibration
-					|| playing instanceof UserVibration) {
+			if (playing == null || playing instanceof IVTVibration || playing instanceof UserVibration) {
 				device.stopAllPlayingEffects();
 			} else {
 				launcher.stop();
@@ -111,9 +107,8 @@ public class Player extends EventDispatcher {
 	}
 
 	/**
-	 * If there aren't playing vibrations start to play passed. If passed
-	 * vibration is matched to playing - stop playing. If passed vibration is
-	 * not matched to playing - play passed vibration
+	 * If there aren't playing vibrations start to play passed. If passed vibration is matched to
+	 * playing - stop playing. If passed vibration is not matched to playing - play passed vibration
 	 */
 	public void playOrStop(Vibration _vibration) {
 		if (playing == null) {
@@ -158,8 +153,7 @@ public class Player extends EventDispatcher {
 	private void playIVT(IVTVibration _ivtVibration) {
 		playing = _ivtVibration;
 		device.playIVTEffect(App.getVibrationManager().getIVTBuffer(), _ivtVibration.ivtID);
-		int duration = App.getVibrationManager().getIVTBuffer()
-				.getEffectDuration(_ivtVibration.ivtID);
+		int duration = App.getVibrationManager().getIVTBuffer().getEffectDuration(_ivtVibration.ivtID);
 		// fire event after playing finished
 		handler.sendEmptyMessageDelayed(EVENT_PATTERN_FINISHED, duration);
 	}
@@ -170,8 +164,8 @@ public class Player extends EventDispatcher {
 	private void playUser(UserVibration _userVibration) {
 		playing = _userVibration;
 		/*
-		 * user vibration are stored like array of [[magnitude,time]...]
-		 * elements, so to play user vibration we just play each element of it
+		 * user vibration are stored like array of [[magnitude,time]...] elements, so to play user
+		 * vibration we just play each element of it
 		 */
 		playingElementIndex = 0;
 		playingElementCount = _userVibration.getElements().length;
@@ -179,8 +173,8 @@ public class Player extends EventDispatcher {
 	}
 
 	/**
-	 * Find next element of playing user vibration and play it, or finish
-	 * vibration if there are no more elements
+	 * Find next element of playing user vibration and play it, or finish vibration if there are no
+	 * more elements
 	 */
 	private void playNextElement() {
 		if (playingElementIndex == playingElementCount) {
@@ -213,33 +207,32 @@ public class Player extends EventDispatcher {
 	// ============================================================================================
 	// INTERNAL CLASSES
 	// ============================================================================================
-	private static class LocalHandler extends Handler {
-		private WeakReference<Player> mTarget;
-
-		private LocalHandler(Player _target) {
-			mTarget = new WeakReference<Player>(_target);
+	// ============================================================================================
+	// LOCAL HANDLER
+	// ============================================================================================
+	private static class LocalHandler extends WeakEventHandler<Player> {
+		private LocalHandler(Player _owner) {
+			super(_owner);
 		}
 
 		@Override
-		public void handleMessage(Message msg) {
-			Player target = mTarget.get();
-			switch (msg.what) {
+		public void handleEvent(Player _owner, int _eventId, Bundle _data) {
+			switch (_eventId) {
 			case EVENT_PATTERN_FINISHED:
 				/*
-				 * if need to play pattern in cycle just call play() with
-				 * current playing pattern argument, otherwise call stop()
+				 * if need to play pattern in cycle just call play() with current playing pattern
+				 * argument, otherwise call stop()
 				 */
-				if (target.repeat) {
-					target.play(target.playing);
+				if (_owner.repeat) {
+					_owner.play(_owner.playing);
 				} else {
-					target.stop();
+					_owner.stop();
 				}
 				break;
 			case EVENT_ELEMENT_FINISHED:
-				target.playNextElement();
+				_owner.playNextElement();
 				break;
 			}
-			super.handleMessage(msg);
 		}
 	}
 }

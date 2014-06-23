@@ -1,16 +1,12 @@
 package ru.ivanp.vibro.views;
 
-import java.lang.ref.WeakReference;
-
 import com.immersion.uhl.ImmVibe;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
-import ru.ivanp.vibro.R.color;
-import ru.ivanp.vibro.R.id;
-import ru.ivanp.vibro.R.layout;
-import ru.ivanp.vibro.R.menu;
-import ru.ivanp.vibro.R.string;
+import ru.ivanp.vibro.utils.Timer;
+import ru.ivanp.vibro.utils.Timer.OnTimerTickListener;
+import ru.ivanp.vibro.utils.WeakEventHandler;
 import ru.ivanp.vibro.vibrations.Morse;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.UserVibration;
@@ -20,8 +16,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -45,7 +39,7 @@ import android.widget.TextView;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MorseActivity extends Activity implements OnClickListener {
+public class MorseActivity extends Activity implements OnClickListener, OnTimerTickListener {
 	// ============================================================================================
 	// ENUMS
 	// ============================================================================================
@@ -54,8 +48,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 	 */
 	private static enum MorseState {
 		/**
-		 * Activity is ready to input/change text which will be translated into
-		 * vibration pattern
+		 * Activity is ready to input/change text which will be translated into vibration pattern
 		 */
 		IDLE,
 
@@ -68,7 +61,6 @@ public class MorseActivity extends Activity implements OnClickListener {
 	// ============================================================================================
 	// CONSTANTS
 	// ============================================================================================
-	private static final int TIMER_TICK_WHAT = 0;
 	/**
 	 * Timer text update interval in milliseconds
 	 */
@@ -89,6 +81,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 	private int timeUnitLong;
 	// fields
 	private LocalHandler localHandler;
+	private Timer timer;
 	private MorseState state;
 	private long timerStartTime;
 	private int vibrationLength;
@@ -103,6 +96,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_morse);
 		setupWidgets();
 		localHandler = new LocalHandler(this);
+		timer = new Timer(INTERVAL_TIMER_TICK, this);
 		recording = new UserVibration(App.getVibrationManager().getEmptyId());
 	}
 
@@ -213,8 +207,8 @@ public class MorseActivity extends Activity implements OnClickListener {
 		state = _state;
 		boolean gotVibration = vibrationLength > 0;
 
-		text_time_cur.setTextColor(state == MorseState.IDLE ? getResources().getColor(R.color.gray)
-				: getResources().getColor(R.color.white));
+		text_time_cur.setTextColor(state == MorseState.IDLE ? getResources().getColor(R.color.gray) : getResources()
+				.getColor(R.color.white));
 
 		txt_input.setEnabled(state == MorseState.IDLE);
 
@@ -259,12 +253,10 @@ public class MorseActivity extends Activity implements OnClickListener {
 		stop();
 
 		LinearLayout linearLayout = new LinearLayout(this);
-		linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT));
+		linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		final EditText txt = new EditText(this);
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		lp.setMargins(30, 30, 30, 30);
 		txt.setLayoutParams(lp);
 		String baseName = txt_input.getText().toString();
@@ -283,8 +275,8 @@ public class MorseActivity extends Activity implements OnClickListener {
 				String name = txt.getText().toString().trim();
 				if (!name.equals("")) {
 					recording.setName(name);
-					recording.setElements(Morse.translate(txt_input.getText().toString(),
-							intensityLevel * ImmVibe.VIBE_MAX_MAGNITUDE / 100, timeUnitLong));
+					recording.setElements(Morse.translate(txt_input.getText().toString(), intensityLevel
+							* ImmVibe.VIBE_MAX_MAGNITUDE / 100, timeUnitLong));
 					App.getVibrationManager().add(recording);
 					App.getVibrationManager().storeUserVibrations();
 					dialog.dismiss();
@@ -302,18 +294,18 @@ public class MorseActivity extends Activity implements OnClickListener {
 
 	private void startTimer() {
 		timerStartTime = SystemClock.elapsedRealtime();
-		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
+		timer.start();
 	}
 
 	private void stopTimer() {
 		text_time_cur.setText(formatTimer(0));
-		localHandler.removeMessages(TIMER_TICK_WHAT);
+		timer.stop();
 	}
 
-	private void onTimerTick() {
+	@Override
+	public void onTimerTick() {
 		int diff = (int) (SystemClock.elapsedRealtime() - timerStartTime);
 		text_time_cur.setText(formatTimer(diff));
-		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
 	}
 
 	/**
@@ -340,8 +332,7 @@ public class MorseActivity extends Activity implements OnClickListener {
 	 */
 	private class MorseFilter implements InputFilter {
 		@Override
-		public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
-				int dstart, int dend) {
+		public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
 			char[] v = new char[end - start];
 			TextUtils.getChars(source, start, end, v, 0);
 			// to upper case
@@ -381,28 +372,21 @@ public class MorseActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	/**
-	 * Message handler for MorseActivity
-	 */
-	private static class LocalHandler extends Handler {
-		private WeakReference<MorseActivity> mTarget;
-
-		private LocalHandler(MorseActivity _target) {
-			mTarget = new WeakReference<MorseActivity>(_target);
+	// ============================================================================================
+	// LOCAL HANDLER
+	// ============================================================================================
+	private static class LocalHandler extends WeakEventHandler<MorseActivity> {
+		private LocalHandler(MorseActivity _owner) {
+			super(_owner);
 		}
 
 		@Override
-		public void handleMessage(Message msg) {
-			MorseActivity target = mTarget.get();
-			switch (msg.what) {
-			case TIMER_TICK_WHAT:
-				target.onTimerTick();
-				break;
+		public void handleEvent(MorseActivity _owner, int _eventId, Bundle _data) {
+			switch (_eventId) {
 			case Player.EVENT_PLAYING_FINISHED:
-				target.stop();
+				_owner.stop();
 				break;
 			}
-			super.handleMessage(msg);
 		}
 	}
 }

@@ -1,8 +1,7 @@
 package ru.ivanp.vibro.telephony;
 
-import java.lang.ref.WeakReference;
-
 import ru.ivanp.vibro.App;
+import ru.ivanp.vibro.utils.WeakEventHandler;
 import ru.ivanp.vibro.vibrations.Player;
 import android.app.Service;
 import android.content.ContentResolver;
@@ -11,9 +10,9 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.util.Log;
 
 /**
@@ -111,8 +110,7 @@ public class SmsService extends Service {
 	 * @return unread SMS count
 	 */
 	synchronized private int getUnreadSmsCount(Context _context) {
-		Cursor cursor = _context.getContentResolver()
-				.query(SMS_INBOX, null, "read = 0", null, null);
+		Cursor cursor = _context.getContentResolver().query(SMS_INBOX, null, "read = 0", null, null);
 		int count = 0;
 		if (cursor != null) {
 			count = cursor.getCount();
@@ -122,25 +120,19 @@ public class SmsService extends Service {
 	}
 
 	// ============================================================================================
-	// INTERNAL CLASSES
+	// LOCAL HANDLER
 	// ============================================================================================
-	/**
-	 * Local event handler
-	 */
-	private static class LocalHandler extends Handler {
-		private WeakReference<SmsService> mTarget;
-
-		private LocalHandler(SmsService _target) {
-			mTarget = new WeakReference<SmsService>(_target);
+	private static class LocalHandler extends WeakEventHandler<SmsService> {
+		private LocalHandler(SmsService _owner) {
+			super(_owner);
 		}
 
 		@Override
-		public void handleMessage(Message msg) {
-			SmsService target = mTarget.get();
-			if (target != null && msg.what == Player.EVENT_PLAYING_FINISHED) {
-				target.stopSelf();
+		public void handleEvent(SmsService _owner, int _eventId, Bundle _data) {
+			switch (_eventId) {
+			case Player.EVENT_PLAYING_FINISHED:
+				_owner.stopSelf();
 			}
-			super.handleMessage(msg);
 		}
 	}
 }

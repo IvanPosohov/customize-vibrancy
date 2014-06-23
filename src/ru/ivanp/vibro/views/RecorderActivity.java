@@ -1,6 +1,5 @@
 package ru.ivanp.vibro.views;
 
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,12 +8,7 @@ import com.immersion.uhl.ImmVibe;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
-import ru.ivanp.vibro.R.color;
-import ru.ivanp.vibro.R.drawable;
-import ru.ivanp.vibro.R.id;
-import ru.ivanp.vibro.R.layout;
-import ru.ivanp.vibro.R.menu;
-import ru.ivanp.vibro.R.string;
+import ru.ivanp.vibro.utils.WeakEventHandler;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.UserVibration;
 import ru.ivanp.vibro.vibrations.VibrationElement;
@@ -24,8 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -57,9 +49,8 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	 */
 	private static enum RecorderState {
 		/**
-		 * Recorder is ready for record/play. Recording will start after button
-		 * REC or after touch recording layout. Playing will start after button
-		 * PLAY
+		 * Recorder is ready for record/play. Recording will start after button REC or after touch
+		 * recording layout. Playing will start after button PLAY
 		 */
 		IDLE,
 
@@ -186,8 +177,7 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 						int height = v.getMeasuredHeight();
 						float percent = y < 0 ? 1 : y > height ? 0 : (height - y) / (float) height;
 						intensity = (int) (percent * ImmVibe.VIBE_MAX_MAGNITUDE);
-						text_intensity_current
-								.setText(String.format("%d%%", (int) (percent * 100)));
+						text_intensity_current.setText(String.format("%d%%", (int) (percent * 100)));
 					}
 
 					App.getPlayer().playMagnitude(intensity);
@@ -205,8 +195,7 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 				int diff = (int) (now - lastTouchTime);
 				elements.add(new VibrationElement(diff, lastIntensity));
 				/*
-				 * Log.d("Recorder.onTouch", "diff=" + diff + ", intensity=" +
-				 * lastIntensity);
+				 * Log.d("Recorder.onTouch", "diff=" + diff + ", intensity=" + lastIntensity);
 				 */
 				lastTouchTime = now;
 				lastIntensity = intensity;
@@ -268,8 +257,7 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	 */
 	private void loadPreferences() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-		isIntensityFixed = pref
-				.getBoolean(RecorderSettingsActivity.RECORDER_FIXED_MAGNITUDE, false);
+		isIntensityFixed = pref.getBoolean(RecorderSettingsActivity.RECORDER_FIXED_MAGNITUDE, false);
 		intensityLevel = pref.getInt(RecorderSettingsActivity.RECORDER_MAGNITUDE, 100);
 		isLengthLimited = pref.getBoolean(RecorderSettingsActivity.RECORDER_LIMIT_DURATION, false);
 		lengthPatternLimit = pref.getInt(RecorderSettingsActivity.RECORDER_DURATION, 60);
@@ -286,16 +274,13 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 		boolean gotVibration = elements.size() > 0;
 
 		prgb_dot.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.GONE);
-		text_time_cur.setTextColor(state == RecorderState.IDLE ? getResources().getColor(
-				R.color.gray) : getResources().getColor(R.color.white));
-		text_intensity_current.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE
-				: View.INVISIBLE);
-		text_time_total.setVisibility(state == RecorderState.RECORDING || !gotVibration ? View.GONE
-				: View.VISIBLE);
+		text_time_cur.setTextColor(state == RecorderState.IDLE ? getResources().getColor(R.color.gray) : getResources()
+				.getColor(R.color.white));
+		text_intensity_current.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.INVISIBLE);
+		text_time_total.setVisibility(state == RecorderState.RECORDING || !gotVibration ? View.GONE : View.VISIBLE);
 
-		layout_touch.setBackgroundDrawable(state == RecorderState.RECORDING ? getResources()
-				.getDrawable(R.drawable.recorder_touch_panel_active) : getResources().getDrawable(
-				R.drawable.recorder_touch_panel));
+		layout_touch.setBackgroundDrawable(state == RecorderState.RECORDING ? getResources().getDrawable(
+				R.drawable.recorder_touch_panel_active) : getResources().getDrawable(R.drawable.recorder_touch_panel));
 
 		if (state == RecorderState.IDLE) {
 			text_state.setText(isBlockedFromTap ? R.string.rec_to_start : R.string.touch_to_start);
@@ -351,12 +336,10 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 		stop();
 
 		LinearLayout linearLayout = new LinearLayout(this);
-		linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT));
+		linearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
 		final EditText txt = new EditText(this);
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		lp.setMargins(30, 30, 30, 30);
 		txt.setLayoutParams(lp);
 		String baseName = "Untitled-" + new SimpleDateFormat("HH:mm:ss").format(new Date());
@@ -430,30 +413,23 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	}
 
 	// ============================================================================================
-	// INTERNAL CLASSES
+	// LOCAL HANDLER
 	// ============================================================================================
-	/**
-	 * Message handler for RecorderActivity
-	 */
-	private static class LocalHandler extends Handler {
-		private WeakReference<RecorderActivity> mTarget;
-
-		private LocalHandler(RecorderActivity _target) {
-			mTarget = new WeakReference<RecorderActivity>(_target);
+	private static class LocalHandler extends WeakEventHandler<RecorderActivity> {
+		private LocalHandler(RecorderActivity _owner) {
+			super(_owner);
 		}
 
 		@Override
-		public void handleMessage(Message msg) {
-			RecorderActivity target = mTarget.get();
-			switch (msg.what) {
+		public void handleEvent(RecorderActivity _owner, int _eventId, Bundle _data) {
+			switch (_eventId) {
 			case TIMER_TICK_WHAT:
-				target.onTimerTick();
+				_owner.onTimerTick();
 				break;
 			case Player.EVENT_PLAYING_FINISHED:
-				target.stop();
+				_owner.stop();
 				break;
 			}
-			super.handleMessage(msg);
 		}
 	}
 }

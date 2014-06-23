@@ -3,18 +3,17 @@ package ru.ivanp.vibro.telephony;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.utils.Pref;
+import ru.ivanp.vibro.utils.Timer;
+import ru.ivanp.vibro.utils.Timer.OnTimerTickListener;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -24,7 +23,7 @@ import android.util.Log;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class CallService extends Service {
+public class CallService extends Service implements OnTimerTickListener {
 	// ============================================================================================
 	// CONSTANTS
 	// ============================================================================================
@@ -33,7 +32,7 @@ public class CallService extends Service {
 	// ============================================================================================
 	// FIELDS
 	// ============================================================================================
-	private TimerHandler handler;
+	private Timer timer;
 	private LogThread logThread;
 	private int callTimeIntervalVibrationID;
 	private long callStartTime;
@@ -45,11 +44,11 @@ public class CallService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		boolean startLogWatcher = intent.getBooleanExtra(START_LOG_WATCHER_KEY, false);
 
-		handler = new TimerHandler(this);
+		timer = new Timer(1000, this);
 
 		/*
-		 * when we got outgoing call, we need to start log parser to know to
-		 * know when user on the over side pick up the phone
+		 * when we got outgoing call, we need to start log parser to know to know when user on the
+		 * over side pick up the phone
 		 */
 		if (startLogWatcher) {
 			startLogWatcher();
@@ -59,8 +58,7 @@ public class CallService extends Service {
 		}
 
 		if (App.DEBUG) {
-			Log.d("CallService.onStartCommand", "Service started, startLogWatcher="
-					+ startLogWatcher);
+			Log.d("CallService.onStartCommand", "Service started, startLogWatcher=" + startLogWatcher);
 		}
 
 		return START_NOT_STICKY;
@@ -71,7 +69,7 @@ public class CallService extends Service {
 		super.onDestroy();
 
 		App.getPlayer().stop();
-		handler.removeMessages(0);
+		timer.stop();
 		if (logThread != null) {
 			logThread.kill();
 		}
@@ -95,9 +93,8 @@ public class CallService extends Service {
 	 * @param _context
 	 *            application context
 	 * @param _startLogWatcher
-	 *            if true Log watcher thread will be started at first, to know
-	 *            to know when user on the over side pick up the phone,
-	 *            otherwise minute interval timer will be started
+	 *            if true Log watcher thread will be started at first, to know to know when user on
+	 *            the over side pick up the phone, otherwise minute interval timer will be started
 	 */
 	public static void start(Context _context, boolean _startLogWatcher) {
 		Intent intent = new Intent(_context, CallService.class);
@@ -122,21 +119,21 @@ public class CallService extends Service {
 
 	private void startTimer() {
 		// find interval vibration
-		callTimeIntervalVibrationID = App.getTriggerManager().getVibrationID(
-				Trigger.CALL_TIME_INTERVAL);
+		callTimeIntervalVibrationID = App.getTriggerManager().getVibrationID(Trigger.CALL_TIME_INTERVAL);
 
 		if (callTimeIntervalVibrationID != VibrationsManager.NO_VIBRATION_ID) {
 			// remember start timer time
 			callStartTime = SystemClock.elapsedRealtime();
 			// start timer
-			handler.sendEmptyMessage(0);
+			timer.start();
 		} else {
 			// no vibration nothing to do so stop self
 			stopSelf();
 		}
 	}
 
-	private void onTimerTick() {
+	@Override
+	public void onTimerTick() {
 		// find difference between real time and start time in seconds
 		long diff = Math.round((SystemClock.elapsedRealtime() - callStartTime) / 1000.0);
 		if (App.DEBUG) {
@@ -144,8 +141,7 @@ public class CallService extends Service {
 		}
 		if (diff % 60 == Pref.minuteInterval) {
 			if (App.DEBUG) {
-				Log.d("CallService.onTimerTick", "play call time interval vibration, diff = "
-						+ diff);
+				Log.d("CallService.onTimerTick", "play call time interval vibration, diff = " + diff);
 			}
 			VibrationService.start(getApplicationContext(), callTimeIntervalVibrationID, false, -1);
 		}
@@ -155,8 +151,7 @@ public class CallService extends Service {
 		if (App.DEBUG) {
 			Log.d("CallService.onPick", "picked up, starting timer");
 		}
-		int pickedUpPhoneVibrationID = App.getTriggerManager().getVibrationID(
-				Trigger.PICK_UP_THE_PHONE);
+		int pickedUpPhoneVibrationID = App.getTriggerManager().getVibrationID(Trigger.PICK_UP_THE_PHONE);
 		if (pickedUpPhoneVibrationID != VibrationsManager.NO_VIBRATION_ID) {
 			if (App.DEBUG) {
 				Log.d("CallService.onPick", "play picked up vibration");
@@ -170,28 +165,6 @@ public class CallService extends Service {
 	// ============================================================================================
 	// INTERNAL CLASSES
 	// ============================================================================================
-	/**
-	 * Timer event handler
-	 */
-	private static class TimerHandler extends Handler {
-		private WeakReference<CallService> mTarget;
-
-		private TimerHandler(CallService _target) {
-			mTarget = new WeakReference<CallService>(_target);
-		}
-
-		@Override
-		public void handleMessage(Message msg) {
-			CallService target = mTarget.get();
-			if (target == null) {
-				return;
-			}
-			target.onTimerTick();
-			sendEmptyMessageDelayed(0, 1000);
-			super.handleMessage(msg);
-		}
-	}
-
 	private class LogThread extends Thread {
 		private boolean isRunning = true;
 		private long startTime;
