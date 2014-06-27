@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements OnItemClickListen
 	public boolean onItemLongClick(AdapterView<?> _adapter, View _view, int _position, long _id) {
 		// open SelectVibrationActivity on long click
 		Trigger trigger = (Trigger) _adapter.getItemAtPosition(_position);
-		SelectVibrationActivity.start(this, trigger.id);
+		SelectVibrationActivity.startActivity(this, trigger.id);
 		return true;
 	}
 

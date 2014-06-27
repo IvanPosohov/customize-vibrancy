@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.immersion.uhl.ImmVibe;
-
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.utils.WeakEventHandler;
@@ -34,6 +32,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.immersion.uhl.ImmVibe;
 
 /**
  * Activity for pattern recording via touching the screen
@@ -228,6 +228,11 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	// ============================================================================================
 	// METHODS
 	// ============================================================================================
+	public static void startActivityForResult(Activity _parentActivity) {
+		Intent intent = new Intent(_parentActivity, RecorderActivity.class);
+		_parentActivity.startActivityForResult(intent, 0);
+	}
+
 	/**
 	 * Process widgets setup
 	 */

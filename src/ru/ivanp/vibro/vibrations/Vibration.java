@@ -95,6 +95,13 @@ public class Vibration {
 		name = _name;
 	}
 
+	// ============================================================================================
+	// METHODS
+	// ============================================================================================
+	public boolean isDeletable() {
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return name;

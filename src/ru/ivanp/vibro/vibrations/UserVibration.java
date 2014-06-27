@@ -83,8 +83,13 @@ public class UserVibration extends Vibration {
 	}
 
 	// ============================================================================================
-	// CONSTRUCTOR
+	// METHODS
 	// ============================================================================================
+	@Override
+	public boolean isDeletable() {
+		return true;
+	}
+	
 	/**
 	 * Counts vibration length
 	 * 

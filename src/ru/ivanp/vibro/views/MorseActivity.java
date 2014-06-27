@@ -163,6 +163,11 @@ public class MorseActivity extends Activity implements OnClickListener, OnTimerT
 	// ============================================================================================
 	// METHODS
 	// ============================================================================================
+	public static void startActivityForResult(Activity _parentActivity) {
+		Intent intent = new Intent(_parentActivity, MorseActivity.class);
+		_parentActivity.startActivityForResult(intent, 0);
+	}
+	
 	/**
 	 * Process widgets setup
 	 */

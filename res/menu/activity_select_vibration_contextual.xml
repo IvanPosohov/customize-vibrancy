@@ -2,8 +2,8 @@
     xmlns:this="http://schemas.android.com/apk/res/ru.ivanp.vibro" >
 
     <item
-        android:id="@+id/menu_new"
-        android:icon="@drawable/ic_action_new"
+        android:id="@+id/menu_remove"
+        android:icon="@drawable/ic_action_remove"
         android:title="@string/create_new_vibration"
         this:showAsAction="always"/>
 

@@ -209,18 +209,6 @@ public final class TriggerManager {
 	}
 
 	/**
-	 * Checks if user is allowed to create custom vibration
-	 * 
-	 * @param _triggerID
-	 *            trigger identifier (use this class constants)
-	 * @return true if user is allowed to create custom vibration, false
-	 *         otherwise
-	 */
-	public boolean isCustomVibrationAllowed(int _triggerID) {
-		return _triggerID != Trigger.INCOMING_CALL && _triggerID != Trigger.INCOMING_SMS;
-	}
-
-	/**
 	 * Set pattern identifier to specified trigger
 	 * 
 	 * @param _triggerID

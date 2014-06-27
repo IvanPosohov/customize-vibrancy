@@ -1,8 +1,8 @@
 package ru.ivanp.vibro.vibrations;
 
 /**
- * Trigger it is an event (e.g. incoming call, change of Internet available
- * etc.) on which application may react(vibrate).
+ * Trigger it is an event (e.g. incoming call, change of Internet available etc.) on which
+ * application may react(vibrate).
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
@@ -89,5 +89,17 @@ public class Trigger {
 		id = _id;
 		name = _name;
 		vibrationID = _vibrationID;
+	}
+
+	// ==============================================================================================
+	// METHODS
+	// ==============================================================================================
+	/**
+	 * Checks if user is allowed to create custom vibration
+	 * 
+	 * @return if user is allowed to create custom vibration
+	 */
+	public boolean isCustomVibrationAllowed() {
+		return id == INCOMING_CALL || id == INCOMING_SMS;
 	}
 }
