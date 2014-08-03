@@ -46,7 +46,7 @@
             android:entries="@array/list_minutes"
             android:entryValues="@array/list_minutes_values"
             android:key="missed_sms_interval"
-            android:title="@string/settings_missed_sms_interval" />
+            android:title="@string/settings_missed_sms_interval" />
     -->
 
 </PreferenceScreen>
