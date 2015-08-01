@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- TITLE -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ab_transparent_dark_holo"
+        android:minHeight="@dimen/action_bar_default_height" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="2dip"
+            android:layout_weight="0"
+            android:drawablePadding="0dip"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/step2"
+            android:paddingRight="@dimen/step2"
+            android:text="Testing activity"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary_text_holo_dark"
+            android:textSize="@dimen/action_bar_title_text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/step2" >
+
+            <!-- PLAYER -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="PLAYER"
+                android:textColor="@color/blue" />
+
+            <!-- Simple -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="Simple vibrations"
+                android:textColor="@color/white" />
+
+            <SeekBar
+                android:id="@+id/seekBar_player"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="100" />
+
+            <!-- Not cycle -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="Not cycle"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/step2" >
+
+                <Button
+                    android:id="@+id/btn_player_preset"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Preset" />
+
+                <Button
+                    android:id="@+id/btn_player_ivt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/step2"
+                    android:text="IVT" />
+
+                <Button
+                    android:id="@+id/btn_player_user"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/step2"
+                    android:text="User" />
+            </LinearLayout>
+
+            <!-- Cycle -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Cycled"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/step2" >
+
+                <Button
+                    android:id="@+id/btn_player_preset_cycled"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Preset" />
+
+                <Button
+                    android:id="@+id/btn_player_ivt_cycled"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/step2"
+                    android:text="IVT" />
+
+                <Button
+                    android:id="@+id/btn_player_user_cycled"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/step2"
+                    android:text="User" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_player_stop"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="Stop" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/gray" />
+
+            <!-- TRIGGERS -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="TRIGGERS"
+                android:textColor="@color/blue" />
+
+            <Button
+                android:id="@+id/btn_triggers_kill_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="Kill sevice" />
+
+            <Button
+                android:id="@+id/btn_triggers_incoming_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step2"
+                android:text="Incoming call" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
