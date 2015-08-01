@@ -7,24 +7,20 @@ import ru.ivanp.vibro.R;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.util.Linkify;
 import android.text.util.Linkify.TransformFilter;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 /**
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class AboutActivity extends ActionBarActivity {
+public class AboutActivity extends BaseActivity {
 	// ============================================================================================
 	// LIFECYCLE
 	// ============================================================================================
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		setContentView(R.layout.activity_about);
 
 		TextView textVersion = (TextView) findViewById(R.id.textVersion);
@@ -39,19 +35,6 @@ public class AboutActivity extends ActionBarActivity {
 		Linkify.addLinks(textFeedback, App.EMAIL_ADDRESS_PATTERN, "mailto:", null, addSubjFilter);
 	}
 
-	// ============================================================================================
-	// MENU
-	// ============================================================================================
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
     // ============================================================================================
     // METHODS
     // ============================================================================================

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="step">5dp</dimen>
     <dimen name="step2">10dp</dimen>
     <dimen name="step3">15dp</dimen>
     <dimen name="radius">3dp</dimen>
@@ -11,4 +10,7 @@
     <!-- Text size for action bar titles -->
     <dimen name="action_bar_title_text_size">18dp</dimen>
 
+    <dimen name="step">16dp</dimen>
+    <dimen name="half_step">8dp</dimen>
+    <dimen name="two_line_list_item_height">72dp</dimen>
 </resources>

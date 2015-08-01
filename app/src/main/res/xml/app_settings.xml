@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -27,7 +27,7 @@
 
     <!-- ABOUT -->
 
-    <PreferenceCategory android:title="@string/about" >
+    <PreferenceCategory android:title="@string/about">
         <Preference
             android:key="about"
             android:summary="@string/about_summary"
@@ -46,7 +46,10 @@
             android:entries="@array/list_minutes"
             android:entryValues="@array/list_minutes_values"
             android:key="missed_sms_interval"
-            android:title="@string/settings_missed_sms_interval" />
+            android:title="@string/settings_missed_sms_interval" />
+
+
+
     -->
 
 </PreferenceScreen>

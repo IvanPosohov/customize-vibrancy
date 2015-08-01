@@ -47,8 +47,10 @@ public class Pref {
 	public static void save(Context _context) {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
 		SharedPreferences.Editor editor = pref.edit();
-		// now all preferences are save automatically in PreferencesActivities
-		editor.commit();
+
+		editor.putBoolean(VIBRATION_ENABLED_KEY, vibrationEnabled);
+
+		editor.apply();
 
 		if (App.DEBUG) {
 			Log.d("Pref.save", "Preferences saved");

@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "ru.ivanp.vibro"
-        minSdkVersion 7
-        targetSdkVersion 19
+        minSdkVersion 10
+        targetSdkVersion 22
+        versionCode 7
+        versionName "3.0"
     }
 
     buildTypes {
@@ -19,6 +21,11 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.1.0'
-    compile files('libs/UHL.jar')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile('com.mikepenz:materialdrawer:3.0.7@aar') {
+        transitive = true
+    }
 }

@@ -15,7 +15,8 @@
             android:orientation="horizontal" >
 
             <!-- LOGO -->
-            <ImageView
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/step2"
             android:text="@string/authors"
-            android:textColor="@color/blue" />
+            android:textColor="@color/accent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/step2"
             android:text="@string/description"
-            android:textColor="@color/blue" />
+            android:textColor="@color/accent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/step2"
             android:text="@string/feedback"
-            android:textColor="@color/blue" />
+            android:textColor="@color/accent" />
 
         <TextView
             android:id="@+id/textFeedback"

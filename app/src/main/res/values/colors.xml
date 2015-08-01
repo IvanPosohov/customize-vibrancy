@@ -4,9 +4,11 @@
     <color name="bright_foreground_holo_dark">#fff3f3f3</color>
     <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
     <color name="white">#FFFFFF</color>
-    <color name="blue">#33B5E5</color>
-    <color name="gray_light">#A3A3A3</color>
     <color name="gray">#5B5B5B</color>
-    <color name="gray_dark">#3B3B3B</color>
 
+    <color name="primary">#212121</color>
+    <color name="primary_dark">#000000</color>
+    <color name="primary_light">#424242</color>
+    <color name="accent">#2196F3</color>
+    <color name="divider">#B6B6B6</color>
 </resources>

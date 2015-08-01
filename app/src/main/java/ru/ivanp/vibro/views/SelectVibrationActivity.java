@@ -8,12 +8,11 @@ import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,7 +31,7 @@ import android.widget.TextView;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class SelectVibrationActivity extends ActionBarActivity implements OnItemClickListener, OnItemLongClickListener {
+public class SelectVibrationActivity extends BaseActivity implements OnItemClickListener, OnItemLongClickListener {
 	// ============================================================================================
 	// CONSTANTS
 	// ============================================================================================
@@ -56,7 +55,6 @@ public class SelectVibrationActivity extends ActionBarActivity implements OnItem
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_select_vibration);
 
 		int customizableTriggerId = getIntent().getIntExtra(TRIGGER_ID_KEY, -1);
@@ -191,7 +189,7 @@ public class SelectVibrationActivity extends ActionBarActivity implements OnItem
 	 * 
 	 * @param _context
 	 *            application context
-	 * @param _triggerID
+	 * @param _triggerId
 	 *            identifier of configurable trigger
 	 */
 	public static void startActivity(Context _context, int _triggerId) {

@@ -11,7 +11,7 @@ import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.UserVibration;
 import ru.ivanp.vibro.vibrations.VibrationElement;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,9 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,14 +38,14 @@ import com.immersion.uhl.ImmVibe;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class RecorderActivity extends Activity implements OnClickListener, OnTouchListener {
+public class RecorderActivity extends BaseActivity implements OnClickListener, OnTouchListener {
 	// ============================================================================================
 	// ENUMS
 	// ============================================================================================
 	/**
 	 * Enumerates all possible recorder states
 	 */
-	private static enum RecorderState {
+	private enum RecorderState {
 		/**
 		 * Recorder is ready for record/play. Recording will start after button REC or after touch
 		 * recording layout. Playing will start after button PLAY
@@ -78,17 +76,16 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	// FIELDS
 	// ============================================================================================
 	// widgets
-	private ProgressBar prgb_dot;
-	private ImageView img_settings;
-	private TextView text_time_cur;
-	private TextView text_intensity_current;
-	private TextView text_time_total;
-	private RelativeLayout layout_touch;
-	private TextView text_state;
-	private ImageView img_rec;
-	private ImageView img_play;
-	private ImageView img_stop;
-	private ImageView img_save;
+	//private ProgressBar prgb_dot;
+	private TextView currentTimeTextView;
+	private TextView currentIntensityTextView;
+	private TextView totalTimeTextView;
+	private RelativeLayout touchableLayout;
+	private TextView stateTextView;
+	private View recButton;
+	private View playButton;
+	private View stopButton;
+	private View saveButton;
 	// preferences
 	private boolean isIntensityFixed;
 	private int intensityLevel;
@@ -111,7 +108,22 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recorder);
-		setupWidgets();
+		//prgb_dot = (ProgressBar) findViewById(R.id.prgb_dot);
+		currentTimeTextView = (TextView) findViewById(R.id.text_time_current);
+		currentIntensityTextView = (TextView) findViewById(R.id.text_intensity_current);
+		totalTimeTextView = (TextView) findViewById(R.id.text_time_total);
+		touchableLayout = (RelativeLayout) findViewById(R.id.layout_touch);
+		touchableLayout.setOnTouchListener(this);
+		stateTextView = (TextView) findViewById(R.id.text_state);
+		recButton = findViewById(R.id.img_rec);
+		recButton.setOnClickListener(this);
+		playButton = findViewById(R.id.img_play);
+		playButton.setOnClickListener(this);
+		stopButton = findViewById(R.id.img_stop);
+		stopButton.setOnClickListener(this);
+		saveButton = findViewById(R.id.img_save);
+		saveButton.setOnClickListener(this);
+
 		localHandler = new LocalHandler(this);
 		elements = new ArrayList<VibrationElement>();
 		recording = new UserVibration(App.getVibrationManager().getEmptyId());
@@ -135,9 +147,6 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.img_settings:
-			settings();
-			break;
 		case R.id.img_rec:
 			startRec();
 			break;
@@ -171,13 +180,13 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 					if (isIntensityFixed) {
 						// cause intensityLevel is a percentage value
 						intensity = intensityLevel * ImmVibe.VIBE_MAX_MAGNITUDE / 100;
-						text_intensity_current.setText(String.format("%d%%", intensityLevel));
+						currentIntensityTextView.setText(String.format("%d%%", intensityLevel));
 					} else {
 						int y = (int) event.getY();
 						int height = v.getMeasuredHeight();
 						float percent = y < 0 ? 1 : y > height ? 0 : (height - y) / (float) height;
 						intensity = (int) (percent * ImmVibe.VIBE_MAX_MAGNITUDE);
-						text_intensity_current.setText(String.format("%d%%", (int) (percent * 100)));
+						currentIntensityTextView.setText(String.format("%d%%", (int) (percent * 100)));
 					}
 
 					App.getPlayer().playMagnitude(intensity);
@@ -185,7 +194,7 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 				case MotionEvent.ACTION_UP:
 					intensity = 0;
 					App.getPlayer().playMagnitude(intensity);
-					text_intensity_current.setText("0%");
+					currentIntensityTextView.setText("0%");
 					break;
 				default:
 					return false;
@@ -219,10 +228,10 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
-			settings();
+			RecorderSettingsActivity.startActivity(this);
 			break;
 		}
-		return true;
+        return super.onOptionsItemSelected(item);
 	};
 
 	// ============================================================================================
@@ -231,30 +240,6 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	public static void startActivityForResult(Activity _parentActivity) {
 		Intent intent = new Intent(_parentActivity, RecorderActivity.class);
 		_parentActivity.startActivityForResult(intent, 0);
-	}
-
-	/**
-	 * Process widgets setup
-	 */
-	private void setupWidgets() {
-		prgb_dot = (ProgressBar) findViewById(R.id.prgb_dot);
-		img_settings = (ImageView) findViewById(R.id.img_settings);
-		text_time_cur = (TextView) findViewById(R.id.text_time_current);
-		text_intensity_current = (TextView) findViewById(R.id.text_intensity_current);
-		text_time_total = (TextView) findViewById(R.id.text_time_total);
-		layout_touch = (RelativeLayout) findViewById(R.id.layout_touch);
-		text_state = (TextView) findViewById(R.id.text_state);
-		img_rec = (ImageView) findViewById(R.id.img_rec);
-		img_play = (ImageView) findViewById(R.id.img_play);
-		img_stop = (ImageView) findViewById(R.id.img_stop);
-		img_save = (ImageView) findViewById(R.id.img_save);
-
-		img_settings.setOnClickListener(this);
-		layout_touch.setOnTouchListener(this);
-		img_rec.setOnClickListener(this);
-		img_play.setOnClickListener(this);
-		img_stop.setOnClickListener(this);
-		img_save.setOnClickListener(this);
 	}
 
 	/**
@@ -278,36 +263,29 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 		state = _state;
 		boolean gotVibration = elements.size() > 0;
 
-		prgb_dot.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.GONE);
-		text_time_cur.setTextColor(state == RecorderState.IDLE ? getResources().getColor(R.color.gray) : getResources()
+		//prgb_dot.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.GONE);
+		currentTimeTextView.setTextColor(state == RecorderState.IDLE ? getResources().getColor(R.color.gray) : getResources()
 				.getColor(R.color.white));
-		text_intensity_current.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.INVISIBLE);
-		text_time_total.setVisibility(state == RecorderState.RECORDING || !gotVibration ? View.GONE : View.VISIBLE);
+		currentIntensityTextView.setVisibility(state == RecorderState.RECORDING ? View.VISIBLE : View.INVISIBLE);
+		totalTimeTextView.setVisibility(state == RecorderState.RECORDING || !gotVibration ? View.GONE : View.VISIBLE);
 
-		layout_touch.setBackgroundDrawable(state == RecorderState.RECORDING ? getResources().getDrawable(
+		touchableLayout.setBackgroundDrawable(state == RecorderState.RECORDING ? getResources().getDrawable(
 				R.drawable.recorder_touch_panel_active) : getResources().getDrawable(R.drawable.recorder_touch_panel));
 
 		if (state == RecorderState.IDLE) {
-			text_state.setText(isBlockedFromTap ? R.string.rec_to_start : R.string.touch_to_start);
+			stateTextView.setText(isBlockedFromTap ? R.string.rec_to_start : R.string.touch_to_start);
 		} else if (state == RecorderState.PLAYING) {
-			text_state.setText(R.string.playing);
+			stateTextView.setText(R.string.playing);
 		} else {
-			text_state.setText("");
+			stateTextView.setText("");
 		}
 
-		img_rec.setEnabled(state == RecorderState.IDLE);
-		img_play.setVisibility(state == RecorderState.IDLE ? View.VISIBLE : View.GONE);
-		img_stop.setVisibility(state == RecorderState.IDLE ? View.GONE : View.VISIBLE);
+		recButton.setEnabled(state == RecorderState.IDLE);
+		playButton.setVisibility(state == RecorderState.IDLE ? View.VISIBLE : View.GONE);
+		stopButton.setVisibility(state == RecorderState.IDLE ? View.GONE : View.VISIBLE);
 
-		img_play.setEnabled(gotVibration);
-		img_save.setEnabled(state == RecorderState.IDLE && gotVibration);
-	}
-
-	/**
-	 * Opens recorder settings activity
-	 */
-	private void settings() {
-		startActivity(new Intent(this, RecorderSettingsActivity.class));
+		playButton.setEnabled(gotVibration);
+		saveButton.setEnabled(state == RecorderState.IDLE && gotVibration);
 	}
 
 	private void startRec() {
@@ -315,7 +293,7 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 		elements.clear();
 		lastTouchTime = SystemClock.elapsedRealtime();
 		lastIntensity = 0;
-		text_intensity_current.setText("0%");
+		currentIntensityTextView.setText("0%");
 		startTimer();
 		setState(RecorderState.RECORDING);
 	}
@@ -323,7 +301,7 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	private void stop() {
 		if (state == RecorderState.RECORDING) {
 			recording.setElements(elements);
-			text_time_total.setText(formatTimer(recording.getLength()));
+			totalTimeTextView.setText(formatTimer(recording.getLength()));
 		}
 
 		App.getPlayer().stop();
@@ -384,14 +362,14 @@ public class RecorderActivity extends Activity implements OnClickListener, OnTou
 	}
 
 	private void stopTimer() {
-		text_time_cur.setText(formatTimer(0));
+		currentTimeTextView.setText(formatTimer(0));
 		localHandler.removeMessages(TIMER_TICK_WHAT);
 	}
 
 	private void onTimerTick() {
 		int diff = (int) (SystemClock.elapsedRealtime() - timerStartTime);
 		/* Log.d("Recoreder.onTimerTick", "diff=" + diff); */
-		text_time_cur.setText(formatTimer(diff));
+		currentTimeTextView.setText(formatTimer(diff));
 		localHandler.sendEmptyMessageDelayed(TIMER_TICK_WHAT, INTERVAL_TIMER_TICK);
 
 		if (isLengthLimited && diff > lengthPatternLimit * 1000) {

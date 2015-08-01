@@ -7,7 +7,6 @@ import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.telephony.VibrationService;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ import android.widget.SeekBar;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class TestActivity extends Activity implements OnClickListener, OnSeekBarChangeListener {
+public class TestingActivity extends BaseActivity implements OnClickListener, OnSeekBarChangeListener {
 	// ============================================================================================
 	// OVERRIDDEN
 	// ============================================================================================
@@ -124,7 +123,7 @@ public class TestActivity extends Activity implements OnClickListener, OnSeekBar
     // METHODS
     // ============================================================================================
     public static void startActivity(Context _context) {
-        Intent intent = new Intent(_context, TestActivity.class);
+        Intent intent = new Intent(_context, TestingActivity.class);
         _context.startActivity(intent);
     }
 }

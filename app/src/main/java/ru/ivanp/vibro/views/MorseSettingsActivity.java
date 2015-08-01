@@ -4,11 +4,11 @@ import com.immersion.uhl.ImmVibe;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
-import ru.ivanp.vibro.R.layout;
-import ru.ivanp.vibro.R.xml;
 import ru.ivanp.vibro.utils.SeekbarPreference;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -17,7 +17,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MorseSettingsActivity extends PreferenceActivity implements OnSeekBarChangeListener {
+@SuppressWarnings("deprecation")
+public class MorseSettingsActivity extends BasePreferencesActivity implements OnSeekBarChangeListener {
 	// ============================================================================================
 	// CONSTANTS
 	// ============================================================================================
@@ -34,7 +35,6 @@ public class MorseSettingsActivity extends PreferenceActivity implements OnSeekB
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_morse_settings);
 		addPreferencesFromResource(R.xml.morse_settings);
 
 		// set intensity seekbar change listener
@@ -63,5 +63,13 @@ public class MorseSettingsActivity extends PreferenceActivity implements OnSeekB
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		App.getPlayer().stop();
+	}
+
+	// ============================================================================================
+	// METHODS
+	// ============================================================================================
+	public static void startActivity(Context _context) {
+		Intent intent = new Intent(_context, MorseSettingsActivity.class);
+		_context.startActivity(intent);
 	}
 }

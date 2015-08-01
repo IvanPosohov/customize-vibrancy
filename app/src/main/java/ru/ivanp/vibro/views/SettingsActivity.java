@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceClickListener;
 
 /**
@@ -14,14 +13,14 @@ import android.preference.Preference.OnPreferenceClickListener;
  * 
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener {
+@SuppressWarnings("deprecation")
+public class SettingsActivity extends BasePreferencesActivity implements OnPreferenceClickListener {
 	// ============================================================================================
 	// LIFECYCLE
 	// ============================================================================================
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
 		addPreferencesFromResource(R.xml.app_settings);
 		findPreference("about").setOnPreferenceClickListener(this);
 	}

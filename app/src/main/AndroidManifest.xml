@@ -1,7 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.ivanp.vibro"
-    android:versionCode="7"
-    android:versionName="3.0 (alpha)" >
+    package="ru.ivanp.vibro">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -12,15 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="19" />
-
     <application
         android:name="ru.ivanp.vibro.App"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/CustomizeVibrancy" >
+        android:theme="@style/AppTheme">
 
         <!-- ABOUT -->
         <activity
@@ -30,7 +24,8 @@
         <!-- MAIN -->
         <activity
             android:name=".views.MainActivity"
-            android:icon="@drawable/logo" >
+            android:icon="@drawable/logo"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,22 +36,26 @@
         <!-- MORSE RECORDER -->
         <activity
             android:name=".views.MorseActivity"
+            android:label="@string/morse_recorder"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- MORSE RECORDER SETTINGS -->
         <activity
             android:name=".views.MorseSettingsActivity"
+            android:label="@string/morse_recorder_settings"
             android:screenOrientation="portrait" />
 
         <!-- TOUCH RECORDER -->
         <activity
             android:name=".views.RecorderActivity"
+            android:label="@string/tap_recorder"
             android:screenOrientation="portrait" />
 
         <!-- TOUCH RECORDER SETTINGS -->
         <activity
             android:name=".views.RecorderSettingsActivity"
+            android:label="@string/tap_recorder_settings"
             android:screenOrientation="portrait" />
 
         <!-- SELECT VIBRATION -->
@@ -67,30 +66,32 @@
         <!-- SETTINGS -->
         <activity
             android:name=".views.SettingsActivity"
+            android:label="@string/settings"
             android:screenOrientation="portrait" />
 
         <!-- TEST -->
         <activity
-            android:name=".views.TestActivity"
+            android:name=".views.TestingActivity"
+            android:label="Testing environment"
             android:screenOrientation="portrait" />
 
         <!-- RECEIVERS -->
         <!-- Internet state changed -->
-        <receiver android:name=".telephony.InternetStateReceiver" >
+        <receiver android:name=".telephony.InternetStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
         <!-- Incoming sms -->
-        <receiver android:name=".telephony.SmsReceiver" >
+        <receiver android:name=".telephony.SmsReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
         <!-- Incoming call -->
-        <receiver android:name=".telephony.CallReceiver" >
+        <receiver android:name=".telephony.CallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>

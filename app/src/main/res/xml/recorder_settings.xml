@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
-    xmlns:widget="http://schemas.android.com/apk/res/ru.ivanp.vibro" >
+    xmlns:widget="http://schemas.android.com/apk/res/ru.ivanp.vibro">
 
     <!-- MAGNITUDE -->
-    <PreferenceCategory android:title="@string/vibration_magnitude" >
+    <PreferenceCategory android:title="@string/vibration_magnitude">
         <CheckBoxPreference
             android:key="recorder_fixed_magnitude"
             android:summary="@string/fixed_magnitude_summary"
@@ -22,7 +21,7 @@
     </PreferenceCategory>
 
     <!-- LENGTH -->
-    <PreferenceCategory android:title="@string/duration_of_vibration" >
+    <PreferenceCategory android:title="@string/duration_of_vibration">
         <CheckBoxPreference
             android:key="recorder_limit_duration_of_vibration"
             android:title="@string/limit_duration_of_vibration" />
