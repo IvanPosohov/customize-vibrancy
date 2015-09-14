@@ -67,8 +67,7 @@ public class VibrationService extends Service {
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
 			// set the info for the views that show in the notification panel.
-			notification
-					.setLatestEventInfo(this, getText(R.string.app_name), getText(R.string.app_name), contentIntent);
+			//notification.setLatestEventInfo(this, getText(R.string.app_name), getText(R.string.app_name), contentIntent);
 
 			// send the notification.
 			notificationManager.notify(NOTIFICATION_ID, notification);

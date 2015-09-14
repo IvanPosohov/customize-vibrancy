@@ -37,26 +37,22 @@
         <activity
             android:name=".views.MorseActivity"
             android:label="@string/morse_recorder"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- MORSE RECORDER SETTINGS -->
         <activity
             android:name=".views.MorseSettingsActivity"
-            android:label="@string/morse_recorder_settings"
-            android:screenOrientation="portrait" />
+            android:label="@string/morse_recorder_settings" />
 
         <!-- TOUCH RECORDER -->
         <activity
             android:name=".views.RecorderActivity"
-            android:label="@string/tap_recorder"
-            android:screenOrientation="portrait" />
+            android:label="@string/tap_recorder" />
 
         <!-- TOUCH RECORDER SETTINGS -->
         <activity
             android:name=".views.RecorderSettingsActivity"
-            android:label="@string/tap_recorder_settings"
-            android:screenOrientation="portrait" />
+            android:label="@string/tap_recorder_settings" />
 
         <!-- SELECT VIBRATION -->
         <activity
@@ -66,14 +62,12 @@
         <!-- SETTINGS -->
         <activity
             android:name=".views.SettingsActivity"
-            android:label="@string/settings"
-            android:screenOrientation="portrait" />
+            android:label="@string/settings" />
 
         <!-- TEST -->
         <activity
             android:name=".views.TestingActivity"
-            android:label="Testing environment"
-            android:screenOrientation="portrait" />
+            android:label="Testing environment" />
 
         <!-- RECEIVERS -->
         <!-- Internet state changed -->

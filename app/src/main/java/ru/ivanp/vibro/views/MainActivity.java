@@ -9,17 +9,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.OnCheckedChangeListener;
 
 /**
  * @author Posohov Ivan (posohof@gmail.com)
@@ -54,18 +53,18 @@ public class MainActivity extends BaseActivity implements Navigation.Callback {
                         new PrimaryDrawerItem().withName(R.string.tap_recorder).withIcon(R.drawable.ic_hand_pointing_right_white_48dp).withIdentifier(Navigation.Items.TAP_RECORDER),
                         new PrimaryDrawerItem().withName(R.string.morse_recorder).withIcon(R.drawable.ic_dots_horizontal_white_48dp).withIdentifier(Navigation.Items.MORSE_RECORDER),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.settings).withIcon(R.drawable.ic_settings_white_48dp).withIdentifier(Navigation.Items.SETTINGS).withCheckable(false)
+                        new SecondaryDrawerItem().withName(R.string.settings).withIcon(R.drawable.ic_settings_white_48dp).withIdentifier(Navigation.Items.SETTINGS).withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Navigation.navigate(drawerItem.getIdentifier(), MainActivity.this, MainActivity.this);
                         return false;
                     }
                 })
                 .withSavedInstance(savedInstanceState);
         if (App.DEBUG) {
-            drawerBuilder.addDrawerItems(new SecondaryDrawerItem().withName("Test").withIcon(R.drawable.ic_bug_white_48dp).withIdentifier(Navigation.Items.TEST).withCheckable(false));
+            drawerBuilder.addDrawerItems(new SecondaryDrawerItem().withName("Test").withIcon(R.drawable.ic_bug_white_48dp).withIdentifier(Navigation.Items.TEST).withSelectable(false));
         }
         drawer = drawerBuilder.build();
 
@@ -123,7 +122,7 @@ public class MainActivity extends BaseActivity implements Navigation.Callback {
     // ============================================================================================
     @Override
     public void showFragment(Fragment _fragment) {
-        drawer.setSelectionByIdentifier(Navigation.getSelectedItemId(), false);
+        drawer.setSelection(Navigation.getSelectedItemId(), false);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.contentLayout, _fragment);
         transaction.commitAllowingStateLoss();
