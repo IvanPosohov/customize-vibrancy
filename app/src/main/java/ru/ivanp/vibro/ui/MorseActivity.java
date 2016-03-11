@@ -12,6 +12,7 @@ import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.UserVibration;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -171,6 +172,11 @@ public class MorseActivity extends BaseActivity implements OnClickListener, OnTi
     public static void startActivityForResult(Activity _parentActivity) {
         Intent intent = new Intent(_parentActivity, MorseActivity.class);
         _parentActivity.startActivityForResult(intent, 0);
+    }
+
+    public static void startActivity(Context _context) {
+        Intent intent = new Intent(_context, MorseActivity.class);
+        _context.startActivity(intent);
     }
 
     /**

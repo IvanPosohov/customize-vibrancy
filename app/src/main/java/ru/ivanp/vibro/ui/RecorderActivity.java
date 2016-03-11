@@ -11,6 +11,7 @@ import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.UserVibration;
 import ru.ivanp.vibro.vibrations.VibrationElement;
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -240,6 +241,11 @@ public class RecorderActivity extends BaseActivity implements OnClickListener, O
 	public static void startActivityForResult(Activity _parentActivity) {
 		Intent intent = new Intent(_parentActivity, RecorderActivity.class);
 		_parentActivity.startActivityForResult(intent, 0);
+	}
+
+	public static void startActivity(Context _context) {
+		Intent intent = new Intent(_context, RecorderActivity.class);
+		_context.startActivity(intent);
 	}
 
 	/**

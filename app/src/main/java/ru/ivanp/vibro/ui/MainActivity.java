@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity {
                 .withToolbar(toolbar)
                 .withTranslucentStatusBar(false)
                 .addDrawerItems(
-                        new SwitchDrawerItem().withName(R.string.vibration_enabled).withIcon(R.drawable.ic_power_white_48dp).withChecked(Pref.vibrationEnabled).withOnCheckedChangeListener(new OnCheckedChangeListener() {
+                        new SwitchDrawerItem().withName(R.string.vibration_enabled).withIcon(R.drawable.ic_power).withChecked(Pref.vibrationEnabled).withOnCheckedChangeListener(new OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
                                 Pref.vibrationEnabled = isChecked;
@@ -49,11 +49,11 @@ public class MainActivity extends BaseActivity {
                             }
                         }),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName(R.string.main).withIcon(R.drawable.ic_home_white_48dp).withIdentifier(Navigation.Items.MAIN),
-                        new PrimaryDrawerItem().withName(R.string.tap_recorder).withIcon(R.drawable.ic_hand_pointing_right_white_48dp).withIdentifier(Navigation.Items.TAP_RECORDER),
-                        new PrimaryDrawerItem().withName(R.string.morse_recorder).withIcon(R.drawable.ic_dots_horizontal_white_48dp).withIdentifier(Navigation.Items.MORSE_RECORDER),
+                        new PrimaryDrawerItem().withName(R.string.main).withIcon(R.drawable.ic_home).withIdentifier(Navigation.Items.MAIN),
+                        new PrimaryDrawerItem().withName(R.string.tap_recorder).withIcon(R.drawable.ic_hand_pointing_right).withIdentifier(Navigation.Items.TAP_RECORDER),
+                        new PrimaryDrawerItem().withName(R.string.morse_recorder).withIcon(R.drawable.ic_dots_horizontal).withIdentifier(Navigation.Items.MORSE_RECORDER),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.settings).withIcon(R.drawable.ic_settings_white_48dp).withIdentifier(Navigation.Items.SETTINGS).withSelectable(false)
+                        new SecondaryDrawerItem().withName(R.string.settings).withIcon(R.drawable.ic_settings).withIdentifier(Navigation.Items.SETTINGS).withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
                 })
                 .withSavedInstance(savedInstanceState);
         if (App.DEBUG) {
-            drawerBuilder.addDrawerItems(new SecondaryDrawerItem().withName("Test").withIcon(R.drawable.ic_bug_white_48dp).withIdentifier(Navigation.Items.TEST).withSelectable(false));
+            drawerBuilder.addDrawerItems(new SecondaryDrawerItem().withName("Test").withIcon(R.drawable.ic_bug).withIdentifier(Navigation.Items.TEST).withSelectable(false));
         }
         drawer = drawerBuilder.build();
 

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:checkMark="@drawable/btn_radio_holo_dark"
+        android:checkMark="?android:attr/listChoiceIndicatorSingle"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" />
 

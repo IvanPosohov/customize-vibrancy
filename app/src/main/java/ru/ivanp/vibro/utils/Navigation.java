@@ -3,6 +3,8 @@ package ru.ivanp.vibro.utils;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import ru.ivanp.vibro.ui.MorseActivity;
+import ru.ivanp.vibro.ui.RecorderActivity;
 import ru.ivanp.vibro.ui.SettingsActivity;
 import ru.ivanp.vibro.ui.MainFragment;
 import ru.ivanp.vibro.ui.TestingActivity;
@@ -48,8 +50,8 @@ public final class Navigation {
     public static void navigate(long _itemId, Context _context, Callback _handler) {
         selectedItemId = _itemId;
         if (_itemId == Items.MAIN) _handler.showFragment(MainFragment.newInstance());
-            //else if (_itemId == Items.TAP_RECORDER) //_handler.showFragment(SelectCountryFragment.newInstance());
-            //else if (_itemId == Items.MORSE_RECORDER) //_handler.showFragment(PaymentMethodFragment.newInstance());
+        else if (_itemId == Items.TAP_RECORDER) RecorderActivity.startActivity(_context);
+        else if (_itemId == Items.MORSE_RECORDER) MorseActivity.startActivity(_context);
         else if (_itemId == Items.SETTINGS) SettingsActivity.startActivity(_context);
         else if (_itemId == Items.TEST) TestingActivity.startActivity(_context);
     }

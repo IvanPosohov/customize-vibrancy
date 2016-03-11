@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <!-- TIMERS -->
 
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/step2"
         android:layout_marginRight="@dimen/step2"
-        android:layout_marginTop="@dimen/step2" >
+        android:layout_marginTop="@dimen/step2">
 
         <TextView
             android:id="@+id/text_time_current"
@@ -22,7 +23,7 @@
             android:includeFontPadding="false"
             android:text="00:00.0"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"/>
 
         <TextView
             android:id="@+id/text_time_total"
@@ -33,7 +34,7 @@
             android:includeFontPadding="false"
             android:text="00:00.0"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/accent" />
+            android:textColor="@color/accent"/>
     </LinearLayout>
 
     <!-- EDIT PANEL -->
@@ -45,16 +46,15 @@
         android:layout_marginLeft="@dimen/step2"
         android:layout_marginRight="@dimen/step2"
         android:layout_marginTop="@dimen/step2"
-        android:background="@drawable/edit_text_holo_dark"
         android:hint="@string/morse_hint"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"/>
 
     <!-- TO FILL VERTICAL SPACE -->
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 
     <!-- BUTTON PANEL -->
 
@@ -62,8 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/step2"
-        android:background="@drawable/ab_bottom_solid_dark_holo"
-        android:minHeight="@dimen/action_bar_default_height" >
+        android:minHeight="@dimen/action_bar_default_height">
 
         <ImageView
             android:id="@+id/img_play"
@@ -71,11 +70,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/item_background_holo_dark"
+            android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:scaleType="center"
-            android:src="@drawable/ic_play" />
+            app:srcCompat="@drawable/ic_play"/>
 
         <ImageView
             android:id="@+id/img_stop"
@@ -83,11 +82,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/item_background_holo_dark"
+            android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:scaleType="center"
-            android:src="@drawable/ic_stop" />
+            app:srcCompat="@drawable/ic_stop"/>
 
         <ImageView
             android:id="@+id/img_save"
@@ -95,11 +94,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/item_background_holo_dark"
+            android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:scaleType="center"
-            android:src="@drawable/ic_save" />
+            app:srcCompat="@drawable/ic_content_save"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,15 +1,11 @@
 package ru.ivanp.vibro;
 
-import java.util.regex.Pattern;
-
 import ru.ivanp.vibro.utils.Pref;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.TriggerManager;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 
 public class App extends Application {
 	// ============================================================================================
@@ -24,10 +20,6 @@ public class App extends Application {
 	 * App version name
 	 */
 	public static String VERSION_NAME = BuildConfig.VERSION_NAME;
-	/**
-	 * App version code
-	 */
-	public static int VERSION_CODE = BuildConfig.VERSION_CODE;
 
 	// ============================================================================================
 	// FIELDS
