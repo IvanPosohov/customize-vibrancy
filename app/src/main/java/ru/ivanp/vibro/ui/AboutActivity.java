@@ -1,14 +1,16 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import java.util.regex.Matcher;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.text.util.Linkify.TransformFilter;
+import android.util.Patterns;
 import android.widget.TextView;
 
 /**
@@ -32,7 +34,7 @@ public class AboutActivity extends BaseActivity {
 				return url + "?subject=Customize Vibrancy feedback"; // &body=message
 			}
 		};
-		Linkify.addLinks(textFeedback, App.EMAIL_ADDRESS_PATTERN, "mailto:", null, addSubjFilter);
+		Linkify.addLinks(textFeedback, Patterns.EMAIL_ADDRESS, "mailto:", null, addSubjFilter);
 	}
 
     // ============================================================================================

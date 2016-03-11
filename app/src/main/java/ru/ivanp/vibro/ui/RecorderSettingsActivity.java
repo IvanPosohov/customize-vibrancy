@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import com.immersion.uhl.ImmVibe;
 
@@ -34,7 +34,7 @@ public class RecorderSettingsActivity extends BasePreferencesActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.recorder_settings);
+		addPreferencesFromResource(R.xml.recorder_preferences);
 
 		// set intensity seekbar change listener
 		SeekbarPreference recoder_intensity = (SeekbarPreference) findPreference(RECORDER_MAGNITUDE);

@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import java.util.ArrayList;
 

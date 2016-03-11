@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

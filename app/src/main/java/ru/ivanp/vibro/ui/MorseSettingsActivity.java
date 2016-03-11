@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import com.immersion.uhl.ImmVibe;
 
@@ -35,7 +35,7 @@ public class MorseSettingsActivity extends BasePreferencesActivity implements On
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.morse_settings);
+		addPreferencesFromResource(R.xml.morse_preferences);
 
 		// set intensity seekbar change listener
 		SeekbarPreference morse_intensity = (SeekbarPreference) findPreference(MORSE_MAGNITUDE);

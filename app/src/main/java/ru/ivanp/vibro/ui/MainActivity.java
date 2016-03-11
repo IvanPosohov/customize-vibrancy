@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import ru.ivanp.vibro.App;
 import ru.ivanp.vibro.R;
@@ -23,7 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 /**
  * @author Posohov Ivan (posohof@gmail.com)
  */
-public class MainActivity extends BaseActivity implements Navigation.Callback {
+public class MainActivity extends BaseActivity {
     // ============================================================================================
     // FIELDS
     // ============================================================================================
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements Navigation.Callback {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Navigation.navigate(drawerItem.getIdentifier(), MainActivity.this, MainActivity.this);
+                        Navigation.navigate(drawerItem.getIdentifier(), MainActivity.this, navigationCallback);
                         return false;
                     }
                 })
@@ -69,14 +69,14 @@ public class MainActivity extends BaseActivity implements Navigation.Callback {
         drawer = drawerBuilder.build();
 
         Bundle data = getIntent().getExtras();
-        int fragmentId = Navigation.Items.MAIN;
+        long fragmentId = Navigation.Items.MAIN;
         if (savedInstanceState != null) {
-            fragmentId = savedInstanceState.getInt(Navigation.ITEM_KEY, Navigation.Items.MAIN);
+            fragmentId = savedInstanceState.getLong(Navigation.ITEM_KEY, Navigation.Items.MAIN);
         }
         if (data != null) {
-            fragmentId = data.getInt(Navigation.ITEM_KEY, Navigation.Items.MAIN);
+            fragmentId = data.getLong(Navigation.ITEM_KEY, Navigation.Items.MAIN);
         }
-        Navigation.navigate(fragmentId, this, this);
+        Navigation.navigate(fragmentId, this, navigationCallback);
     }
 
     @Override
@@ -95,41 +95,35 @@ public class MainActivity extends BaseActivity implements Navigation.Callback {
         //add the values which need to be saved from the drawer to the bundle
         outState = drawer.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
-        outState.putInt(Navigation.ITEM_KEY, getSelectedDrawerItemId());
+        outState.putLong(Navigation.ITEM_KEY, drawer.getCurrentSelection());
     }
 
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        } else if (getSelectedDrawerItemId() != Navigation.Items.MAIN) {
-            Navigation.navigate(Navigation.Items.MAIN, this, this);
+        } else if (drawer.getCurrentSelection() != Navigation.Items.MAIN) {
+            Navigation.navigate(Navigation.Items.MAIN, this, navigationCallback);
         } else {
             super.onBackPressed();
         }
     }
 
-    private int getSelectedDrawerItemId() {
-        int position = drawer.getCurrentSelection();
-        if (position != -1) {
-            return drawer.getDrawerItems().get(position).getIdentifier();
-        }
-        return Navigation.Items.MAIN;
-    }
-
     // ============================================================================================
     // NAVIGATION CALLBACK
     // ============================================================================================
-    @Override
-    public void showFragment(Fragment _fragment) {
-        drawer.setSelection(Navigation.getSelectedItemId(), false);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.contentLayout, _fragment);
-        transaction.commitAllowingStateLoss();
-    }
+    private final Navigation.Callback navigationCallback = new Navigation.Callback() {
+        @Override
+        public void showFragment(Fragment _fragment) {
+            drawer.setSelection(Navigation.getSelectedItemId(), false);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentLayout, _fragment);
+            transaction.commitAllowingStateLoss();
+        }
 
-    @Override
-    public void back() {
-        Navigation.navigate(Navigation.Items.MAIN, this, this);
-    }
+        @Override
+        public void back() {
+            Navigation.navigate(Navigation.Items.MAIN, MainActivity.this, this);
+        }
+    };
 }

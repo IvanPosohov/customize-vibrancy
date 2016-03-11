@@ -7,7 +7,7 @@ import ru.ivanp.vibro.utils.WeakEventHandler;
 import ru.ivanp.vibro.vibrations.Player;
 import ru.ivanp.vibro.vibrations.Vibration;
 import ru.ivanp.vibro.vibrations.VibrationsManager;
-import ru.ivanp.vibro.views.MainActivity;
+import ru.ivanp.vibro.ui.MainActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

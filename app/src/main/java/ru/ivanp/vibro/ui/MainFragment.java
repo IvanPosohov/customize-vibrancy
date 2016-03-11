@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +14,7 @@ import ru.ivanp.vibro.R;
 import ru.ivanp.vibro.data.TriggerAdapter;
 import ru.ivanp.vibro.vibrations.Trigger;
 import ru.ivanp.vibro.vibrations.Vibration;
+import ru.ivanp.vibro.views.DividerItemDecoration;
 
 /**
  * @author Posohov Ivan (posohof@gmail.com)

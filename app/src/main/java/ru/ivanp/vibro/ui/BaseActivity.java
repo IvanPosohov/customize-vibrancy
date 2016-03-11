@@ -1,15 +1,15 @@
-package ru.ivanp.vibro.views;
+package ru.ivanp.vibro.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import ru.ivanp.vibro.R;
 
 /**
+ * @author Posohov Ivan (posohof@gmail.com)
  * Base class for all non fullscreen activities
  */
 public class BaseActivity extends AppCompatActivity {
@@ -27,14 +27,13 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(R.layout.activity_base);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        ViewGroup root = (ViewGroup) findViewById(R.id.root);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        inflater.inflate(layoutResID, root, true);
+        getLayoutInflater().inflate(layoutResID, (ViewGroup) findViewById(R.id.root));
     }
 
     // ============================================================================================

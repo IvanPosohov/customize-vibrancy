@@ -23,18 +23,11 @@ public class App extends Application {
 	/**
 	 * App version name
 	 */
-	public static String VERSION_NAME;
+	public static String VERSION_NAME = BuildConfig.VERSION_NAME;
 	/**
 	 * App version code
 	 */
-	public static int VERSION_CODE;
-	/**
-	 * Email address validation regexp pattern
-	 */
-    public final static Pattern EMAIL_ADDRESS_PATTERN = Pattern
-            .compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@"
-                    + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\."
-                    + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+");
+	public static int VERSION_CODE = BuildConfig.VERSION_CODE;
 
 	// ============================================================================================
 	// FIELDS
@@ -75,17 +68,6 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 		context = this;
-		try {
-			PackageInfo packageInfo = context.getPackageManager().getPackageInfo(getPackageName(), 0);
-			VERSION_NAME = packageInfo.versionName;
-			VERSION_CODE = packageInfo.versionCode;
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
 		Pref.load(context);
 	}
-
-	// ============================================================================================
-	// METHODS
-	// ============================================================================================
 }

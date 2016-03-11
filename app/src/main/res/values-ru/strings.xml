@@ -17,12 +17,6 @@
     <string name="about">О программе</string>
     <string name="about_summary">Показать информацию об этом приложении</string>
     <string name="version">Версия:</string>
-    <string name="authors">Авторы</string>
-    <string name="author_code">Посоход Иван (код)</string>
-    <string name="author_design">Лихачев Иван (дизайн)</string>
-    <string name="thanks_to_Max">Отдельное спасибо Пономарёву Максиму за помощь в тестировании</string>
-    <string name="help_with_translation">Помощь в переводе</string>
-    <string name="help_with_ukrainian_thanslation"></string>
     <string name="description">Описание</string>
     <string name="decription_content">Приложение позволяет индивидуально настроить вибрацию телефона. Вы можете выбрать одну из стандартных вибраций или создать свою и установить ее на:\n
         1) входящий вызов;\n

@@ -1,100 +1,103 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.ivanp.vibro">
+<manifest package="ru.ivanp.vibro"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.WRITE_SMS" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <uses-sdk tools:overrideLibrary="android.support.v14.preference"/>
 
     <application
         android:name="ru.ivanp.vibro.App"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CustomizeVibrancy">
 
         <!-- ABOUT -->
         <activity
-            android:name=".views.AboutActivity"
-            android:label="@string/about" />
+            android:name=".ui.AboutActivity"
+            android:label="@string/about"/>
 
         <!-- MAIN -->
         <activity
-            android:name=".views.MainActivity"
+            android:name=".ui.MainActivity"
             android:icon="@drawable/logo"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <!-- MORSE RECORDER -->
         <activity
-            android:name=".views.MorseActivity"
+            android:name=".ui.MorseActivity"
             android:label="@string/morse_recorder"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
 
         <!-- MORSE RECORDER SETTINGS -->
         <activity
-            android:name=".views.MorseSettingsActivity"
-            android:label="@string/morse_recorder_settings" />
+            android:name=".ui.MorseSettingsActivity"
+            android:label="@string/morse_recorder_settings"/>
 
         <!-- TOUCH RECORDER -->
         <activity
-            android:name=".views.RecorderActivity"
-            android:label="@string/tap_recorder" />
+            android:name=".ui.RecorderActivity"
+            android:label="@string/tap_recorder"/>
 
         <!-- TOUCH RECORDER SETTINGS -->
         <activity
-            android:name=".views.RecorderSettingsActivity"
-            android:label="@string/tap_recorder_settings" />
+            android:name=".ui.RecorderSettingsActivity"
+            android:label="@string/tap_recorder_settings"/>
 
         <!-- SELECT VIBRATION -->
         <activity
-            android:name=".views.SelectVibrationActivity"
-            android:label="@string/select_vibration" />
+            android:name=".ui.SelectVibrationActivity"
+            android:label="@string/select_vibration"/>
 
         <!-- SETTINGS -->
         <activity
-            android:name=".views.SettingsActivity"
-            android:label="@string/settings" />
+            android:name=".ui.SettingsActivity"
+            android:label="@string/settings"/>
 
         <!-- TEST -->
         <activity
-            android:name=".views.TestingActivity"
-            android:label="Testing environment" />
+            android:name=".ui.TestingActivity"
+            android:label="Testing environment"/>
 
         <!-- RECEIVERS -->
         <!-- Internet state changed -->
         <receiver android:name=".telephony.InternetStateReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
 
         <!-- Incoming sms -->
         <receiver android:name=".telephony.SmsReceiver">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
 
         <!-- Incoming call -->
         <receiver android:name=".telephony.CallReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.PHONE_STATE"/>
             </intent-filter>
         </receiver>
 
         <!-- SERVICES -->
-        <service android:name=".telephony.SmsService" />
-        <service android:name=".telephony.CallService" />
-        <service android:name=".telephony.VibrationService" />
+        <service android:name=".telephony.SmsService"/>
+        <service android:name=".telephony.CallService"/>
+        <service android:name=".telephony.VibrationService"/>
     </application>
 
 </manifest>

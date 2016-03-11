@@ -3,9 +3,9 @@ package ru.ivanp.vibro.utils;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
-import ru.ivanp.vibro.views.MainFragment;
-import ru.ivanp.vibro.views.SettingsActivity;
-import ru.ivanp.vibro.views.TestingActivity;
+import ru.ivanp.vibro.ui.SettingsActivity;
+import ru.ivanp.vibro.ui.MainFragment;
+import ru.ivanp.vibro.ui.TestingActivity;
 
 public final class Navigation {
     // ============================================================================================
@@ -13,6 +13,7 @@ public final class Navigation {
     // ============================================================================================
     public interface Callback {
         void showFragment(Fragment _fragment);
+
         void back();
     }
 
@@ -20,48 +21,37 @@ public final class Navigation {
     // CONSTANTS
     // ============================================================================================
     public final class Items {
-        public static final int MAIN = 0;
-        public static final int TAP_RECORDER = 1;
-        public static final int MORSE_RECORDER = 2;
-        public static final int SETTINGS = 3;
-        public static final int TEST = 4;
+        public static final long MAIN = 0;
+        public static final long TAP_RECORDER = 1;
+        public static final long MORSE_RECORDER = 2;
+        public static final long SETTINGS = 3;
+        public static final long TEST = 4;
     }
+
     public static final String ITEM_KEY = "item_key";
 
     // ============================================================================================
     // FIELDS
     // ============================================================================================
-    private static int selectedItemId;
+    private static long selectedItemId;
 
     // ============================================================================================
     // GETTERS
     // ============================================================================================
-    public static int getSelectedItemId() {
+    public static long getSelectedItemId() {
         return selectedItemId;
     }
 
     // ============================================================================================
     // METHODS
     // ============================================================================================
-    public static void navigate(int _itemId, Context _context, Callback _handler) {
+    public static void navigate(long _itemId, Context _context, Callback _handler) {
         selectedItemId = _itemId;
-        switch (_itemId) {
-            case Items.MAIN:
-                _handler.showFragment(MainFragment.newInstance());
-                break;
-            case Items.TAP_RECORDER:
-                //_handler.showFragment(SelectCountryFragment.newInstance());
-                break;
-            case Items.MORSE_RECORDER:
-                //_handler.showFragment(PaymentMethodFragment.newInstance());
-                break;
-            case Items.SETTINGS:
-                SettingsActivity.startActivity(_context);
-                break;
-            case Items.TEST:
-                TestingActivity.startActivity(_context);
-                break;
-        }
+        if (_itemId == Items.MAIN) _handler.showFragment(MainFragment.newInstance());
+            //else if (_itemId == Items.TAP_RECORDER) //_handler.showFragment(SelectCountryFragment.newInstance());
+            //else if (_itemId == Items.MORSE_RECORDER) //_handler.showFragment(PaymentMethodFragment.newInstance());
+        else if (_itemId == Items.SETTINGS) SettingsActivity.startActivity(_context);
+        else if (_itemId == Items.TEST) TestingActivity.startActivity(_context);
     }
 
     private Navigation() {}
