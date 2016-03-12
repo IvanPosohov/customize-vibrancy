@@ -1,4 +1,4 @@
-package ru.ivanp.vibro.utils;
+package ru.ivanp.vibro.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

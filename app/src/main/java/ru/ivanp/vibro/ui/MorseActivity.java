@@ -157,7 +157,7 @@ public class MorseActivity extends BaseActivity implements OnClickListener, OnTi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_settings:
-                MorseSettingsActivity.startActivity(this);
+                SettingsActivity.openMorsePreferences(this);
                 break;
             case R.id.menu_help:
                 showHelpDialog();
@@ -185,10 +185,10 @@ public class MorseActivity extends BaseActivity implements OnClickListener, OnTi
     private void loadPreferences() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        intensityLevel = pref.getInt(MorseSettingsActivity.MORSE_MAGNITUDE,
-                MorseSettingsActivity.DEFAULT_MORSE_MAGNITUDE);
-        timeUnitLong = pref.getInt(MorseSettingsActivity.MORSE_TIME_UNIT_LENGTH,
-                MorseSettingsActivity.DEFAULT_MORSE_TIME_UNIT_LENGTH);
+        intensityLevel = pref.getInt(MorseSettingsFragment.MORSE_MAGNITUDE,
+                MorseSettingsFragment.DEFAULT_MORSE_MAGNITUDE);
+        timeUnitLong = pref.getInt(MorseSettingsFragment.MORSE_TIME_UNIT_LENGTH,
+                MorseSettingsFragment.DEFAULT_MORSE_TIME_UNIT_LENGTH);
     }
 
     /**

@@ -229,7 +229,7 @@ public class RecorderActivity extends BaseActivity implements OnClickListener, O
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
-			RecorderSettingsActivity.startActivity(this);
+			SettingsActivity.openRecorderPreferences(this);
 			break;
 		}
         return super.onOptionsItemSelected(item);
@@ -253,10 +253,10 @@ public class RecorderActivity extends BaseActivity implements OnClickListener, O
 	 */
 	private void loadPreferences() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-		isIntensityFixed = pref.getBoolean(RecorderSettingsActivity.RECORDER_FIXED_MAGNITUDE, false);
-		intensityLevel = pref.getInt(RecorderSettingsActivity.RECORDER_MAGNITUDE, 100);
-		isLengthLimited = pref.getBoolean(RecorderSettingsActivity.RECORDER_LIMIT_DURATION, false);
-		lengthPatternLimit = pref.getInt(RecorderSettingsActivity.RECORDER_DURATION, 60);
+		isIntensityFixed = pref.getBoolean(RecorderSettingsFragment.RECORDER_FIXED_MAGNITUDE, false);
+		intensityLevel = pref.getInt(RecorderSettingsFragment.RECORDER_MAGNITUDE, 100);
+		isLengthLimited = pref.getBoolean(RecorderSettingsFragment.RECORDER_LIMIT_DURATION, false);
+		lengthPatternLimit = pref.getInt(RecorderSettingsFragment.RECORDER_DURATION, 60);
 	}
 
 	/**

@@ -3,7 +3,7 @@
     xmlns:widget="http://schemas.android.com/apk/res/ru.ivanp.vibro" >
 
     <!-- INTENSITY -->
-    <ru.ivanp.vibro.utils.SeekbarPreference
+    <ru.ivanp.vibro.views.SeekBarPreference
         android:defaultValue="100"
         android:key="morse_magnitude"
         android:persistent="true"
@@ -13,7 +13,7 @@
         widget:minValue="1" />
 
     <!-- TIME UNIT LENGTH -->
-    <ru.ivanp.vibro.utils.SeekbarPreference
+    <ru.ivanp.vibro.views.SeekBarPreference
         android:defaultValue="100"
         android:key="morse_time_unit_length"
         android:persistent="true"

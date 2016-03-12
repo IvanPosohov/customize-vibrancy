@@ -52,7 +52,7 @@ public final class Navigation {
         if (_itemId == Items.MAIN) _handler.showFragment(MainFragment.newInstance());
         else if (_itemId == Items.TAP_RECORDER) RecorderActivity.startActivity(_context);
         else if (_itemId == Items.MORSE_RECORDER) MorseActivity.startActivity(_context);
-        else if (_itemId == Items.SETTINGS) SettingsActivity.startActivity(_context);
+        else if (_itemId == Items.SETTINGS) SettingsActivity.openAppPreferences(_context);
         else if (_itemId == Items.TEST) TestingActivity.startActivity(_context);
     }
 

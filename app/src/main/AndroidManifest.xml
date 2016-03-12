@@ -41,20 +41,10 @@
             android:label="@string/morse_recorder"
             android:windowSoftInputMode="adjustResize"/>
 
-        <!-- MORSE RECORDER SETTINGS -->
-        <activity
-            android:name=".ui.MorseSettingsActivity"
-            android:label="@string/morse_recorder_settings"/>
-
         <!-- TOUCH RECORDER -->
         <activity
             android:name=".ui.RecorderActivity"
             android:label="@string/tap_recorder"/>
-
-        <!-- TOUCH RECORDER SETTINGS -->
-        <activity
-            android:name=".ui.RecorderSettingsActivity"
-            android:label="@string/tap_recorder_settings"/>
 
         <!-- SELECT VIBRATION -->
         <activity

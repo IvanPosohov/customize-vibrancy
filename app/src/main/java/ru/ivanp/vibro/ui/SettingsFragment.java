@@ -40,4 +40,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return false;
         }
     };
+
+    // ============================================================================================
+    // METHODS
+    // ============================================================================================
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
+    }
 }

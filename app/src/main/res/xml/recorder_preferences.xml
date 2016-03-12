@@ -9,7 +9,7 @@
             android:summary="@string/fixed_magnitude_summary"
             android:title="@string/fixed_magnitude" />
 
-        <ru.ivanp.vibro.utils.SeekbarPreference
+        <ru.ivanp.vibro.views.SeekBarPreference
             android:defaultValue="100"
             android:dependency="recorder_fixed_magnitude"
             android:key="recorder_magnitude"
@@ -26,7 +26,7 @@
             android:key="recorder_limit_duration_of_vibration"
             android:title="@string/limit_duration_of_vibration" />
 
-        <ru.ivanp.vibro.utils.SeekbarPreference
+        <ru.ivanp.vibro.views.SeekBarPreference
             android:defaultValue="5"
             android:dependency="recorder_limit_duration_of_vibration"
             android:key="recorder_duration"
